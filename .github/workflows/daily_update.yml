@@ -1,0 +1,35 @@
+name: Daily data refresh
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 1:00 UTC = 9:00 SGT
+  workflow_dispatch:
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip pandas requests
+
+      - name: Fetch Singapore housing data and save CSVs
+        run: python scripts/update_data.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/latest/*.csv data/archive/*.csv
+          git diff --cached --quiet || (
+            git commit -m "Daily Singapore housing data refresh" && git push
+          )
