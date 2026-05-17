@@ -9,6 +9,7 @@ import streamlit as st
 from data_sources import DATA_SOURCE_MODE, load_all_transactions
 from housing_constants import GLOSSARY, calculate_absd, enrich_area_labels
 from rental_model import load_rent_vs_buy_scenario
+from schools import load_schools, programme_tags
 from property_groups import HOUSING_KINDS, default_sizes_for_kinds, size_options_for_kinds
 from story import (
     BUYER_TIPS,
@@ -51,6 +52,54 @@ def geocode_place(query: str):
     if not result:
         return None
     return float(result[0]["lat"]), float(result[0]["lon"])
+
+
+@st.cache_data
+def load_school_list():
+    return load_schools()
+
+
+@st.cache_data
+def geocode_school(school_name: str):
+    """Geocode a school; cached so the full list only hits the API once per school."""
+    loc = geocode_place(school_name)
+    if loc:
+        return loc
+    return geocode_place(f"{school_name} Singapore")
+
+
+@st.cache_data
+def schools_near_home(home_query: str, top_n: int = 15):
+    home = geocode_place(home_query)
+    if not home:
+        return None, pd.DataFrame()
+
+    schools_df = load_school_list()
+    if schools_df.empty:
+        return home, pd.DataFrame()
+
+    rows = []
+    for _, row in schools_df.iterrows():
+        loc = geocode_school(row["name"])
+        if not loc:
+            continue
+        km = haversine_distance(home[0], home[1], loc[0], loc[1])
+        rows.append(
+            {
+                "rank": int(row["rank"]),
+                "school": row["name"],
+                "score": row["score"],
+                "gender": row.get("gender", ""),
+                "programmes": programme_tags(row),
+                "distance_km": round(km, 2),
+            }
+        )
+
+    if not rows:
+        return home, pd.DataFrame()
+
+    near = pd.DataFrame(rows).sort_values("distance_km").head(top_n)
+    return home, near
 
 
 @st.cache_data
@@ -223,29 +272,109 @@ def show_affordability_calculator(default_price: float = 600_000.0):
 
 
 def show_distance_tools():
-    st.subheader("Commute estimate")
+    st.subheader("Commute & nearby schools")
     google_key = os.environ.get("GOOGLE_MAPS_API_KEY")
-    with st.form("distance"):
-        origin = st.text_input("Address near the home", value="Tampines Street 61")
-        destination = st.text_input("Destination (work / school / MRT)", value="Tampines MRT Station")
-        submitted = st.form_submit_button("Estimate")
+    schools_df = load_school_list()
 
-    if submitted:
-        if google_key:
-            result = google_distance(origin, destination, google_key)
-            if result:
-                st.success(f"Transit: {result['duration_text']}, {result['distance_text']}.")
+    home_default = "Tampines Street 61"
+    school_names = schools_df["name"].tolist() if not schools_df.empty else []
+    school_labels = (
+        [f"#{int(r['rank'])} {r['name']}" for _, r in schools_df.iterrows()] if not schools_df.empty else []
+    )
+    label_to_name = dict(zip(school_labels, school_names)) if school_labels else {}
+
+    tab_commute, tab_schools, tab_list = st.tabs(["Commute", "Nearest schools", "School rankings"])
+
+    with tab_commute:
+        with st.form("distance"):
+            origin = st.text_input("Address near the home", value=home_default, key="commute_origin")
+            dest_mode = st.radio("Destination", ["Custom address", "Pick from school list"], horizontal=True)
+            if dest_mode == "Pick from school list" and school_labels:
+                picked = st.selectbox("School", school_labels, key="commute_school_pick")
+                destination = label_to_name.get(picked, picked)
             else:
-                st.warning("Google Distance Matrix returned no result.")
+                destination = st.text_input("Destination (work / school / MRT)", value="Tampines MRT Station")
+            submitted = st.form_submit_button("Estimate commute")
+
+        if submitted:
+            if google_key:
+                result = google_distance(origin, destination, google_key)
+                if result:
+                    st.success(f"Transit: {result['duration_text']}, {result['distance_text']}.")
+                else:
+                    st.warning("Google Distance Matrix returned no result.")
+            else:
+                st.info("No Google Maps API key — using straight-line distance (OpenStreetMap).")
+                origin_loc = geocode_place(origin)
+                destination_loc = geocode_place(destination)
+                if origin_loc and destination_loc:
+                    km = haversine_distance(origin_loc[0], origin_loc[1], destination_loc[0], destination_loc[1])
+                    st.write(f"Approximate distance: **{km:.1f} km** (straight line).")
+                else:
+                    st.warning("Could not geocode one of the locations.")
+
+    with tab_schools:
+        st.caption(
+            "Distances are straight-line (km) from your address to each school. "
+            "School **rank** is the row order in `data/school_list.csv` (1 = top of list)."
+        )
+        if schools_df.empty:
+            st.warning("`data/school_list.csv` not found.")
         else:
-            st.info("No Google Maps API key — using straight-line distance (OpenStreetMap).")
-            origin_loc = geocode_place(origin)
-            destination_loc = geocode_place(destination)
-            if origin_loc and destination_loc:
-                km = haversine_distance(origin_loc[0], origin_loc[1], destination_loc[0], destination_loc[1])
-                st.write(f"Approximate distance: **{km:.1f} km** (straight line).")
-            else:
-                st.warning("Could not geocode one of the locations.")
+            with st.form("near_schools"):
+                home = st.text_input("Your home address", value=home_default, key="schools_home")
+                top_n = st.slider("Show nearest schools", min_value=5, max_value=30, value=15)
+                find = st.form_submit_button("Find nearest schools")
+
+            if find:
+                with st.spinner("Locating schools (first run may take a minute while locations are cached)…"):
+                    _home, near = schools_near_home(home, top_n=top_n)
+                if _home is None:
+                    st.warning("Could not find that address. Try block + street + Singapore.")
+                elif near.empty:
+                    st.warning("Could not locate schools. Check your internet connection.")
+                else:
+                    st.dataframe(
+                        near.rename(
+                            columns={
+                                "rank": "Rank",
+                                "school": "School",
+                                "score": "Score",
+                                "gender": "Gender",
+                                "programmes": "Programmes",
+                                "distance_km": "Distance (km)",
+                            }
+                        ),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+                    closest = near.iloc[0]
+                    st.info(
+                        f"Closest on this list: **{closest['school']}** "
+                        f"(rank #{int(closest['rank'])}, ~{closest['distance_km']} km away)."
+                    )
+
+    with tab_list:
+        if schools_df.empty:
+            st.warning("`data/school_list.csv` not found.")
+        else:
+            st.caption("Full list sorted by rank (same order as the original spreadsheet).")
+            display = schools_df.copy()
+            display["programmes"] = display.apply(programme_tags, axis=1)
+            st.dataframe(
+                display[["rank", "name", "score", "gender", "programmes"]].rename(
+                    columns={
+                        "rank": "Rank",
+                        "name": "School",
+                        "score": "Score",
+                        "gender": "Gender",
+                        "programmes": "Programmes",
+                    }
+                ),
+                use_container_width=True,
+                hide_index=True,
+                height=400,
+            )
 
 
 def render_sidebar_controls(df):
@@ -374,7 +503,7 @@ def main():
     tab_labels = ["Trends & prices"]
     if show_rent_tab:
         tab_labels.append("Rent vs buy")
-    tab_labels.extend(["ABSD & affordability", "Commute", "Policy notes"])
+    tab_labels.extend(["ABSD & affordability", "Commute & schools", "Policy notes"])
     tab_objects = st.tabs(tab_labels)
     ti = 0
 
