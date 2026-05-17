@@ -51,6 +51,14 @@ def run():
             continue
         save_csv(name, df)
 
+    print("\nBuilding processed slices for fast app load…")
+    import subprocess
+
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_processed_data.py"), "--fast"],
+        check=False,
+    )
+
     print("\nDATA_REFRESH_COMPLETE: All sources processed")
 
 
