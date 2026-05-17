@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -63,6 +64,11 @@ def geocode_query(query: str) -> tuple[float, float] | None:
     except Exception as exc:
         print(f"  geocode fail: {query[:50]}... ({exc})", file=sys.stderr)
     return None
+
+
+def extract_sg_postal(text: str) -> str | None:
+    m = re.search(r"S\((\d{6})\)", str(text))
+    return m.group(1) if m else None
 
 
 def geocode_key(key: str, query: str, cache: dict, fast: bool) -> tuple[float, float] | None:
@@ -168,7 +174,9 @@ def build_hawkers(cache: dict, fast: bool):
         name = row.get("name_of_centre", "")
         addr = row.get("location_of_centre", "")
         key = f"hawker:{name}"
-        loc = geocode_key(key, f"{addr}, Singapore", cache, fast)
+        postal = extract_sg_postal(addr)
+        query = f"Singapore {postal}" if postal else f"{addr}, Singapore"
+        loc = geocode_key(key, query, cache, fast)
         rows.append(
             {
                 "name": name,
@@ -194,7 +202,9 @@ def build_pharmacies(cache: dict, fast: bool):
         name = row.get("pharmacy_name", "")
         addr = row.get("pharmacy_address", "")
         key = f"pharma:{name}"
-        loc = geocode_key(key, f"{addr}, Singapore", cache, fast)
+        postal = extract_sg_postal(addr)
+        query = f"Singapore {postal}" if postal else f"{addr}, Singapore"
+        loc = geocode_key(key, query, cache, fast)
         rows.append(
             {
                 "name": name,
