@@ -9,14 +9,15 @@ import streamlit as st
 from data_sources import DATA_SOURCE_MODE, load_all_transactions
 from housing_constants import GLOSSARY, calculate_absd, enrich_area_labels
 from rental_model import load_rent_vs_buy_scenario
+from property_groups import HOUSING_KINDS, default_sizes_for_kinds, size_options_for_kinds
 from story import (
     BUYER_TIPS,
     absd_tier_from_story,
     apply_story_filters,
+    default_kinds_from_story,
     init_story_state,
     render_journey_picker,
     render_story_step,
-    story_default_property_types,
 )
 
 st.set_page_config(
@@ -247,7 +248,7 @@ def show_distance_tools():
                 st.warning("Could not geocode one of the locations.")
 
 
-def render_sidebar_controls(df, property_options):
+def render_sidebar_controls(df):
     st.sidebar.header("Your profile")
     st.session_state.residency = st.sidebar.selectbox(
         "Residency",
@@ -274,8 +275,28 @@ def render_sidebar_controls(df, property_options):
         index=0 if st.session_state.first_property.startswith("Yes") else 1,
     )
 
-    defaults = story_default_property_types(df, property_options)
-    property_choices = st.sidebar.multiselect("Property types", property_options, default=defaults)
+    st.sidebar.markdown("**What are you looking at?**")
+    if st.session_state.residency == "Foreigner":
+        kind_options = ["Condo", "Landed"]
+    else:
+        kind_options = HOUSING_KINDS
+
+    default_kinds = [k for k in default_kinds_from_story() if k in kind_options]
+    housing_kinds = st.sidebar.multiselect(
+        "Home type",
+        kind_options,
+        default=default_kinds or kind_options[:2],
+        help="HDB = public flats · Condo = private apartments & EC · Landed = terrace / semi-D / bungalow",
+    )
+
+    size_options = size_options_for_kinds(df, housing_kinds)
+    default_sizes = [s for s in default_sizes_for_kinds(df, housing_kinds) if s in size_options]
+    size_choices = st.sidebar.multiselect(
+        "Size (rooms & approx. sqft)",
+        size_options,
+        default=default_sizes,
+        help="Sqft ranges are typical sizes from transaction data, shown in square feet.",
+    )
 
     area_labels = sorted(df["area_name"].dropna().unique()) if "area_name" in df.columns else sorted(df["town"].dropna().unique())
     selected_areas = st.sidebar.multiselect("Areas (towns / districts)", area_labels, default=[])
@@ -294,13 +315,15 @@ def render_sidebar_controls(df, property_options):
         st.session_state.story_complete = False
         st.rerun()
 
-    return property_choices, selected_areas, start_year, end_year
+    return housing_kinds, size_choices, selected_areas, start_year, end_year
 
 
-def filter_dataframe(df, property_choices, selected_areas):
+def filter_dataframe(df, housing_kinds, size_choices, selected_areas):
     filtered = apply_story_filters(df)
-    if property_choices:
-        filtered = filtered[filtered["property_type"].isin(property_choices)]
+    if housing_kinds:
+        filtered = filtered[filtered["housing_kind"].isin(housing_kinds)]
+    if size_choices:
+        filtered = filtered[filtered["size_label"].isin(size_choices)]
     if selected_areas and "area_name" in filtered.columns:
         filtered = filtered[filtered["area_name"].isin(selected_areas)]
     return filtered
@@ -333,9 +356,8 @@ def main():
         render_story_step()
         st.divider()
 
-    property_options = sorted(df["property_type"].dropna().unique())
-    property_choices, selected_areas, start_year, end_year = render_sidebar_controls(df, property_options)
-    filtered = filter_dataframe(df, property_choices, selected_areas)
+    housing_kinds, size_choices, selected_areas, start_year, end_year = render_sidebar_controls(df)
+    filtered = filter_dataframe(df, housing_kinds, size_choices, selected_areas)
 
     show_glossary()
 
@@ -359,22 +381,29 @@ def main():
     with tab_objects[ti]:
         ti += 1
         if filtered.empty:
-            st.warning("No records match your filters — broaden property types or areas.")
+            st.warning("No records match your filters — try more home types, sizes, or areas.")
         else:
             display_col = "area_name" if "area_name" in filtered.columns else "town"
             top_summary = (
-                filtered.groupby(["property_type", display_col], as_index=False)["price"]
+                filtered.groupby(["housing_kind", "size_label", display_col], as_index=False)["price"]
                 .median()
                 .sort_values("price", ascending=False)
                 .head(12)
             )
             st.subheader("Highest median prices (your selection)")
             st.dataframe(
-                top_summary.rename(columns={"property_type": "Type", display_col: "Area", "price": "Median (SGD)"}),
+                top_summary.rename(
+                    columns={
+                        "housing_kind": "Home type",
+                        "size_label": "Size",
+                        display_col: "Area",
+                        "price": "Median (SGD)",
+                    }
+                ),
                 use_container_width=True,
             )
 
-            group_col = display_col if selected_areas else "property_type"
+            group_col = display_col if selected_areas else "size_label"
             chart = build_trend_chart(filtered, group_col, start_year, end_year)
             if chart:
                 st.plotly_chart(chart, use_container_width=True)

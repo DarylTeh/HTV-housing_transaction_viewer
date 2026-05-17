@@ -251,8 +251,9 @@ def _enrich(df: pd.DataFrame) -> pd.DataFrame:
     if df is None or df.empty:
         return pd.DataFrame()
     from housing_constants import enrich_area_labels
+    from property_groups import add_property_groups
 
-    return enrich_area_labels(df)
+    return add_property_groups(enrich_area_labels(df))
 
 
 def load_all_transactions() -> pd.DataFrame:

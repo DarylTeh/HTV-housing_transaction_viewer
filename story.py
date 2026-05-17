@@ -36,17 +36,6 @@ BUYER_TIPS = {
     ),
 }
 
-HDB_FLAT_TYPES = ["1 ROOM", "2 ROOM", "3 ROOM", "4 ROOM", "5 ROOM", "EXECUTIVE", "MULTI-GENERATION"]
-PRIVATE_TYPES = [
-    "Apartment",
-    "Condominium",
-    "Executive Condominium",
-    "Terrace House",
-    "Semi-Detached House",
-    "Detached House",
-    "Terrace",
-    "Semi-detached",
-]
 
 
 def init_story_state():
@@ -116,13 +105,17 @@ def render_story_step():
 
     elif step == 3:
         st.markdown("### Chapter 4 — What housing are you curious about?")
-        options = ["HDB only", "Private only", "Both HDB and private"]
+        options = ["HDB only", "Condo & landed only", "All types"]
         if st.session_state.residency == "Foreigner":
-            options = ["Private only"]
-            st.session_state.property_focus = "Private only"
+            options = ["Condo & landed only"]
+            st.session_state.property_focus = "Condo & landed only"
             st.warning("Foreigners generally cannot purchase HDB resale flats.")
         else:
-            st.session_state.property_focus = st.radio("Which market should we focus on?", options)
+            st.session_state.property_focus = st.radio(
+                "Which homes interest you?",
+                options,
+                help="HDB = public flats · Condo = apartments & EC · Landed = terrace / semi-D / bungalow",
+            )
         st.session_state.first_property = st.radio(
             "Will this be your first property purchase in Singapore?",
             ["Yes — first property", "No — I already own property"],
@@ -157,29 +150,25 @@ def render_story_step():
             st.rerun()
 
 
-def story_default_property_types(df, property_options: list[str]) -> list[str]:
-    focus = st.session_state.get("property_focus", "Both HDB and private")
-    hdb = [p for p in property_options if p in HDB_FLAT_TYPES or p == "HDB"]
-    private = [p for p in property_options if p in PRIVATE_TYPES or p == "Private Property"]
+def default_kinds_from_story() -> list[str]:
+    focus = st.session_state.get("property_focus", "All types")
     if focus == "HDB only":
-        chosen = hdb
-    elif focus == "Private only":
-        chosen = private
-    else:
-        chosen = hdb[:3] + [p for p in ["Condominium", "Apartment"] if p in property_options]
-    return chosen or property_options[: min(3, len(property_options))]
+        return ["HDB"]
+    if focus == "Condo & landed only":
+        return ["Condo", "Landed"]
+    return ["HDB", "Condo"]
 
 
 def apply_story_filters(df):
     """Return dataframe filtered by story choices."""
     out = df.copy()
     if st.session_state.get("residency") == "Foreigner":
-        out = out[out["dataset"] != "HDB Resale"]
-    focus = st.session_state.get("property_focus", "Both HDB and private")
+        out = out[out["housing_kind"] != "HDB"]
+    focus = st.session_state.get("property_focus", "All types")
     if focus == "HDB only":
-        out = out[out["dataset"] == "HDB Resale"]
-    elif focus == "Private only":
-        out = out[out["dataset"] == "Private Property"]
+        out = out[out["housing_kind"] == "HDB"]
+    elif focus == "Condo & landed only":
+        out = out[out["housing_kind"].isin(["Condo", "Landed"])]
     return out
 
 
