@@ -1,0 +1,9 @@
+{
+  "property_label": "Condo (worked example from RentalIncome.xlsx)",
+  "purchase_price": 1500000.0,
+  "loan_amount": 900000.0,
+  "interest_rate": 0.025,
+  "tenure_years": 30,
+  "starting_monthly_rent": 4000.0,
+  "starting_monthly_instalment": 3556.088089
+}

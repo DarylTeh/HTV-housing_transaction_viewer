@@ -1,0 +1,152 @@
+rank,name,score,gender,ip,ibdp,sap,affiliated,programmes
+1,Hwa Chong Institution,259,Boys,IP,,SAP,,"IP, SAP"
+2,Raffles Girls’ School,259,Girls,IP,,,,IP
+3,Methodist Girls’ School,258,Girls,IP,IB,,Affiliated,"IP, IB, Affiliated"
+4,Nanyang Girls’ High School,258,Girls,IP,,SAP,Affiliated,"IP, SAP, Affiliated"
+5,Raffles Institution,258,Boys,IP,,,,IP
+6,Dunman High School,256,Co-Ed,IP,,SAP,,"IP, SAP"
+7,National Junior College,256,Co-Ed,IP,,,,IP
+8,CHIJ St. Nicholas Girls’ School,255,Girls,IP,,SAP,Affiliated,"IP, SAP, Affiliated"
+9,Anglo-Chinese School (Independent),254,Boys,IP,IB,,Affiliated,"IP, IB, Affiliated"
+10,Catholic High School,254,Boys,IP,,SAP,,"IP, SAP"
+11,Methodist Girls’ School (O-Levels),254,Girls,IB,,,Affiliated,"IP, Affiliated"
+12,Cedar Girls’ Secondary School,253,Girls,IP,,,,IP
+13,CHIJ St. Nicholas Girls’ School,253,Girls,,,SAP,Affiliated,"SAP, Affiliated"
+14,River Valley High School,252,Co-Ed,IP,,SAP,,"IP, SAP"
+15,Singapore Chinese Girls’ School,252,Girls,IP,,,Affiliated,"IP, Affiliated"
+16,Singapore Chinese Girls’ School (O-Levels),252,Girls,,,,Affiliated,Affiliated
+17,Victoria School,252,Boys,IP,,,,IP
+18,Catholic High School (O-Levels),251,Boys,,,SAP,,SAP
+19,Anglo-Chinese School (Independent),250,Boys,,,,Affiliated,Affiliated
+20,Cedar Girls’ Secondary School,250,Girls,,,,,—
+21,Paya Lebar Methodist Girls’ School,250,Girls,,,,Affiliated,Affiliated
+22,St. Joseph’s Institution,250,Boys,IP,IB,,Affiliated,"IP, IB, Affiliated"
+23,Temasek Junior College,250,Co-Ed,IP,,,,IP
+24,Anderson Secondary School,247,Co-Ed,,,,,—
+25,CHIJ Secondary (Toa Payoh),246,Girls,,,,Affiliated,Affiliated
+26,Victoria School (O-Levels),246,Boys,,,,,—
+27,Anglo-Chinese School (Barker Road),245,Boys,,,,Affiliated,Affiliated
+28,Bukit Panjang Govt. High School,245,Co-Ed,,,,,—
+29,Nan Hua High School,245,Co-Ed,,,,,—
+30,St. Joseph’s Institution (O-Levels),245,Boys,,,,Affiliated,Affiliated
+31,Nan Chiau High School,244,Co-Ed,,,SAP,,SAP
+32,Chung Cheng High School (Main),242,Co-Ed,,,SAP,,SAP
+33,Crescent Girls’ School,242,Girls,,,,,—
+34,Fairfield Methodist School,242,Co-Ed,,,,Affiliated,Affiliated
+35,St. Andrew’s Secondary School,242,Boys,,,,Affiliated,Affiliated
+36,St. Margaret’s Secondary School,242,Girls,,,,Affiliated,Affiliated
+37,Swiss Cottage Secondary School,242,Co-Ed,,,,,—
+38,Chung Cheng High School (Yishun),240,Co-Ed,,,,,—
+39,Anglican High School,239,Co-Ed,,,SAP,,SAP
+40,Commonwealth Secondary School,239,Co-Ed,,,,,—
+41,Yishun Town Secondary School,239,Co-Ed,,,,,—
+42,CHIJ St. Theresa’s Convent,238,Girls,,,,Affiliated,Affiliated
+43,Ngee Ann Secondary School,238,Co-Ed,,,,,—
+44,CHIJ St. Joseph’s Convent,237,Girls,,,,Affiliated,Affiliated
+45,Maris Stella High School,237,Boys,,,,Affiliated,Affiliated
+46,Kuo Chuan Presbyterian Secondary School,236,Co-Ed,,,,Affiliated,Affiliated
+47,Zhonghua Secondary School,236,Co-Ed,,,,,—
+48,Fuhua Secondary School,235,Co-Ed,,,,,—
+49,Presbyterian High School,235,Co-Ed,,,,,—
+50,Tanjong Katong Girls’ School,235,Girls,,,,,—
+51,Xinmin Secondary School,235,Co-Ed,,,,,—
+52,Clementi Town Secondary School,234,Co-Ed,,,,,—
+53,Riverside Secondary School,234,Co-Ed,,,,,—
+54,Temasek Secondary School,234,Co-Ed,,,,,—
+55,Holy Innocents’ High School,233,Co-Ed,,,,Affiliated,Affiliated
+56,Kranji Secondary School,233,Co-Ed,,,,,—
+57,Tanjong Katong Secondary School,233,Co-Ed,,,,,—
+58,Dunman Secondary School,231,Co-Ed,,,,,—
+59,Edgefield Secondary School,229,Co-Ed,,,,,—
+60,St. Patrick’s School,229,Boys,,,,Affiliated,Affiliated
+61,Ang Mo Kio Secondary School,228,Co-Ed,,,,,—
+62,Bukit Batok Secondary School,228,Co-Ed,,,,,—
+63,Geylang Methodist School,228,Co-Ed,,,,Affiliated,Affiliated
+64,Jurong Secondary School,228,Co-Ed,,,,,—
+65,CHIJ Katong Convent,227,Girls,,,,Affiliated,Affiliated
+66,Evergreen Secondary School,227,Co-Ed,,,,,—
+67,St. Anthony’s Canossian Secondary School,227,Girls,,,,Affiliated,Affiliated
+68,Bowen Secondary School,226,Co-Ed,,,,,—
+69,Gan Eng Seng School,226,Co-Ed,,,,,—
+70,Hua Yi Secondary School,226,Co-Ed,,,,,—
+71,St. Gabriel’s Secondary School,226,Boys,,,,Affiliated,Affiliated
+72,St. Hilda’s Secondary School,226,Co-Ed,,,,,—
+73,Pei Hwa Secondary School,224,Co-Ed,,,,,—
+74,West Spring Secondary School,224,Co-Ed,,,,,—
+75,Hai Sing Catholic School,223,Co-Ed,,,,,—
+76,Ahmad Ibrahim Secondary School,222,Co-Ed,,,,,—
+77,Mayflower Secondary School,222,Co-Ed,,,,,—
+78,Deyi Secondary School,220,Co-Ed,,,,,—
+79,Queensway Secondary School,220,Co-Ed,,,,,—
+80,Pasir Ris Secondary School,219,Co-Ed,,,,,—
+81,Unity Secondary School,219,Co-Ed,,,,,—
+82,Pasir Ris Crest Secondary School,217,Co-Ed,,,,,—
+83,Woodlands Ring Secondary School,217,Co-Ed,,,,,—
+84,Bedok View Secondary School,216,Co-Ed,,,,,—
+85,Chua Chu Kang Secondary School,216,Co-Ed,,,,,—
+86,Beatty Secondary School,215,Co-Ed,,,,,—
+87,Yuan Ching Secondary School,215,Co-Ed,,,,,—
+88,Compassvale Secondary School,214,Co-Ed,,,,,—
+89,Kent Ridge Secondary School,214,Co-Ed,,,,,—
+90,North Vista Secondary School,214,Co-Ed,,,,,—
+91,Orchid Park Secondary School,212,Co-Ed,,,,,—
+92,Bukit View Secondary School,211,Co-Ed,,,,,—
+93,Peirce Secondary School,211,Co-Ed,,,,,—
+94,Zhenghua Secondary School,211,Co-Ed,,,,,—
+95,Bedok South Secondary School,210,Co-Ed,,,,,—
+96,Greendale Secondary School,210,Co-Ed,,,,,—
+97,Hillgrove Secondary School,210,Co-Ed,,,,,—
+98,Meridian Secondary School,210,Co-Ed,,,,,—
+99,Woodgrove Secondary School,210,Co-Ed,,,,,—
+100,Jurong West Secondary School,209,Co-Ed,,,,,—
+101,Montfort Secondary School,208,Boys,,,,Affiliated,Affiliated
+102,Tampines Secondary School,208,Co-Ed,,,,,—
+103,Christ Church Secondary School,207,Co-Ed,,,,,—
+104,Yishun Secondary School,207,Co-Ed,,,,,—
+105,Seng Kang Secondary School,205,Co-Ed,,,,,—
+106,Admiralty Secondary School,203,Co-Ed,,,,,—
+107,Naval Base Secondary School,203,Co-Ed,,,,,—
+108,Hougang Secondary School,202,Co-Ed,,,,,—
+109,Punggol Secondary School,201,Co-Ed,,,,,—
+110,Regent Secondary School,201,Co-Ed,,,,,—
+111,Jurongville Secondary School,197,Co-Ed,,,,,—
+112,Westwood Secondary School,196,Co-Ed,,,,,—
+113,Greenridge Secondary School,195,Co-Ed,,,,,—
+114,Canberra Secondary School,193,Co-Ed,,,,,—
+115,New Town Secondary School,193,Co-Ed,,,,,—
+116,Juying Secondary School,192,Co-Ed,,,,,—
+117,Peicai Secondary School,189,Co-Ed,,,,,—
+118,Queenstown Secondary School,189,Co-Ed,,,,,—
+119,Assumption English School,188,Co-Ed,,,,,—
+120,Bartley Secondary School,188,Co-Ed,,,,,—
+121,Bedok Green Secondary School,188,Co-Ed,,,,,—
+122,Bendemeer Secondary School,188,Co-Ed,,,,,—
+123,Boon Lay Secondary School,188,Co-Ed,,,,,—
+124,Broadrick Secondary School,188,Co-Ed,,,,,—
+125,Bukit Merah Secondary School,188,Co-Ed,,,,,—
+126,Changkat Changi Secondary School,188,Co-Ed,,,,,—
+127,Damai Secondary School,188,Co-Ed,,,,,—
+128,Dunearn Secondary School,188,Co-Ed,,,,,—
+129,East Spring Secondary School,188,Co-Ed,,,,,—
+130,Fajar Secondary School,188,Co-Ed,,,,,—
+131,Fuchun Secondary School,188,Co-Ed,,,,,—
+132,Guangyang Secondary School,188,Co-Ed,,,,,—
+133,Junyuan Secondary School,188,Co-Ed,,,,,—
+134,Loyang Secondary School,188,Co-Ed,,,,,—
+135,Manjusri Secondary School,188,Co-Ed,,,,Affiliated,Affiliated
+136,Marsiling Secondary School,188,Co-Ed,,,,,—
+137,Northbrooks Secondary School,188,Co-Ed,,,,,—
+138,Northland Secondary School,188,Co-Ed,,,,,—
+139,Outram Secondary School,188,Co-Ed,,,,,—
+140,Ping Yi Secondary School,188,Co-Ed,,,,,—
+141,Sembawang Secondary School,188,Co-Ed,,,,,—
+142,Serangoon Garden Secondary School,188,Co-Ed,,,,,—
+143,Serangoon Secondary School,188,Co-Ed,,,,,—
+144,Springfield Secondary School,188,Co-Ed,,,,,—
+145,Tanglin Secondary School,188,Co-Ed,,,,,—
+146,Teck Whye Secondary School,188,Co-Ed,,,,,—
+147,Whitley Secondary School,188,Co-Ed,,,,,—
+148,Woodlands Secondary School,188,Co-Ed,,,,,—
+149,Yio Chu Kang Secondary School,188,Co-Ed,,,,,—
+150,Yuhua Secondary School,188,Co-Ed,,,,,—
+151,Yuying Secondary School,188,Co-Ed,,,,,—

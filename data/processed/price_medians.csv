@@ -1,0 +1,1306 @@
+year,housing_kind,size_label,area_name,median_price,sales
+2021.0,Condo,2-bed (~590–915 sqft),D1 — Raffles Place / Marina Bay,1608260.0,125
+2021.0,Condo,2-bed (~590–915 sqft),D10 — Tanglin / Bukit Timah,1720600.0,541
+2021.0,Condo,2-bed (~590–915 sqft),D11 — Novena / Thomson,1520000.0,177
+2021.0,Condo,2-bed (~590–915 sqft),D12 — Balestier / Toa Payoh,1088000.0,193
+2021.0,Condo,2-bed (~590–915 sqft),D13 — MacPherson / Potong Pasir,1359999.5,204
+2021.0,Condo,2-bed (~590–915 sqft),D14 — Geylang / Paya Lebar,1250500.0,460
+2021.0,Condo,2-bed (~590–915 sqft),D15 — Marine Parade / Katong,1311500.0,454
+2021.0,Condo,2-bed (~590–915 sqft),D16 — Bedok / Upper East Coast,969000.0,190
+2021.0,Condo,2-bed (~590–915 sqft),D17 — Loyang / Changi,977100.0,373
+2021.0,Condo,2-bed (~590–915 sqft),D18 — Tampines / Pasir Ris,1016000.0,569
+2021.0,Condo,2-bed (~590–915 sqft),D19 — Hougang / Punggol,1100888.0,889
+2021.0,Condo,2-bed (~590–915 sqft),D2 — Chinatown / Tanjong Pagar,1310000.0,123
+2021.0,Condo,2-bed (~590–915 sqft),D20 — Bishan / Ang Mo Kio,1250000.0,148
+2021.0,Condo,2-bed (~590–915 sqft),D21 — Upper Bukit Timah / Clementi Park,1376000.0,446
+2021.0,Condo,2-bed (~590–915 sqft),D22 — Jurong / Boon Lay,1150000.0,56
+2021.0,Condo,2-bed (~590–915 sqft),D23 — Bukit Panjang / Choa Chu Kang,1160000.0,616
+2021.0,Condo,2-bed (~590–915 sqft),D25 — Woodlands / Admiralty,690000.0,49
+2021.0,Condo,2-bed (~590–915 sqft),D26 — Upper Thomson / Springleaf,953830.0,40
+2021.0,Condo,2-bed (~590–915 sqft),D27 — Yishun / Sembawang,1024500.0,440
+2021.0,Condo,2-bed (~590–915 sqft),D28 — Seletar / Yio Chu Kang,870000.0,115
+2021.0,Condo,2-bed (~590–915 sqft),D3 — Queenstown / Tiong Bahru,1573000.0,430
+2021.0,Condo,2-bed (~590–915 sqft),D4 — Telok Blangah / Harbourfront,1639050.0,284
+2021.0,Condo,2-bed (~590–915 sqft),D5 — Clementi / Pasir Panjang,1245000.0,974
+2021.0,Condo,2-bed (~590–915 sqft),D6 — Beach Road / High Street,2394000.0,173
+2021.0,Condo,2-bed (~590–915 sqft),D7 — Bugis / Rochor,1759230.0,273
+2021.0,Condo,2-bed (~590–915 sqft),D8 — Little India / Farrer Park,1308000.0,101
+2021.0,Condo,2-bed (~590–915 sqft),D9 — Orchard / River Valley,1700000.0,545
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D1 — Raffles Place / Marina Bay,2178000.0,57
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D10 — Tanglin / Bukit Timah,2287821.0,501
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D11 — Novena / Thomson,1975000.0,172
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D12 — Balestier / Toa Payoh,1450050.0,232
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D13 — MacPherson / Potong Pasir,1874000.0,213
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D14 — Geylang / Paya Lebar,1500000.0,472
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D15 — Marine Parade / Katong,1700000.0,688
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D16 — Bedok / Upper East Coast,1200000.0,392
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D17 — Loyang / Changi,1050000.0,229
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D18 — Tampines / Pasir Ris,1270000.0,788
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D19 — Hougang / Punggol,1355000.0,1169
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D2 — Chinatown / Tanjong Pagar,1918000.0,75
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D20 — Bishan / Ang Mo Kio,1580000.0,211
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D21 — Upper Bukit Timah / Clementi Park,1775000.0,498
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D22 — Jurong / Boon Lay,1180000.0,208
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D23 — Bukit Panjang / Choa Chu Kang,1290000.0,664
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D25 — Woodlands / Admiralty,852500.0,56
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D26 — Upper Thomson / Springleaf,1135000.0,75
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D27 — Yishun / Sembawang,1230000.0,315
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D28 — Seletar / Yio Chu Kang,1230000.0,107
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D3 — Queenstown / Tiong Bahru,1966000.0,348
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D4 — Telok Blangah / Harbourfront,2000000.0,146
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D5 — Clementi / Pasir Panjang,1665000.0,1005
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D6 — Beach Road / High Street,3008500.0,30
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D7 — Bugis / Rochor,2604195.0,114
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D8 — Little India / Farrer Park,1510000.0,116
+2021.0,Condo,"3-bed (~915–1,290 sqft)",D9 — Orchard / River Valley,2421000.0,338
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D1 — Raffles Place / Marina Bay,3838713.5,78
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D10 — Tanglin / Bukit Timah,3936000.0,853
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D11 — Novena / Thomson,2900000.0,302
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D12 — Balestier / Toa Payoh,1950000.0,113
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D13 — MacPherson / Potong Pasir,2099000.0,62
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D14 — Geylang / Paya Lebar,1850800.0,157
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D15 — Marine Parade / Katong,2495000.0,810
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D16 — Bedok / Upper East Coast,1745000.0,270
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D17 — Loyang / Changi,1350000.0,177
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D18 — Tampines / Pasir Ris,1780000.0,520
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D19 — Hougang / Punggol,1900000.0,495
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D2 — Chinatown / Tanjong Pagar,4180000.0,29
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D20 — Bishan / Ang Mo Kio,2300000.0,203
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D21 — Upper Bukit Timah / Clementi Park,2185000.0,344
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D22 — Jurong / Boon Lay,1550000.0,80
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D23 — Bukit Panjang / Choa Chu Kang,1600000.0,249
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D25 — Woodlands / Admiralty,1190000.0,38
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D26 — Upper Thomson / Springleaf,1629000.0,48
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D27 — Yishun / Sembawang,1429000.0,130
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D28 — Seletar / Yio Chu Kang,1600000.0,79
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D3 — Queenstown / Tiong Bahru,2780000.0,199
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D4 — Telok Blangah / Harbourfront,3044000.0,296
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D5 — Clementi / Pasir Panjang,2288500.0,592
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D6 — Beach Road / High Street,5602000.0,58
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D7 — Bugis / Rochor,4247100.0,33
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D8 — Little India / Farrer Park,1970000.0,70
+2021.0,Condo,"4-bed+ (~1,290+ sqft)",D9 — Orchard / River Valley,4280000.0,557
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D1 — Raffles Place / Marina Bay,1017500.0,22
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D10 — Tanglin / Bukit Timah,1215000.0,195
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D11 — Novena / Thomson,1030000.0,67
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D12 — Balestier / Toa Payoh,725000.0,153
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D13 — MacPherson / Potong Pasir,770000.0,115
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D14 — Geylang / Paya Lebar,668000.0,321
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D15 — Marine Parade / Katong,830000.0,257
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D16 — Bedok / Upper East Coast,715000.0,89
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D17 — Loyang / Changi,580000.0,67
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D18 — Tampines / Pasir Ris,687500.0,230
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D19 — Hougang / Punggol,738000.0,343
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D2 — Chinatown / Tanjong Pagar,1121000.0,99
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D20 — Bishan / Ang Mo Kio,905000.0,70
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D21 — Upper Bukit Timah / Clementi Park,988000.0,129
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D22 — Jurong / Boon Lay,842500.0,48
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D23 — Bukit Panjang / Choa Chu Kang,808000.0,225
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D25 — Woodlands / Admiralty,538000.0,63
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D26 — Upper Thomson / Springleaf,777800.0,19
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D27 — Yishun / Sembawang,662500.0,72
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D28 — Seletar / Yio Chu Kang,650000.0,61
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D3 — Queenstown / Tiong Bahru,1114000.0,219
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D4 — Telok Blangah / Harbourfront,1106350.0,116
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D5 — Clementi / Pasir Panjang,946000.0,563
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D6 — Beach Road / High Street,1470000.0,313
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D7 — Bugis / Rochor,1301850.0,181
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D8 — Little India / Farrer Park,792500.0,92
+2021.0,Condo,Studio / 1-bed (~400–590 sqft),D9 — Orchard / River Valley,1250000.0,262
+2021.0,HDB,1-room (~330 sqft),BUKIT MERAH,198000.0,9
+2021.0,HDB,2-room (~500–720 sqft),ANG MO KIO,230000.0,11
+2021.0,HDB,2-room (~500–720 sqft),BEDOK,250972.0,14
+2021.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,245000.0,29
+2021.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,276888.0,33
+2021.0,HDB,2-room (~500–720 sqft),CENTRAL AREA,262500.0,8
+2021.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,268000.0,13
+2021.0,HDB,2-room (~500–720 sqft),CLEMENTI,329444.0,8
+2021.0,HDB,2-room (~500–720 sqft),GEYLANG,216500.0,10
+2021.0,HDB,2-room (~500–720 sqft),HOUGANG,255000.0,9
+2021.0,HDB,2-room (~500–720 sqft),JURONG EAST,277000.0,7
+2021.0,HDB,2-room (~500–720 sqft),JURONG WEST,268000.0,21
+2021.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,250000.0,13
+2021.0,HDB,2-room (~500–720 sqft),MARINE PARADE,235000.0,2
+2021.0,HDB,2-room (~500–720 sqft),PASIR RIS,295000.0,7
+2021.0,HDB,2-room (~500–720 sqft),PUNGGOL,275000.0,46
+2021.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,250000.0,20
+2021.0,HDB,2-room (~500–720 sqft),SEMBAWANG,268000.0,16
+2021.0,HDB,2-room (~500–720 sqft),SENGKANG,285000.0,50
+2021.0,HDB,2-room (~500–720 sqft),SERANGOON,247500.0,2
+2021.0,HDB,2-room (~500–720 sqft),TAMPINES,288000.0,13
+2021.0,HDB,2-room (~500–720 sqft),TOA PAYOH,233000.0,23
+2021.0,HDB,2-room (~500–720 sqft),WOODLANDS,267000.0,13
+2021.0,HDB,2-room (~500–720 sqft),YISHUN,250000.0,17
+2021.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,326000.0,564
+2021.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,318000.0,562
+2021.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,400000.0,52
+2021.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,315000.0,251
+2021.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,350000.0,413
+2021.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,338000.0,120
+2021.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,415000.0,13
+2021.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,431000.0,90
+2021.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,365000.0,115
+2021.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,342000.0,265
+2021.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,290000.0,298
+2021.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,326500.0,274
+2021.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,330500.0,162
+2021.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,291944.0,262
+2021.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,325000.0,383
+2021.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,382000.0,85
+2021.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,442500.0,26
+2021.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,390500.0,250
+2021.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,355000.0,365
+2021.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,325000.0,19
+2021.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,382044.0,164
+2021.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,345000.0,101
+2021.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,360000.0,414
+2021.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,290000.0,375
+2021.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,305000.0,191
+2021.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,325000.0,452
+2021.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,448000.0,284
+2021.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,446000.0,599
+2021.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,570000.0,287
+2021.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,430000.0,281
+2021.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,750000.0,441
+2021.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,450000.0,473
+2021.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,637500.0,32
+2021.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,941000.0,108
+2021.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,455000.0,757
+2021.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,705000.0,279
+2021.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,600000.0,307
+2021.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,445000.0,653
+2021.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,441000.0,183
+2021.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,425000.0,542
+2021.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,640888.0,295
+2021.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,490000.0,41
+2021.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,470000.0,361
+2021.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,495944.0,1432
+2021.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,785000.0,445
+2021.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,412500.0,214
+2021.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,468000.0,1397
+2021.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,475444.0,220
+2021.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,470000.0,870
+2021.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,620000.0,301
+2021.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,410000.0,701
+2021.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,430000.0,843
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,646944.0,176
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,615000.0,365
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,780000.0,169
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,580000.0,125
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,820000.0,278
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,550000.0,308
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,862888.0,17
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1052000.0,55
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,530000.0,562
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,700000.0,99
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,698000.0,100
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,578500.0,370
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,580000.0,132
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,505000.0,501
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,738000.0,167
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,800000.0,76
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,555000.0,308
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,593000.0,970
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,900000.0,153
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,480000.0,175
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,524000.0,982
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,615900.0,102
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,580000.0,587
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,810000.0,189
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,490000.0,511
+2021.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,545000.0,327
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,899000.0,20
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,760000.0,76
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,960000.0,57
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,695000.0,95
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT MERAH,750000.0,3
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,698000.0,121
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1029000.0,20
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,615000.0,123
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,858000.0,21
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,815000.0,29
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,730000.0,165
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,755000.0,81
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,610000.0,174
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,845000.0,24
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,688898.0,249
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,586500.0,44
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1094400.0,4
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,565000.0,89
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,619000.0,158
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,800000.0,94
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,728000.0,257
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,858500.0,28
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,680000.0,221
+2021.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,650500.0,106
+2021.0,HDB,"Multi-generation (~1,400–1,900 sqft)",BISHAN,921000.0,5
+2021.0,HDB,"Multi-generation (~1,400–1,900 sqft)",TAMPINES,772500.0,8
+2021.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,860000.0,5
+2022.0,Condo,2-bed (~590–915 sqft),D1 — Raffles Place / Marina Bay,1584000.0,68
+2022.0,Condo,2-bed (~590–915 sqft),D10 — Tanglin / Bukit Timah,1932000.0,562
+2022.0,Condo,2-bed (~590–915 sqft),D11 — Novena / Thomson,1689500.0,172
+2022.0,Condo,2-bed (~590–915 sqft),D12 — Balestier / Toa Payoh,1265000.0,186
+2022.0,Condo,2-bed (~590–915 sqft),D13 — MacPherson / Potong Pasir,1330000.0,155
+2022.0,Condo,2-bed (~590–915 sqft),D14 — Geylang / Paya Lebar,1260000.0,314
+2022.0,Condo,2-bed (~590–915 sqft),D15 — Marine Parade / Katong,1438000.0,376
+2022.0,Condo,2-bed (~590–915 sqft),D16 — Bedok / Upper East Coast,1260000.0,261
+2022.0,Condo,2-bed (~590–915 sqft),D17 — Loyang / Changi,850000.0,99
+2022.0,Condo,2-bed (~590–915 sqft),D18 — Tampines / Pasir Ris,950000.0,242
+2022.0,Condo,2-bed (~590–915 sqft),D19 — Hougang / Punggol,1140000.0,653
+2022.0,Condo,2-bed (~590–915 sqft),D2 — Chinatown / Tanjong Pagar,1545000.0,105
+2022.0,Condo,2-bed (~590–915 sqft),D20 — Bishan / Ang Mo Kio,1449500.0,300
+2022.0,Condo,2-bed (~590–915 sqft),D21 — Upper Bukit Timah / Clementi Park,1559500.0,188
+2022.0,Condo,2-bed (~590–915 sqft),D22 — Jurong / Boon Lay,1204000.0,86
+2022.0,Condo,2-bed (~590–915 sqft),D23 — Bukit Panjang / Choa Chu Kang,1100000.0,263
+2022.0,Condo,2-bed (~590–915 sqft),D25 — Woodlands / Admiralty,745000.0,25
+2022.0,Condo,2-bed (~590–915 sqft),D26 — Upper Thomson / Springleaf,1559250.0,237
+2022.0,Condo,2-bed (~590–915 sqft),D27 — Yishun / Sembawang,920000.0,139
+2022.0,Condo,2-bed (~590–915 sqft),D28 — Seletar / Yio Chu Kang,947500.0,114
+2022.0,Condo,2-bed (~590–915 sqft),D3 — Queenstown / Tiong Bahru,1689444.0,386
+2022.0,Condo,2-bed (~590–915 sqft),D4 — Telok Blangah / Harbourfront,1580000.0,29
+2022.0,Condo,2-bed (~590–915 sqft),D5 — Clementi / Pasir Panjang,1172500.0,220
+2022.0,Condo,2-bed (~590–915 sqft),D6 — Beach Road / High Street,2340800.0,34
+2022.0,Condo,2-bed (~590–915 sqft),D7 — Bugis / Rochor,1850000.0,91
+2022.0,Condo,2-bed (~590–915 sqft),D8 — Little India / Farrer Park,1492000.0,199
+2022.0,Condo,2-bed (~590–915 sqft),D9 — Orchard / River Valley,1735000.0,314
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D1 — Raffles Place / Marina Bay,2149000.0,45
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D10 — Tanglin / Bukit Timah,2736000.0,463
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D11 — Novena / Thomson,2262500.0,146
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D12 — Balestier / Toa Payoh,1619000.0,184
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D13 — MacPherson / Potong Pasir,1986000.0,157
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D14 — Geylang / Paya Lebar,1540000.0,283
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D15 — Marine Parade / Katong,1901350.0,488
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D16 — Bedok / Upper East Coast,1380000.0,334
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D17 — Loyang / Changi,1150000.0,149
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D18 — Tampines / Pasir Ris,1250000.0,393
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D19 — Hougang / Punggol,1470000.0,744
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D2 — Chinatown / Tanjong Pagar,1870000.0,31
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D20 — Bishan / Ang Mo Kio,1962500.0,260
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D21 — Upper Bukit Timah / Clementi Park,1911000.0,268
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D22 — Jurong / Boon Lay,1325000.0,164
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D23 — Bukit Panjang / Choa Chu Kang,1362500.0,398
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D25 — Woodlands / Admiralty,1020000.0,42
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D26 — Upper Thomson / Springleaf,2003760.0,245
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D27 — Yishun / Sembawang,1261000.0,264
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D28 — Seletar / Yio Chu Kang,1320000.0,91
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D3 — Queenstown / Tiong Bahru,2551000.0,285
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D4 — Telok Blangah / Harbourfront,1880000.0,70
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D5 — Clementi / Pasir Panjang,1750000.0,475
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D6 — Beach Road / High Street,3308000.0,15
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D7 — Bugis / Rochor,2080000.0,31
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D8 — Little India / Farrer Park,2206000.0,152
+2022.0,Condo,"3-bed (~915–1,290 sqft)",D9 — Orchard / River Valley,2603944.0,258
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D1 — Raffles Place / Marina Bay,3884000.0,58
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D10 — Tanglin / Bukit Timah,4200000.0,592
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D11 — Novena / Thomson,3150000.0,151
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D12 — Balestier / Toa Payoh,2410000.0,72
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D13 — MacPherson / Potong Pasir,2400000.0,45
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D14 — Geylang / Paya Lebar,2074122.0,127
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D15 — Marine Parade / Katong,2980000.0,643
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D16 — Bedok / Upper East Coast,1900000.0,184
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D17 — Loyang / Changi,1450000.0,107
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D18 — Tampines / Pasir Ris,1650000.0,187
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D19 — Hougang / Punggol,2000000.0,295
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D2 — Chinatown / Tanjong Pagar,4200000.0,35
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D20 — Bishan / Ang Mo Kio,2514000.0,188
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D21 — Upper Bukit Timah / Clementi Park,2490000.0,218
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D22 — Jurong / Boon Lay,1677500.0,80
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D23 — Bukit Panjang / Choa Chu Kang,1782200.0,148
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D25 — Woodlands / Admiralty,1339444.0,24
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D26 — Upper Thomson / Springleaf,2997000.0,65
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D27 — Yishun / Sembawang,1751000.0,122
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D28 — Seletar / Yio Chu Kang,1738000.0,49
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D3 — Queenstown / Tiong Bahru,3348000.0,207
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D4 — Telok Blangah / Harbourfront,3571500.0,234
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D5 — Clementi / Pasir Panjang,2470000.0,299
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D6 — Beach Road / High Street,5664000.0,27
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D7 — Bugis / Rochor,4556970.0,35
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D8 — Little India / Farrer Park,2808000.0,80
+2022.0,Condo,"4-bed+ (~1,290+ sqft)",D9 — Orchard / River Valley,4198800.0,404
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D1 — Raffles Place / Marina Bay,1020000.0,17
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D10 — Tanglin / Bukit Timah,1383500.0,166
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D11 — Novena / Thomson,1310000.0,71
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D12 — Balestier / Toa Payoh,735000.0,95
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D13 — MacPherson / Potong Pasir,830000.0,113
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D14 — Geylang / Paya Lebar,715000.0,261
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D15 — Marine Parade / Katong,859000.0,188
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D16 — Bedok / Upper East Coast,780000.0,73
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D17 — Loyang / Changi,610000.0,43
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D18 — Tampines / Pasir Ris,682888.0,119
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D19 — Hougang / Punggol,765000.0,371
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D2 — Chinatown / Tanjong Pagar,1034000.0,38
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D20 — Bishan / Ang Mo Kio,830000.0,53
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D21 — Upper Bukit Timah / Clementi Park,680000.0,52
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D22 — Jurong / Boon Lay,900000.0,19
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D23 — Bukit Panjang / Choa Chu Kang,730000.0,94
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D25 — Woodlands / Admiralty,588000.0,31
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D26 — Upper Thomson / Springleaf,1131075.0,63
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D27 — Yishun / Sembawang,690000.0,36
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D28 — Seletar / Yio Chu Kang,710000.0,55
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D3 — Queenstown / Tiong Bahru,1176000.0,233
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D4 — Telok Blangah / Harbourfront,885000.0,7
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D5 — Clementi / Pasir Panjang,997880.0,159
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D6 — Beach Road / High Street,1607500.0,10
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D7 — Bugis / Rochor,1480000.0,28
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D8 — Little India / Farrer Park,1099500.0,136
+2022.0,Condo,Studio / 1-bed (~400–590 sqft),D9 — Orchard / River Valley,1342045.0,168
+2022.0,HDB,1-room (~330 sqft),BUKIT MERAH,231944.0,10
+2022.0,HDB,2-room (~500–720 sqft),ANG MO KIO,278000.0,23
+2022.0,HDB,2-room (~500–720 sqft),BEDOK,262500.0,20
+2022.0,HDB,2-room (~500–720 sqft),BUKIT BATOK,338000.0,3
+2022.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,265000.0,27
+2022.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,298000.0,19
+2022.0,HDB,2-room (~500–720 sqft),CENTRAL AREA,308000.0,12
+2022.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,290000.0,13
+2022.0,HDB,2-room (~500–720 sqft),CLEMENTI,374000.0,6
+2022.0,HDB,2-room (~500–720 sqft),GEYLANG,240000.0,20
+2022.0,HDB,2-room (~500–720 sqft),HOUGANG,300000.0,3
+2022.0,HDB,2-room (~500–720 sqft),JURONG EAST,286500.0,6
+2022.0,HDB,2-room (~500–720 sqft),JURONG WEST,300000.0,21
+2022.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,274000.0,8
+2022.0,HDB,2-room (~500–720 sqft),PASIR RIS,332500.0,6
+2022.0,HDB,2-room (~500–720 sqft),PUNGGOL,310000.0,40
+2022.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,265000.0,15
+2022.0,HDB,2-room (~500–720 sqft),SEMBAWANG,318000.0,46
+2022.0,HDB,2-room (~500–720 sqft),SENGKANG,315000.0,53
+2022.0,HDB,2-room (~500–720 sqft),SERANGOON,261500.0,4
+2022.0,HDB,2-room (~500–720 sqft),TAMPINES,327000.0,12
+2022.0,HDB,2-room (~500–720 sqft),TOA PAYOH,260000.0,23
+2022.0,HDB,2-room (~500–720 sqft),WOODLANDS,306444.0,28
+2022.0,HDB,2-room (~500–720 sqft),YISHUN,300000.0,48
+2022.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,365000.0,528
+2022.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,350000.0,552
+2022.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,428000.0,65
+2022.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,350000.0,281
+2022.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,380000.0,335
+2022.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,370000.0,110
+2022.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,450000.0,13
+2022.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,444000.0,86
+2022.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,391500.0,100
+2022.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,380000.0,276
+2022.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,324000.0,313
+2022.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,370000.0,302
+2022.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,355000.0,178
+2022.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,343000.0,321
+2022.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,379000.0,346
+2022.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,418000.0,91
+2022.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,480000.0,21
+2022.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,430000.0,207
+2022.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,381500.0,328
+2022.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,426500.0,62
+2022.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,430000.0,178
+2022.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,380000.0,92
+2022.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,395000.0,385
+2022.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,335000.0,385
+2022.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,357500.0,243
+2022.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,365000.0,537
+2022.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,513000.0,305
+2022.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,470000.0,461
+2022.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,640000.0,206
+2022.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,495000.0,362
+2022.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,750000.0,358
+2022.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,470000.0,462
+2022.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,618444.0,28
+2022.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,849044.0,86
+2022.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,488000.0,671
+2022.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,660000.0,226
+2022.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,562500.0,240
+2022.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,500000.0,638
+2022.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,464000.0,138
+2022.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,468000.0,594
+2022.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,777694.0,430
+2022.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,545000.0,44
+2022.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,510000.0,310
+2022.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,550000.0,1048
+2022.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,838000.0,298
+2022.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,492000.0,358
+2022.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,525000.0,1133
+2022.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,520000.0,199
+2022.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,520000.0,658
+2022.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,718500.0,280
+2022.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,461500.0,834
+2022.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,468000.0,942
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,782500.0,154
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,650000.0,253
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,850000.0,139
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,693000.0,156
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,870000.0,233
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,595000.0,283
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,900000.0,11
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1170000.0,29
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,579444.0,500
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,845000.0,86
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,791500.0,82
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,620000.0,256
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,620000.0,119
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,550000.0,529
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,810000.0,127
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,850000.0,59
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,615000.0,263
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,616500.0,680
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,900000.0,106
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,555000.0,255
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,580000.0,807
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,688000.0,75
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,635000.0,443
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,841500.0,136
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,555900.0,568
+2022.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,610000.0,364
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,936500.0,16
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,850000.0,77
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,1030000.0,55
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,780000.0,84
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,750000.0,80
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1201000.0,10
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,702500.0,120
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,910000.0,16
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,860000.0,28
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,815000.0,127
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,763444.0,44
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,660750.0,190
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,952500.0,16
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,766500.0,218
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,661428.0,30
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1130000.0,7
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,625000.0,69
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,700000.0,128
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,893444.44,58
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,832388.0,202
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,952500.0,22
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,760000.0,197
+2022.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,773000.0,91
+2022.0,HDB,"Multi-generation (~1,400–1,900 sqft)",TAMPINES,815500.0,4
+2022.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,871000.0,8
+2023.0,Condo,2-bed (~590–915 sqft),D1 — Raffles Place / Marina Bay,1490000.0,60
+2023.0,Condo,2-bed (~590–915 sqft),D10 — Tanglin / Bukit Timah,2007500.0,480
+2023.0,Condo,2-bed (~590–915 sqft),D11 — Novena / Thomson,1900000.0,131
+2023.0,Condo,2-bed (~590–915 sqft),D12 — Balestier / Toa Payoh,1192000.0,112
+2023.0,Condo,2-bed (~590–915 sqft),D13 — MacPherson / Potong Pasir,1385000.0,199
+2023.0,Condo,2-bed (~590–915 sqft),D14 — Geylang / Paya Lebar,1289000.0,216
+2023.0,Condo,2-bed (~590–915 sqft),D15 — Marine Parade / Katong,1800000.0,793
+2023.0,Condo,2-bed (~590–915 sqft),D16 — Bedok / Upper East Coast,1387000.0,217
+2023.0,Condo,2-bed (~590–915 sqft),D17 — Loyang / Changi,939000.0,50
+2023.0,Condo,2-bed (~590–915 sqft),D18 — Tampines / Pasir Ris,1069000.0,224
+2023.0,Condo,2-bed (~590–915 sqft),D19 — Hougang / Punggol,1180000.0,545
+2023.0,Condo,2-bed (~590–915 sqft),D2 — Chinatown / Tanjong Pagar,1854500.0,120
+2023.0,Condo,2-bed (~590–915 sqft),D20 — Bishan / Ang Mo Kio,1444000.0,120
+2023.0,Condo,2-bed (~590–915 sqft),D21 — Upper Bukit Timah / Clementi Park,1725263.0,479
+2023.0,Condo,2-bed (~590–915 sqft),D22 — Jurong / Boon Lay,1679500.0,289
+2023.0,Condo,2-bed (~590–915 sqft),D23 — Bukit Panjang / Choa Chu Kang,1352000.0,411
+2023.0,Condo,2-bed (~590–915 sqft),D25 — Woodlands / Admiralty,838000.0,32
+2023.0,Condo,2-bed (~590–915 sqft),D26 — Upper Thomson / Springleaf,1545000.0,314
+2023.0,Condo,2-bed (~590–915 sqft),D27 — Yishun / Sembawang,965000.0,91
+2023.0,Condo,2-bed (~590–915 sqft),D28 — Seletar / Yio Chu Kang,1030000.0,109
+2023.0,Condo,2-bed (~590–915 sqft),D3 — Queenstown / Tiong Bahru,1695000.0,260
+2023.0,Condo,2-bed (~590–915 sqft),D4 — Telok Blangah / Harbourfront,1630000.0,35
+2023.0,Condo,2-bed (~590–915 sqft),D5 — Clementi / Pasir Panjang,1593500.0,348
+2023.0,Condo,2-bed (~590–915 sqft),D6 — Beach Road / High Street,2488000.0,1
+2023.0,Condo,2-bed (~590–915 sqft),D7 — Bugis / Rochor,1869000.0,108
+2023.0,Condo,2-bed (~590–915 sqft),D8 — Little India / Farrer Park,1250000.0,51
+2023.0,Condo,2-bed (~590–915 sqft),D9 — Orchard / River Valley,2001000.0,214
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D1 — Raffles Place / Marina Bay,2250000.0,35
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D10 — Tanglin / Bukit Timah,2480000.0,257
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D11 — Novena / Thomson,2727572.0,197
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D12 — Balestier / Toa Payoh,1688444.0,134
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D13 — MacPherson / Potong Pasir,1950000.0,109
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D14 — Geylang / Paya Lebar,1600000.0,210
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D15 — Marine Parade / Katong,2361000.0,673
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D16 — Bedok / Upper East Coast,1500000.0,264
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D17 — Loyang / Changi,1220000.0,107
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D18 — Tampines / Pasir Ris,1400000.0,322
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D19 — Hougang / Punggol,1552500.0,548
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D2 — Chinatown / Tanjong Pagar,1880000.0,34
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D20 — Bishan / Ang Mo Kio,1880000.0,125
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D21 — Upper Bukit Timah / Clementi Park,2241901.0,297
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D22 — Jurong / Boon Lay,2140000.0,210
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D23 — Bukit Panjang / Choa Chu Kang,1570000.0,367
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D25 — Woodlands / Admiralty,1090000.0,37
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D26 — Upper Thomson / Springleaf,2035000.0,226
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D27 — Yishun / Sembawang,1188000.0,137
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D28 — Seletar / Yio Chu Kang,1398000.0,73
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D3 — Queenstown / Tiong Bahru,2531000.0,226
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D4 — Telok Blangah / Harbourfront,2024000.0,68
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D5 — Clementi / Pasir Panjang,1925000.0,312
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D7 — Bugis / Rochor,1742500.0,61
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D8 — Little India / Farrer Park,1680000.0,51
+2023.0,Condo,"3-bed (~915–1,290 sqft)",D9 — Orchard / River Valley,2577500.0,166
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D1 — Raffles Place / Marina Bay,3190000.0,36
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D10 — Tanglin / Bukit Timah,3900000.0,397
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D11 — Novena / Thomson,4443835.0,192
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D12 — Balestier / Toa Payoh,2286500.0,56
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D13 — MacPherson / Potong Pasir,2600000.0,33
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D14 — Geylang / Paya Lebar,2050000.0,65
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D15 — Marine Parade / Katong,3120000.0,477
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D16 — Bedok / Upper East Coast,2045000.0,172
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D17 — Loyang / Changi,1630000.0,58
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D18 — Tampines / Pasir Ris,1765000.0,150
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D19 — Hougang / Punggol,2180000.0,232
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D2 — Chinatown / Tanjong Pagar,3240500.0,22
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D20 — Bishan / Ang Mo Kio,1988000.0,139
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D21 — Upper Bukit Timah / Clementi Park,3117984.5,304
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D22 — Jurong / Boon Lay,1928000.0,73
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D23 — Bukit Panjang / Choa Chu Kang,2088888.0,145
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D25 — Woodlands / Admiralty,1500000.0,19
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D26 — Upper Thomson / Springleaf,2709000.0,103
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D27 — Yishun / Sembawang,1585000.0,54
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D28 — Seletar / Yio Chu Kang,1800000.0,47
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D3 — Queenstown / Tiong Bahru,2840000.0,101
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D4 — Telok Blangah / Harbourfront,3800000.0,164
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D5 — Clementi / Pasir Panjang,2505000.0,186
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D6 — Beach Road / High Street,8808000.0,7
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D7 — Bugis / Rochor,4319000.0,73
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D8 — Little India / Farrer Park,2914500.0,92
+2023.0,Condo,"4-bed+ (~1,290+ sqft)",D9 — Orchard / River Valley,4250000.0,319
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D1 — Raffles Place / Marina Bay,1056500.0,16
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D10 — Tanglin / Bukit Timah,1393500.0,108
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D11 — Novena / Thomson,1441500.0,97
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D12 — Balestier / Toa Payoh,800000.0,101
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D13 — MacPherson / Potong Pasir,900000.0,81
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D14 — Geylang / Paya Lebar,750000.0,228
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D15 — Marine Parade / Katong,1221000.0,341
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D16 — Bedok / Upper East Coast,990000.0,108
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D17 — Loyang / Changi,652944.0,40
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D18 — Tampines / Pasir Ris,757000.0,149
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D19 — Hougang / Punggol,800000.0,290
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D2 — Chinatown / Tanjong Pagar,1080000.0,59
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D20 — Bishan / Ang Mo Kio,860000.0,46
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D21 — Upper Bukit Timah / Clementi Park,1184076.0,169
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D22 — Jurong / Boon Lay,1159550.0,76
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D23 — Bukit Panjang / Choa Chu Kang,860000.0,155
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D25 — Woodlands / Admiralty,640000.0,23
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D26 — Upper Thomson / Springleaf,1149000.0,73
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D27 — Yishun / Sembawang,694000.0,30
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D28 — Seletar / Yio Chu Kang,755000.0,45
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D3 — Queenstown / Tiong Bahru,1055000.0,154
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D4 — Telok Blangah / Harbourfront,990000.0,7
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D5 — Clementi / Pasir Panjang,918000.0,115
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D6 — Beach Road / High Street,1720000.0,1
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D7 — Bugis / Rochor,1497415.0,30
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D8 — Little India / Farrer Park,770000.0,53
+2023.0,Condo,Studio / 1-bed (~400–590 sqft),D9 — Orchard / River Valley,1385000.0,165
+2023.0,HDB,1-room (~330 sqft),BUKIT MERAH,241500.0,6
+2023.0,HDB,2-room (~500–720 sqft),ANG MO KIO,290000.0,24
+2023.0,HDB,2-room (~500–720 sqft),BEDOK,295000.0,15
+2023.0,HDB,2-room (~500–720 sqft),BUKIT BATOK,336000.0,63
+2023.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,290000.0,27
+2023.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,309000.0,8
+2023.0,HDB,2-room (~500–720 sqft),CENTRAL AREA,295000.0,10
+2023.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,297500.0,10
+2023.0,HDB,2-room (~500–720 sqft),CLEMENTI,305000.0,3
+2023.0,HDB,2-room (~500–720 sqft),GEYLANG,260000.0,22
+2023.0,HDB,2-room (~500–720 sqft),HOUGANG,350000.0,32
+2023.0,HDB,2-room (~500–720 sqft),JURONG EAST,302500.0,10
+2023.0,HDB,2-room (~500–720 sqft),JURONG WEST,305000.0,35
+2023.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,283000.0,11
+2023.0,HDB,2-room (~500–720 sqft),MARINE PARADE,265000.0,1
+2023.0,HDB,2-room (~500–720 sqft),PASIR RIS,360000.0,8
+2023.0,HDB,2-room (~500–720 sqft),PUNGGOL,340000.0,89
+2023.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,270500.0,26
+2023.0,HDB,2-room (~500–720 sqft),SEMBAWANG,330000.0,78
+2023.0,HDB,2-room (~500–720 sqft),SENGKANG,336888.0,53
+2023.0,HDB,2-room (~500–720 sqft),SERANGOON,285000.0,3
+2023.0,HDB,2-room (~500–720 sqft),TAMPINES,346500.0,10
+2023.0,HDB,2-room (~500–720 sqft),TOA PAYOH,268888.0,31
+2023.0,HDB,2-room (~500–720 sqft),WOODLANDS,328000.0,49
+2023.0,HDB,2-room (~500–720 sqft),YISHUN,316500.0,70
+2023.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,385000.0,539
+2023.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,370000.0,566
+2023.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,470000.0,43
+2023.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,378000.0,364
+2023.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,428000.0,355
+2023.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,390500.0,110
+2023.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,465000.0,11
+2023.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,460000.0,91
+2023.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,402500.0,69
+2023.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,400000.0,257
+2023.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,339000.0,283
+2023.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,390000.0,305
+2023.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,368000.0,163
+2023.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,355000.0,337
+2023.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,385000.0,356
+2023.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,431000.0,72
+2023.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,520000.0,15
+2023.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,460000.0,298
+2023.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,398000.0,253
+2023.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,440000.0,98
+2023.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,460000.0,134
+2023.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,397499.5,110
+2023.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,422750.0,400
+2023.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,358000.0,352
+2023.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,382000.0,273
+2023.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,383000.0,501
+2023.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,551500.0,344
+2023.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,508000.0,451
+2023.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,700000.0,193
+2023.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,593000.0,651
+2023.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,845750.0,428
+2023.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,498000.0,367
+2023.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,775000.0,16
+2023.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,812500.0,76
+2023.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,500000.0,596
+2023.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,600000.0,218
+2023.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,600000.0,241
+2023.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,535000.0,680
+2023.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,477500.0,142
+2023.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,486000.0,597
+2023.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,780000.0,293
+2023.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,560000.0,35
+2023.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,548000.0,269
+2023.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,595000.0,1058
+2023.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,878000.0,261
+2023.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,552500.0,528
+2023.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,561944.0,1024
+2023.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,581000.0,188
+2023.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,565000.0,674
+2023.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,760000.0,200
+2023.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,495000.0,958
+2023.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,498000.0,869
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,774444.0,124
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,680000.0,218
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,900000.0,103
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,760000.0,262
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,899000.0,168
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,610000.0,201
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,1050000.0,11
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1339000.0,16
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,590000.0,366
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,800000.0,67
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,768000.0,69
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,668000.0,287
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,638000.0,105
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,585000.0,449
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,865000.0,108
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,855500.0,36
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,650000.0,197
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,675000.0,606
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,934000.0,52
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,590000.0,255
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,618000.0,633
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,682794.0,66
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,678000.0,425
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,880000.0,113
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,590000.0,586
+2023.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,645000.0,319
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,1038000.0,14
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,895444.0,60
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,1068000.0,41
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,820000.0,70
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,793000.0,73
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1210000.0,8
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",CENTRAL AREA,1034000.0,2
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,721944.0,96
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,975000.0,20
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,885000.0,20
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,862000.0,109
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,855000.0,47
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,700000.0,143
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,995000.0,14
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,820000.0,134
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,740000.0,33
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1180000.0,7
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,678888.0,51
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,733888.0,109
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,908000.0,53
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,868000.0,125
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,1000000.0,24
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,800000.0,190
+2023.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,808000.0,60
+2023.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,975000.0,3
+2024.0,Condo,2-bed (~590–915 sqft),D1 — Raffles Place / Marina Bay,1825000.0,113
+2024.0,Condo,2-bed (~590–915 sqft),D10 — Tanglin / Bukit Timah,2133000.0,245
+2024.0,Condo,2-bed (~590–915 sqft),D11 — Novena / Thomson,1604000.0,80
+2024.0,Condo,2-bed (~590–915 sqft),D12 — Balestier / Toa Payoh,1320000.0,157
+2024.0,Condo,2-bed (~590–915 sqft),D13 — MacPherson / Potong Pasir,1480000.0,146
+2024.0,Condo,2-bed (~590–915 sqft),D14 — Geylang / Paya Lebar,1400000.0,255
+2024.0,Condo,2-bed (~590–915 sqft),D15 — Marine Parade / Katong,1865000.0,841
+2024.0,Condo,2-bed (~590–915 sqft),D16 — Bedok / Upper East Coast,1188000.0,127
+2024.0,Condo,2-bed (~590–915 sqft),D17 — Loyang / Changi,1320000.0,169
+2024.0,Condo,2-bed (~590–915 sqft),D18 — Tampines / Pasir Ris,1108000.0,285
+2024.0,Condo,2-bed (~590–915 sqft),D19 — Hougang / Punggol,1400000.0,951
+2024.0,Condo,2-bed (~590–915 sqft),D2 — Chinatown / Tanjong Pagar,1549000.0,96
+2024.0,Condo,2-bed (~590–915 sqft),D20 — Bishan / Ang Mo Kio,1547500.0,136
+2024.0,Condo,2-bed (~590–915 sqft),D21 — Upper Bukit Timah / Clementi Park,1720000.0,439
+2024.0,Condo,2-bed (~590–915 sqft),D22 — Jurong / Boon Lay,1468000.0,189
+2024.0,Condo,2-bed (~590–915 sqft),D23 — Bukit Panjang / Choa Chu Kang,1416950.0,379
+2024.0,Condo,2-bed (~590–915 sqft),D25 — Woodlands / Admiralty,1384000.0,209
+2024.0,Condo,2-bed (~590–915 sqft),D26 — Upper Thomson / Springleaf,1614000.0,440
+2024.0,Condo,2-bed (~590–915 sqft),D27 — Yishun / Sembawang,1020000.0,105
+2024.0,Condo,2-bed (~590–915 sqft),D28 — Seletar / Yio Chu Kang,1080000.0,138
+2024.0,Condo,2-bed (~590–915 sqft),D3 — Queenstown / Tiong Bahru,1657500.0,284
+2024.0,Condo,2-bed (~590–915 sqft),D4 — Telok Blangah / Harbourfront,1674000.0,36
+2024.0,Condo,2-bed (~590–915 sqft),D5 — Clementi / Pasir Panjang,1400000.0,383
+2024.0,Condo,2-bed (~590–915 sqft),D7 — Bugis / Rochor,1480000.0,73
+2024.0,Condo,2-bed (~590–915 sqft),D8 — Little India / Farrer Park,1330000.0,47
+2024.0,Condo,2-bed (~590–915 sqft),D9 — Orchard / River Valley,1785000.0,181
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D1 — Raffles Place / Marina Bay,2378444.0,70
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D10 — Tanglin / Bukit Timah,2600000.0,257
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D11 — Novena / Thomson,2385000.0,111
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D12 — Balestier / Toa Payoh,1809000.0,184
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D13 — MacPherson / Potong Pasir,2075000.0,94
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D14 — Geylang / Paya Lebar,1800000.0,287
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D15 — Marine Parade / Katong,2669500.0,916
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D16 — Bedok / Upper East Coast,1600000.0,309
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D17 — Loyang / Changi,1270000.0,123
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D18 — Tampines / Pasir Ris,1515000.0,421
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D19 — Hougang / Punggol,1900000.0,983
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D2 — Chinatown / Tanjong Pagar,1847500.0,46
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D20 — Bishan / Ang Mo Kio,2000000.0,153
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D21 — Upper Bukit Timah / Clementi Park,2381700.0,389
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D22 — Jurong / Boon Lay,1700414.0,192
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D23 — Bukit Panjang / Choa Chu Kang,1910000.0,621
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D25 — Woodlands / Admiralty,2063000.0,96
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D26 — Upper Thomson / Springleaf,2271000.0,429
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D27 — Yishun / Sembawang,1250000.0,157
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D28 — Seletar / Yio Chu Kang,1538000.0,63
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D3 — Queenstown / Tiong Bahru,2190000.0,181
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D4 — Telok Blangah / Harbourfront,2160000.0,107
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D5 — Clementi / Pasir Panjang,1960000.0,349
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D6 — Beach Road / High Street,3617000.0,5
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D7 — Bugis / Rochor,1925000.0,32
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D8 — Little India / Farrer Park,1730000.0,56
+2024.0,Condo,"3-bed (~915–1,290 sqft)",D9 — Orchard / River Valley,2405000.0,166
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D1 — Raffles Place / Marina Bay,3500000.0,49
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D10 — Tanglin / Bukit Timah,3900000.0,433
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D11 — Novena / Thomson,3793000.0,172
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D12 — Balestier / Toa Payoh,2548000.0,63
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D13 — MacPherson / Potong Pasir,2490000.0,31
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D14 — Geylang / Paya Lebar,2128000.0,83
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D15 — Marine Parade / Katong,3265000.0,686
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D16 — Bedok / Upper East Coast,2283000.0,191
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D17 — Loyang / Changi,1650000.0,93
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D18 — Tampines / Pasir Ris,1900000.0,175
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D19 — Hougang / Punggol,2321388.5,276
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D2 — Chinatown / Tanjong Pagar,3600000.0,19
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D20 — Bishan / Ang Mo Kio,2320000.0,151
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D21 — Upper Bukit Timah / Clementi Park,3160000.0,319
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D22 — Jurong / Boon Lay,1890000.0,74
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D23 — Bukit Panjang / Choa Chu Kang,2468880.0,189
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D25 — Woodlands / Admiralty,2507500.0,40
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D26 — Upper Thomson / Springleaf,2849000.0,147
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D27 — Yishun / Sembawang,1665000.0,72
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D28 — Seletar / Yio Chu Kang,2100000.0,62
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D3 — Queenstown / Tiong Bahru,2919400.0,80
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D4 — Telok Blangah / Harbourfront,3100000.0,203
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D5 — Clementi / Pasir Panjang,2525000.0,199
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D6 — Beach Road / High Street,5627000.0,8
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D7 — Bugis / Rochor,5148000.0,18
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D8 — Little India / Farrer Park,2401944.0,30
+2024.0,Condo,"4-bed+ (~1,290+ sqft)",D9 — Orchard / River Valley,3890000.0,286
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D1 — Raffles Place / Marina Bay,1164000.0,60
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D10 — Tanglin / Bukit Timah,1080000.0,63
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D11 — Novena / Thomson,1070000.0,35
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D12 — Balestier / Toa Payoh,836888.0,97
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D13 — MacPherson / Potong Pasir,910000.0,89
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D14 — Geylang / Paya Lebar,784000.0,242
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D15 — Marine Parade / Katong,1245000.0,228
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D16 — Bedok / Upper East Coast,828888.0,71
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D17 — Loyang / Changi,986000.0,109
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D18 — Tampines / Pasir Ris,780000.0,133
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D19 — Hougang / Punggol,828000.0,286
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D2 — Chinatown / Tanjong Pagar,1092500.0,56
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D20 — Bishan / Ang Mo Kio,1009500.0,46
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D21 — Upper Bukit Timah / Clementi Park,1349000.0,74
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D22 — Jurong / Boon Lay,1049000.0,68
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D23 — Bukit Panjang / Choa Chu Kang,808000.0,78
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D25 — Woodlands / Admiralty,889000.0,62
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D26 — Upper Thomson / Springleaf,1216500.0,134
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D27 — Yishun / Sembawang,760000.0,29
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D28 — Seletar / Yio Chu Kang,781000.0,50
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D3 — Queenstown / Tiong Bahru,1010000.0,107
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D4 — Telok Blangah / Harbourfront,1043000.0,17
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D5 — Clementi / Pasir Panjang,909000.0,100
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D6 — Beach Road / High Street,1720000.0,3
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D7 — Bugis / Rochor,1234000.0,26
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D8 — Little India / Farrer Park,826500.0,40
+2024.0,Condo,Studio / 1-bed (~400–590 sqft),D9 — Orchard / River Valley,1180000.0,135
+2024.0,HDB,1-room (~330 sqft),BUKIT MERAH,247000.0,11
+2024.0,HDB,2-room (~500–720 sqft),ANG MO KIO,304500.0,22
+2024.0,HDB,2-room (~500–720 sqft),BEDOK,308000.0,15
+2024.0,HDB,2-room (~500–720 sqft),BUKIT BATOK,350000.0,114
+2024.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,300000.0,35
+2024.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,335000.0,17
+2024.0,HDB,2-room (~500–720 sqft),CENTRAL AREA,300000.0,7
+2024.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,320000.0,11
+2024.0,HDB,2-room (~500–720 sqft),CLEMENTI,440000.0,3
+2024.0,HDB,2-room (~500–720 sqft),GEYLANG,280000.0,26
+2024.0,HDB,2-room (~500–720 sqft),HOUGANG,355444.0,56
+2024.0,HDB,2-room (~500–720 sqft),JURONG EAST,330000.0,9
+2024.0,HDB,2-room (~500–720 sqft),JURONG WEST,320000.0,65
+2024.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,320000.0,8
+2024.0,HDB,2-room (~500–720 sqft),MARINE PARADE,292500.0,2
+2024.0,HDB,2-room (~500–720 sqft),PASIR RIS,400000.0,5
+2024.0,HDB,2-room (~500–720 sqft),PUNGGOL,352500.0,84
+2024.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,286944.0,14
+2024.0,HDB,2-room (~500–720 sqft),SEMBAWANG,358000.0,87
+2024.0,HDB,2-room (~500–720 sqft),SENGKANG,360000.0,65
+2024.0,HDB,2-room (~500–720 sqft),SERANGOON,286000.0,1
+2024.0,HDB,2-room (~500–720 sqft),TAMPINES,357000.0,15
+2024.0,HDB,2-room (~500–720 sqft),TOA PAYOH,280000.0,18
+2024.0,HDB,2-room (~500–720 sqft),WOODLANDS,340000.0,49
+2024.0,HDB,2-room (~500–720 sqft),YISHUN,335000.0,70
+2024.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,410000.0,571
+2024.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,395000.0,536
+2024.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,510000.0,51
+2024.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,398000.0,428
+2024.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,415000.0,378
+2024.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,420000.0,119
+2024.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,482500.0,12
+2024.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,500000.0,81
+2024.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,420000.0,85
+2024.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,398000.0,270
+2024.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,375000.0,306
+2024.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,425000.0,308
+2024.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,390000.0,230
+2024.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,378000.0,397
+2024.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,415888.0,415
+2024.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,450000.0,78
+2024.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,534500.0,18
+2024.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,505000.0,259
+2024.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,407000.0,338
+2024.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,485000.0,111
+2024.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,496888.0,171
+2024.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,437500.0,96
+2024.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,457000.0,421
+2024.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,380000.0,366
+2024.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,410000.0,271
+2024.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,418000.0,477
+2024.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,573500.0,308
+2024.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,540000.0,452
+2024.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,738888.0,187
+2024.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,600000.0,810
+2024.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,900000.0,433
+2024.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,538000.0,370
+2024.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,704000.0,22
+2024.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,788888.0,67
+2024.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,525000.0,654
+2024.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,673888.0,201
+2024.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,840944.0,248
+2024.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,588000.0,671
+2024.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,508000.0,171
+2024.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,505000.0,764
+2024.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,870000.0,375
+2024.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,570444.0,34
+2024.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,592000.0,279
+2024.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,640000.0,1005
+2024.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,928000.0,273
+2024.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,575000.0,485
+2024.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,618000.0,1040
+2024.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,618000.0,197
+2024.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,625000.0,867
+2024.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,850000.0,299
+2024.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,530000.0,882
+2024.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,538000.0,894
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,840888.0,144
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,766500.0,252
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,968000.0,105
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,758000.0,305
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,970000.0,183
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,658000.0,275
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,1092500.0,16
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1410000.0,24
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,618000.0,407
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,852500.0,66
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,808000.0,61
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,730000.0,288
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,658000.0,117
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,600000.0,565
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,920000.0,111
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,914000.0,28
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,700000.0,195
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,720000.0,646
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,1023000.0,69
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,615000.0,256
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,660000.0,717
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,771444.0,88
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,730000.0,506
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,1004000.0,108
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,636000.0,626
+2024.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,670000.0,311
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,1094888.0,15
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,970000.0,61
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,1251000.0,38
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,860000.0,75
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,838000.0,85
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1294000.0,12
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,788000.0,127
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,1067444.0,14
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,970000.0,24
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,925000.0,144
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,843000.0,39
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,740444.0,170
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,975000.0,15
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,859444.0,186
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,780000.0,33
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1229000.0,4
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,700000.0,71
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,788000.0,125
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,988444.0,58
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,905000.0,150
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,1068888.0,17
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,860000.0,214
+2024.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,853444.0,90
+2024.0,HDB,"Multi-generation (~1,400–1,900 sqft)",BISHAN,980000.0,1
+2024.0,HDB,"Multi-generation (~1,400–1,900 sqft)",TAMPINES,1044000.0,2
+2024.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,1028000.0,3
+2025.0,Condo,2-bed (~590–915 sqft),D1 — Raffles Place / Marina Bay,2030900.5,302
+2025.0,Condo,2-bed (~590–915 sqft),D10 — Tanglin / Bukit Timah,2087000.0,561
+2025.0,Condo,2-bed (~590–915 sqft),D11 — Novena / Thomson,1705000.0,56
+2025.0,Condo,2-bed (~590–915 sqft),D12 — Balestier / Toa Payoh,1843500.0,480
+2025.0,Condo,2-bed (~590–915 sqft),D13 — MacPherson / Potong Pasir,1480000.0,127
+2025.0,Condo,2-bed (~590–915 sqft),D14 — Geylang / Paya Lebar,1428000.0,207
+2025.0,Condo,2-bed (~590–915 sqft),D15 — Marine Parade / Katong,1788800.0,273
+2025.0,Condo,2-bed (~590–915 sqft),D16 — Bedok / Upper East Coast,1303444.0,182
+2025.0,Condo,2-bed (~590–915 sqft),D17 — Loyang / Changi,1080044.0,84
+2025.0,Condo,2-bed (~590–915 sqft),D18 — Tampines / Pasir Ris,1597000.0,812
+2025.0,Condo,2-bed (~590–915 sqft),D19 — Hougang / Punggol,1290000.0,499
+2025.0,Condo,2-bed (~590–915 sqft),D2 — Chinatown / Tanjong Pagar,1793500.0,134
+2025.0,Condo,2-bed (~590–915 sqft),D20 — Bishan / Ang Mo Kio,1619000.0,120
+2025.0,Condo,2-bed (~590–915 sqft),D21 — Upper Bukit Timah / Clementi Park,1700000.0,185
+2025.0,Condo,2-bed (~590–915 sqft),D22 — Jurong / Boon Lay,1544000.0,103
+2025.0,Condo,2-bed (~590–915 sqft),D23 — Bukit Panjang / Choa Chu Kang,1220000.0,200
+2025.0,Condo,2-bed (~590–915 sqft),D25 — Woodlands / Admiralty,881500.0,20
+2025.0,Condo,2-bed (~590–915 sqft),D26 — Upper Thomson / Springleaf,1650000.0,686
+2025.0,Condo,2-bed (~590–915 sqft),D27 — Yishun / Sembawang,1360000.0,315
+2025.0,Condo,2-bed (~590–915 sqft),D28 — Seletar / Yio Chu Kang,1100000.0,95
+2025.0,Condo,2-bed (~590–915 sqft),D3 — Queenstown / Tiong Bahru,1993450.0,1032
+2025.0,Condo,2-bed (~590–915 sqft),D4 — Telok Blangah / Harbourfront,1760000.0,35
+2025.0,Condo,2-bed (~590–915 sqft),D5 — Clementi / Pasir Panjang,1696000.0,1111
+2025.0,Condo,2-bed (~590–915 sqft),D6 — Beach Road / High Street,2655000.0,3
+2025.0,Condo,2-bed (~590–915 sqft),D7 — Bugis / Rochor,1728000.0,80
+2025.0,Condo,2-bed (~590–915 sqft),D8 — Little India / Farrer Park,1375000.0,46
+2025.0,Condo,2-bed (~590–915 sqft),D9 — Orchard / River Valley,2050000.0,540
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D1 — Raffles Place / Marina Bay,2863439.0,117
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D10 — Tanglin / Bukit Timah,2882000.0,431
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D11 — Novena / Thomson,2400000.0,132
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D12 — Balestier / Toa Payoh,2708000.0,323
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D13 — MacPherson / Potong Pasir,2190000.0,100
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D14 — Geylang / Paya Lebar,1855000.0,252
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D15 — Marine Parade / Katong,2420000.0,457
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D16 — Bedok / Upper East Coast,1700000.0,250
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D17 — Loyang / Changi,1295000.0,112
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D18 — Tampines / Pasir Ris,2125400.0,714
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D19 — Hougang / Punggol,1750000.0,533
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D2 — Chinatown / Tanjong Pagar,2150000.0,24
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D20 — Bishan / Ang Mo Kio,2154444.0,132
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D21 — Upper Bukit Timah / Clementi Park,2345000.0,243
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D22 — Jurong / Boon Lay,1783444.0,164
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D23 — Bukit Panjang / Choa Chu Kang,1600000.0,316
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D25 — Woodlands / Admiralty,1240000.0,27
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D26 — Upper Thomson / Springleaf,2385000.0,598
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D27 — Yishun / Sembawang,1444000.0,186
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D28 — Seletar / Yio Chu Kang,1665000.0,70
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D3 — Queenstown / Tiong Bahru,3120200.0,538
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D4 — Telok Blangah / Harbourfront,2000000.0,65
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D5 — Clementi / Pasir Panjang,2353000.0,641
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D6 — Beach Road / High Street,3524500.0,4
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D7 — Bugis / Rochor,2435000.0,26
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D8 — Little India / Farrer Park,1860000.0,49
+2025.0,Condo,"3-bed (~915–1,290 sqft)",D9 — Orchard / River Valley,3000000.0,262
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D1 — Raffles Place / Marina Bay,4726580.0,67
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D10 — Tanglin / Bukit Timah,4480000.0,495
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D11 — Novena / Thomson,3750000.0,158
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D12 — Balestier / Toa Payoh,3562000.0,167
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D13 — MacPherson / Potong Pasir,2700444.0,24
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D14 — Geylang / Paya Lebar,2560000.0,67
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D15 — Marine Parade / Katong,3386500.0,534
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D16 — Bedok / Upper East Coast,2400000.0,186
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D17 — Loyang / Changi,1730000.0,75
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D18 — Tampines / Pasir Ris,2343000.0,232
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D19 — Hougang / Punggol,2265000.0,199
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D2 — Chinatown / Tanjong Pagar,3503500.0,22
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D20 — Bishan / Ang Mo Kio,2380000.0,132
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D21 — Upper Bukit Timah / Clementi Park,3244850.0,300
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D22 — Jurong / Boon Lay,2388000.0,81
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D23 — Bukit Panjang / Choa Chu Kang,2294000.0,156
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D25 — Woodlands / Admiralty,2664500.0,22
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D26 — Upper Thomson / Springleaf,3053000.0,187
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D27 — Yishun / Sembawang,1850000.0,63
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D28 — Seletar / Yio Chu Kang,2179000.0,50
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D3 — Queenstown / Tiong Bahru,4218000.0,197
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D4 — Telok Blangah / Harbourfront,3207500.0,174
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D5 — Clementi / Pasir Panjang,3065944.0,284
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D6 — Beach Road / High Street,7371500.0,20
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D7 — Bugis / Rochor,4253527.5,28
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D8 — Little India / Farrer Park,2350000.0,29
+2025.0,Condo,"4-bed+ (~1,290+ sqft)",D9 — Orchard / River Valley,3913944.0,310
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D1 — Raffles Place / Marina Bay,1248591.0,274
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D10 — Tanglin / Bukit Timah,1511500.0,174
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D11 — Novena / Thomson,1050000.0,25
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D12 — Balestier / Toa Payoh,990000.0,117
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D13 — MacPherson / Potong Pasir,895000.0,81
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D14 — Geylang / Paya Lebar,800000.0,193
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D15 — Marine Parade / Katong,940000.0,103
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D16 — Bedok / Upper East Coast,915000.0,61
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D17 — Loyang / Changi,709000.0,34
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D18 — Tampines / Pasir Ris,835000.0,179
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D19 — Hougang / Punggol,830000.0,235
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D2 — Chinatown / Tanjong Pagar,1164444.0,50
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D20 — Bishan / Ang Mo Kio,1025000.0,47
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D21 — Upper Bukit Timah / Clementi Park,1034044.0,48
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D22 — Jurong / Boon Lay,958000.0,17
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D23 — Bukit Panjang / Choa Chu Kang,820000.0,64
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D25 — Woodlands / Admiralty,668000.0,22
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D26 — Upper Thomson / Springleaf,1116000.0,187
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D27 — Yishun / Sembawang,950888.0,51
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D28 — Seletar / Yio Chu Kang,770000.0,43
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D3 — Queenstown / Tiong Bahru,1384000.0,225
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D4 — Telok Blangah / Harbourfront,1084000.0,18
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D5 — Clementi / Pasir Panjang,1010000.0,185
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D6 — Beach Road / High Street,1456000.0,5
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D7 — Bugis / Rochor,1200000.0,15
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D8 — Little India / Farrer Park,832944.0,42
+2025.0,Condo,Studio / 1-bed (~400–590 sqft),D9 — Orchard / River Valley,1387000.0,329
+2025.0,HDB,1-room (~330 sqft),BUKIT MERAH,270000.0,5
+2025.0,HDB,2-room (~500–720 sqft),ANG MO KIO,335500.0,17
+2025.0,HDB,2-room (~500–720 sqft),BEDOK,330000.0,25
+2025.0,HDB,2-room (~500–720 sqft),BUKIT BATOK,375000.0,79
+2025.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,298888.0,29
+2025.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,370000.0,25
+2025.0,HDB,2-room (~500–720 sqft),CENTRAL AREA,370000.0,10
+2025.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,350000.0,13
+2025.0,HDB,2-room (~500–720 sqft),CLEMENTI,465000.0,5
+2025.0,HDB,2-room (~500–720 sqft),GEYLANG,299444.0,20
+2025.0,HDB,2-room (~500–720 sqft),HOUGANG,375000.0,65
+2025.0,HDB,2-room (~500–720 sqft),JURONG EAST,348000.0,12
+2025.0,HDB,2-room (~500–720 sqft),JURONG WEST,356500.0,30
+2025.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,305000.0,17
+2025.0,HDB,2-room (~500–720 sqft),MARINE PARADE,334000.0,2
+2025.0,HDB,2-room (~500–720 sqft),PASIR RIS,405000.0,15
+2025.0,HDB,2-room (~500–720 sqft),PUNGGOL,387500.0,76
+2025.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,300000.0,20
+2025.0,HDB,2-room (~500–720 sqft),SEMBAWANG,375000.0,131
+2025.0,HDB,2-room (~500–720 sqft),SENGKANG,382500.0,90
+2025.0,HDB,2-room (~500–720 sqft),SERANGOON,290000.0,1
+2025.0,HDB,2-room (~500–720 sqft),TAMPINES,420000.0,13
+2025.0,HDB,2-room (~500–720 sqft),TOA PAYOH,297000.0,25
+2025.0,HDB,2-room (~500–720 sqft),WOODLANDS,370000.0,41
+2025.0,HDB,2-room (~500–720 sqft),YISHUN,360000.0,71
+2025.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,440000.0,535
+2025.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,430000.0,498
+2025.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,548000.0,61
+2025.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,420000.0,338
+2025.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,438000.0,349
+2025.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,460000.0,101
+2025.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,497500.0,10
+2025.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,535000.0,74
+2025.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,480000.0,60
+2025.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,425000.0,243
+2025.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,374000.0,305
+2025.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,452000.0,326
+2025.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,418000.0,182
+2025.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,395000.0,353
+2025.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,450444.0,330
+2025.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,482500.0,86
+2025.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,588000.0,23
+2025.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,540000.0,203
+2025.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,445000.0,264
+2025.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,520000.0,113
+2025.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,540000.0,153
+2025.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,465000.0,94
+2025.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,490000.0,352
+2025.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,400000.0,424
+2025.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,441000.0,202
+2025.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,435000.0,472
+2025.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,597944.0,282
+2025.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,590000.0,447
+2025.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,795444.0,178
+2025.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,623500.0,548
+2025.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,928000.0,383
+2025.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,575000.0,383
+2025.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,920000.0,17
+2025.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,1245000.0,68
+2025.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,560000.0,481
+2025.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,870000.0,209
+2025.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,700000.0,227
+2025.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,628000.0,597
+2025.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,547444.0,144
+2025.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,545000.0,609
+2025.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,885000.0,317
+2025.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,660000.0,33
+2025.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,634000.0,248
+2025.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,680000.0,775
+2025.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,988000.0,250
+2025.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,625000.0,545
+2025.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,650000.0,940
+2025.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,660000.0,186
+2025.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,668000.0,892
+2025.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,975000.0,423
+2025.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,560000.0,836
+2025.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,570000.0,825
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,910000.0,123
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,762500.0,178
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,1008888.0,98
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,810000.0,267
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,1080000.0,167
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,720000.0,209
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,1184444.0,18
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1483500.0,20
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,668944.0,376
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,1019444.0,84
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,820000.0,71
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,775000.0,231
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,695000.0,102
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,640000.0,460
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,950000.0,117
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,955000.0,41
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,725000.0,204
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,749000.0,456
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,1200000.0,65
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,675000.0,325
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,708000.0,642
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,810000.0,65
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,812000.0,509
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,1033444.0,172
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,668000.0,515
+2025.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,718000.0,266
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,1105000.0,14
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,995000.0,59
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,1260000.0,38
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,869444.0,72
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,866944.0,80
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1390000.0,9
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,828000.0,97
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,1050000.0,11
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,1055000.0,16
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,986500.0,94
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,977500.0,42
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,795000.0,139
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,1038888.0,13
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,920000.0,144
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,814000.0,28
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1335250.0,6
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,749688.0,77
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,833500.0,80
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,1055500.0,56
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,965000.0,154
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,1088000.0,19
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,900000.0,155
+2025.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,895000.0,67
+2025.0,HDB,"Multi-generation (~1,400–1,900 sqft)",BISHAN,1388888.0,1
+2025.0,HDB,"Multi-generation (~1,400–1,900 sqft)",TAMPINES,1170000.0,1
+2025.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,1020000.0,2
+2026.0,HDB,1-room (~330 sqft),BUKIT MERAH,267500.0,4
+2026.0,HDB,2-room (~500–720 sqft),ANG MO KIO,327500.0,6
+2026.0,HDB,2-room (~500–720 sqft),BEDOK,324444.0,4
+2026.0,HDB,2-room (~500–720 sqft),BUKIT BATOK,380000.0,36
+2026.0,HDB,2-room (~500–720 sqft),BUKIT MERAH,279000.0,10
+2026.0,HDB,2-room (~500–720 sqft),BUKIT PANJANG,380000.0,5
+2026.0,HDB,2-room (~500–720 sqft),CHOA CHU KANG,386944.0,4
+2026.0,HDB,2-room (~500–720 sqft),CLEMENTI,362500.0,4
+2026.0,HDB,2-room (~500–720 sqft),GEYLANG,294144.0,8
+2026.0,HDB,2-room (~500–720 sqft),HOUGANG,381000.0,15
+2026.0,HDB,2-room (~500–720 sqft),JURONG EAST,350000.0,5
+2026.0,HDB,2-room (~500–720 sqft),JURONG WEST,358888.0,7
+2026.0,HDB,2-room (~500–720 sqft),KALLANG/WHAMPOA,350000.0,3
+2026.0,HDB,2-room (~500–720 sqft),PASIR RIS,422000.0,3
+2026.0,HDB,2-room (~500–720 sqft),PUNGGOL,398000.0,47
+2026.0,HDB,2-room (~500–720 sqft),QUEENSTOWN,522500.0,6
+2026.0,HDB,2-room (~500–720 sqft),SEMBAWANG,375500.0,34
+2026.0,HDB,2-room (~500–720 sqft),SENGKANG,395444.0,20
+2026.0,HDB,2-room (~500–720 sqft),TAMPINES,422888.0,3
+2026.0,HDB,2-room (~500–720 sqft),TOA PAYOH,278000.0,9
+2026.0,HDB,2-room (~500–720 sqft),WOODLANDS,370000.0,12
+2026.0,HDB,2-room (~500–720 sqft),YISHUN,363000.0,20
+2026.0,HDB,"3-room (~530–1,250 sqft)",ANG MO KIO,438000.0,127
+2026.0,HDB,"3-room (~530–1,250 sqft)",BEDOK,420000.0,165
+2026.0,HDB,"3-room (~530–1,250 sqft)",BISHAN,530000.0,21
+2026.0,HDB,"3-room (~530–1,250 sqft)",BUKIT BATOK,415000.0,121
+2026.0,HDB,"3-room (~530–1,250 sqft)",BUKIT MERAH,430000.0,118
+2026.0,HDB,"3-room (~530–1,250 sqft)",BUKIT PANJANG,470500.0,34
+2026.0,HDB,"3-room (~530–1,250 sqft)",BUKIT TIMAH,467500.0,4
+2026.0,HDB,"3-room (~530–1,250 sqft)",CENTRAL AREA,523444.0,26
+2026.0,HDB,"3-room (~530–1,250 sqft)",CHOA CHU KANG,458000.0,29
+2026.0,HDB,"3-room (~530–1,250 sqft)",CLEMENTI,435000.0,79
+2026.0,HDB,"3-room (~530–1,250 sqft)",GEYLANG,383000.0,116
+2026.0,HDB,"3-room (~530–1,250 sqft)",HOUGANG,450000.0,93
+2026.0,HDB,"3-room (~530–1,250 sqft)",JURONG EAST,415000.0,61
+2026.0,HDB,"3-room (~530–1,250 sqft)",JURONG WEST,399000.0,109
+2026.0,HDB,"3-room (~530–1,250 sqft)",KALLANG/WHAMPOA,456944.0,92
+2026.0,HDB,"3-room (~530–1,250 sqft)",MARINE PARADE,450000.0,20
+2026.0,HDB,"3-room (~530–1,250 sqft)",PASIR RIS,615000.0,8
+2026.0,HDB,"3-room (~530–1,250 sqft)",PUNGGOL,540500.0,66
+2026.0,HDB,"3-room (~530–1,250 sqft)",QUEENSTOWN,467000.0,127
+2026.0,HDB,"3-room (~530–1,250 sqft)",SEMBAWANG,520000.0,43
+2026.0,HDB,"3-room (~530–1,250 sqft)",SENGKANG,545000.0,57
+2026.0,HDB,"3-room (~530–1,250 sqft)",SERANGOON,460000.0,32
+2026.0,HDB,"3-room (~530–1,250 sqft)",TAMPINES,490000.0,132
+2026.0,HDB,"3-room (~530–1,250 sqft)",TOA PAYOH,371250.0,142
+2026.0,HDB,"3-room (~530–1,250 sqft)",WOODLANDS,430000.0,76
+2026.0,HDB,"3-room (~530–1,250 sqft)",YISHUN,435000.0,144
+2026.0,HDB,"4-room (~750–1,900 sqft)",ANG MO KIO,650000.0,112
+2026.0,HDB,"4-room (~750–1,900 sqft)",BEDOK,585000.0,171
+2026.0,HDB,"4-room (~750–1,900 sqft)",BISHAN,809000.0,68
+2026.0,HDB,"4-room (~750–1,900 sqft)",BUKIT BATOK,650000.0,199
+2026.0,HDB,"4-room (~750–1,900 sqft)",BUKIT MERAH,930000.0,131
+2026.0,HDB,"4-room (~750–1,900 sqft)",BUKIT PANJANG,568000.0,141
+2026.0,HDB,"4-room (~750–1,900 sqft)",BUKIT TIMAH,950000.0,7
+2026.0,HDB,"4-room (~750–1,900 sqft)",CENTRAL AREA,843000.0,29
+2026.0,HDB,"4-room (~750–1,900 sqft)",CHOA CHU KANG,555000.0,173
+2026.0,HDB,"4-room (~750–1,900 sqft)",CLEMENTI,750000.0,71
+2026.0,HDB,"4-room (~750–1,900 sqft)",GEYLANG,808888.0,91
+2026.0,HDB,"4-room (~750–1,900 sqft)",HOUGANG,618888.0,189
+2026.0,HDB,"4-room (~750–1,900 sqft)",JURONG EAST,548888.0,45
+2026.0,HDB,"4-room (~750–1,900 sqft)",JURONG WEST,535000.0,212
+2026.0,HDB,"4-room (~750–1,900 sqft)",KALLANG/WHAMPOA,930000.0,101
+2026.0,HDB,"4-room (~750–1,900 sqft)",MARINE PARADE,628000.0,15
+2026.0,HDB,"4-room (~750–1,900 sqft)",PASIR RIS,640000.0,105
+2026.0,HDB,"4-room (~750–1,900 sqft)",PUNGGOL,683444.0,288
+2026.0,HDB,"4-room (~750–1,900 sqft)",QUEENSTOWN,1018444.0,96
+2026.0,HDB,"4-room (~750–1,900 sqft)",SEMBAWANG,605000.0,131
+2026.0,HDB,"4-room (~750–1,900 sqft)",SENGKANG,640000.0,278
+2026.0,HDB,"4-room (~750–1,900 sqft)",SERANGOON,659000.0,46
+2026.0,HDB,"4-room (~750–1,900 sqft)",TAMPINES,670000.0,285
+2026.0,HDB,"4-room (~750–1,900 sqft)",TOA PAYOH,997500.0,138
+2026.0,HDB,"4-room (~750–1,900 sqft)",WOODLANDS,550000.0,309
+2026.0,HDB,"4-room (~750–1,900 sqft)",YISHUN,555000.0,275
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",ANG MO KIO,1090000.0,58
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BEDOK,797500.0,68
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BISHAN,954000.0,32
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT BATOK,825888.0,109
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT MERAH,1085000.0,59
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT PANJANG,690000.0,75
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",BUKIT TIMAH,1115000.0,7
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",CENTRAL AREA,1160000.0,6
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",CHOA CHU KANG,675000.0,119
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",CLEMENTI,1340000.0,22
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",GEYLANG,930000.0,28
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",HOUGANG,764000.0,76
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG EAST,718000.0,42
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",JURONG WEST,640000.0,161
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",KALLANG/WHAMPOA,941500.0,34
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",MARINE PARADE,970000.0,5
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",PASIR RIS,735000.0,78
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",PUNGGOL,790000.0,135
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",QUEENSTOWN,1258000.0,25
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",SEMBAWANG,650000.0,89
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",SENGKANG,710000.0,187
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",SERANGOON,871500.0,18
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",TAMPINES,822000.0,193
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",TOA PAYOH,1035900.0,44
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",WOODLANDS,650000.0,185
+2026.0,HDB,"5-room (~1,050–1,800 sqft)",YISHUN,696500.0,78
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",ANG MO KIO,1225000.0,3
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",BEDOK,1030000.0,15
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",BISHAN,1254000.0,12
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT BATOK,884444.0,24
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT PANJANG,850000.0,29
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",BUKIT TIMAH,1389000.0,2
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",CHOA CHU KANG,830000.0,36
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",CLEMENTI,1147500.0,2
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",GEYLANG,1050000.0,5
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",HOUGANG,920444.0,34
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG EAST,1008000.0,15
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",JURONG WEST,800000.0,43
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",KALLANG/WHAMPOA,920000.0,2
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",PASIR RIS,930000.0,57
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",PUNGGOL,830500.0,8
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",QUEENSTOWN,1210000.0,3
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",SEMBAWANG,760000.0,23
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",SENGKANG,859000.0,34
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",SERANGOON,1120000.0,15
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",TAMPINES,970000.0,60
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",TOA PAYOH,1087944.0,2
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",WOODLANDS,930000.0,63
+2026.0,HDB,"Executive (~1,350–2,600 sqft)",YISHUN,884000.0,28
+2026.0,HDB,"Multi-generation (~1,400–1,900 sqft)",TAMPINES,1100000.0,1
+2026.0,HDB,"Multi-generation (~1,400–1,900 sqft)",YISHUN,1120000.0,1
