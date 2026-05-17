@@ -1,34 +1,41 @@
 import math
 import os
-from datetime import datetime
 
 import pandas as pd
 import plotly.express as px
 import requests
 import streamlit as st
 
-DATA_FILES = {
-    "HDB Resale": "data/latest/hdb_resale.csv",
-    "Private Property": "data/latest/private_property.csv",
-}
+from data_sources import DATA_SOURCE_MODE, load_all_transactions
+from housing_constants import GLOSSARY, calculate_absd, enrich_area_labels
+from rental_model import load_rent_vs_buy_scenario
+from story import (
+    BUYER_TIPS,
+    absd_tier_from_story,
+    apply_story_filters,
+    init_story_state,
+    render_journey_picker,
+    render_story_step,
+    story_default_property_types,
+)
 
 st.set_page_config(
-    page_title="Singapore Housing Transaction Viewer",
+    page_title="Singapore Housing Journey",
     page_icon="🏘️",
     layout="wide",
 )
 
-
-def find_column(df, candidates, default=None):
-    for candidate in candidates:
-        if candidate in df.columns:
-            return candidate
-    return default
+DEFAULT_YEAR_WINDOW = 5
 
 
 @st.cache_data
-def load_dataframe(path):
-    return pd.read_csv(path)
+def load_app_data():
+    return load_all_transactions()
+
+
+@st.cache_data
+def load_rental_scenario():
+    return load_rent_vs_buy_scenario()
 
 
 @st.cache_data
@@ -50,12 +57,7 @@ def google_distance(origin: str, destination: str, api_key: str):
     if not origin or not destination or not api_key:
         return None
     url = "https://maps.googleapis.com/maps/api/distancematrix/json"
-    params = {
-        "origins": origin,
-        "destinations": destination,
-        "key": api_key,
-        "mode": "transit",
-    }
+    params = {"origins": origin, "destinations": destination, "key": api_key, "mode": "transit"}
     response = requests.get(url, params=params, timeout=20)
     response.raise_for_status()
     data = response.json()
@@ -64,10 +66,7 @@ def google_distance(origin: str, destination: str, api_key: str):
     element = data["rows"][0]["elements"][0]
     if element.get("status") != "OK":
         return None
-    return {
-        "distance_text": element["distance"]["text"],
-        "duration_text": element["duration"]["text"],
-    }
+    return {"distance_text": element["distance"]["text"], "duration_text": element["duration"]["text"]}
 
 
 def haversine_distance(lat1, lon1, lat2, lon2):
@@ -85,114 +84,112 @@ def format_currency(value):
     return f"${value:,.0f}"
 
 
-def normalize_hdb(df):
-    df = df.copy()
-    df["dataset"] = "HDB Resale"
-    df["property_type"] = "HDB Resale"
-    price_col = find_column(df, ["resale_price", "price", "transacted_price"], "resale_price")
-    town_col = find_column(df, ["town", "planning_area", "area"], "town")
-    date_col = find_column(df, ["month", "transaction_date", "sale_date"], "month")
-    size_col = find_column(df, ["floor_area_sqm", "area_sqm", "area"])
-    lease_col = find_column(df, ["remaining_lease", "lease_remaining", "lease"])
-
-    df = df.rename(columns={town_col: "town", date_col: "transaction_date", price_col: "price"})
-    if "town" not in df.columns:
-        df["town"] = "Unknown"
-    df["street_name"] = df.get("street_name", df.get("block", ""))
-    df["flat_type"] = df.get("flat_type", df.get("flat_model", ""))
-    df["size_sqm"] = df.get(size_col)
-    df["lease_remaining"] = df.get(lease_col)
-    df["transaction_date"] = pd.to_datetime(df["transaction_date"], errors="coerce")
-    df["year"] = df["transaction_date"].dt.year
-    df["quarter"] = df["transaction_date"].dt.to_period("Q").astype(str)
-    df["price"] = pd.to_numeric(df["price"], errors="coerce")
-    return df[
-        ["dataset", "property_type", "town", "street_name", "transaction_date", "price", "size_sqm", "lease_remaining", "year", "quarter"]
-    ]
+def default_year_range(year_options: list[int], window: int = DEFAULT_YEAR_WINDOW) -> tuple[int, int]:
+    if not year_options:
+        return 2020, 2025
+    end = year_options[-1]
+    start = max(year_options[0], end - window + 1)
+    return start, end
 
 
-def normalize_private(df):
-    df = df.copy()
-    df["dataset"] = "Private Property"
-    price_col = find_column(df, ["price", "transacted_price", "resale_price"], "price")
-    town_col = find_column(df, ["town", "planning_area", "location"], "town")
-    date_col = find_column(df, ["transaction_date", "month", "sale_date", "completion_date"], "transaction_date")
-    property_col = find_column(df, ["property_type", "type_of_area", "subtype", "property_category"], "property_type")
-    size_col = find_column(df, ["floor_area_sqm", "area_sqm", "size_sqft", "floor_area"], None)
-    lease_col = find_column(df, ["lease_commence_date", "tenure", "lease"], None)
-
-    df["transaction_date"] = pd.to_datetime(df[date_col], errors="coerce")
-    df["town"] = df.get(town_col, "Unknown")
-    df["property_type"] = df.get(property_col, "Private")
-    if pd.api.types.is_numeric_dtype(df["property_type"]):
-        df["property_type"] = df["property_type"].astype(str)
-    df["street_name"] = df.get("street_name", df.get("project_name", ""))
-    df["size_sqm"] = df.get(size_col)
-    df["lease_remaining"] = df.get(lease_col)
-    df["year"] = df["transaction_date"].dt.year
-    df["quarter"] = df["transaction_date"].dt.to_period("Q").astype(str)
-    df["price"] = pd.to_numeric(df[price_col], errors="coerce")
-    return df[
-        ["dataset", "property_type", "town", "street_name", "transaction_date", "price", "size_sqm", "lease_remaining", "year", "quarter"]
-    ]
-
-
-def load_app_data():
-    loaded = []
-    for label, path in DATA_FILES.items():
-        if os.path.exists(path):
-            try:
-                df = load_dataframe(path)
-                if label == "HDB Resale":
-                    loaded.append(normalize_hdb(df))
-                else:
-                    loaded.append(normalize_private(df))
-            except Exception as exc:
-                st.warning(f"Could not load {path}: {exc}")
-        else:
-            st.warning(f"Missing data file: {path}")
-    if loaded:
-        return pd.concat(loaded, ignore_index=True)
-    return pd.DataFrame()
-
-
-def build_trend_chart(df, group_by, start_year, end_year):
+def build_trend_chart(df, group_col: str, start_year, end_year):
     filtered = df[(df["year"] >= start_year) & (df["year"] <= end_year)].copy()
-    if filtered.empty:
+    if filtered.empty or group_col not in filtered.columns:
         return None
-    target = filtered.groupby([group_by, "year"], as_index=False)["price"].median()
+    target = filtered.groupby([group_col, "year"], as_index=False)["price"].median()
     return px.line(
         target,
         x="year",
         y="price",
-        color=group_by,
+        color=group_col,
         markers=True,
-        labels={"price": "Median Price (SGD)", "year": "Year"},
-        title=f"Median price trend by {group_by.lower()} ({start_year}–{end_year})",
+        labels={"price": "Median Price (SGD)", "year": "Year", group_col: "Group"},
+        title=f"Median price trend ({start_year}–{end_year})",
     )
 
 
-def calculate_percent_gain(df, group_by, start_year, end_year, top_n=10):
+def calculate_percent_gain(df, group_col: str, start_year, end_year, top_n=10):
     pivot = df[df["year"].isin([start_year, end_year])].copy()
-    if pivot.empty:
+    if pivot.empty or group_col not in pivot.columns:
         return pd.DataFrame()
-    medians = pivot.groupby([group_by, "year"], as_index=False)["price"].median()
-    start = medians[medians["year"] == start_year].set_index(group_by)["price"]
-    end = medians[medians["year"] == end_year].set_index(group_by)["price"]
+    medians = pivot.groupby([group_col, "year"], as_index=False)["price"].median()
+    start = medians[medians["year"] == start_year].set_index(group_col)["price"]
+    end = medians[medians["year"] == end_year].set_index(group_col)["price"]
     joined = pd.DataFrame({"start_price": start, "end_price": end}).dropna()
     joined["gain_pct"] = (joined["end_price"] - joined["start_price"]) / joined["start_price"] * 100
     return joined.reset_index().sort_values("gain_pct", ascending=False).head(top_n)
 
 
-def show_affordability_calculator():
-    st.header("Affordability calculator")
-    st.write(
-        "Enter your salary and expected property price to see how HDB MSR and private TDSR compare. "
-        "This calculator is a beginner guide and not a bank decision." 
+def show_glossary():
+    with st.expander("📚 Glossary — key terms"):
+        for term, meaning in GLOSSARY.items():
+            st.markdown(f"**{term}** — {meaning}")
+
+
+def show_absd_estimator(residency: str, tier: str):
+    st.subheader("ABSD estimator (stamp duty)")
+    st.caption("Illustrative rates only — confirm with IRAS or a lawyer before buying.")
+    price = st.number_input("Purchase price (SGD)", min_value=0.0, value=1_000_000.0, step=50_000.0, key="absd_price")
+    tier_choice = st.selectbox(
+        "Property count for ABSD",
+        ["1st", "2nd", "3rd+"],
+        index=["1st", "2nd", "3rd+"].index(tier if tier in ("1st", "2nd") else "3rd+"),
+        key="absd_tier",
     )
+    if price > 0:
+        result = calculate_absd(price, residency, tier_choice)
+        st.metric("Estimated ABSD", format_currency(result["amount"]))
+        st.write(f"Rate applied: **{result['rate'] * 100:.0f}%** ({tier_choice} property for {residency})")
+
+
+def show_rent_vs_buy_section(scenario: dict | None, filtered_df: pd.DataFrame):
+    st.subheader("Rent vs buy")
+    rent_or_buy = st.session_state.get("rent_or_buy", "Still deciding")
+
+    if scenario:
+        st.markdown(
+            f"**Worked example** from your `RentalIncome.xlsx` workbook: "
+            f"a **{scenario['property_label']}** bought at **{format_currency(scenario['purchase_price'])}** "
+            f"with a **{scenario['loan_amount']:,.0f}** loan at **{scenario['interest_rate']*100:.2f}%** over "
+            f"**{scenario['tenure_years']}** years."
+        )
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Example monthly rent (year 1)", format_currency(scenario["starting_monthly_rent"]))
+        c2.metric("Example monthly mortgage", format_currency(scenario["starting_monthly_instalment"]))
+        diff = scenario["starting_monthly_rent"] - scenario["starting_monthly_instalment"]
+        c3.metric("Rent − mortgage (month 1)", format_currency(diff))
+
+        timeline = scenario["timeline"].head(15)
+        chart_df = timeline.melt(id_vars=["year"], value_vars=["monthly_rent", "monthly_instalment"], var_name="Cost", value_name="SGD")
+        chart_df["Cost"] = chart_df["Cost"].map({"monthly_rent": "Rent", "monthly_instalment": "Mortgage"})
+        fig = px.line(chart_df, x="year", y="SGD", color="Cost", markers=True, title="Example: rent vs mortgage over 15 years")
+        st.plotly_chart(fig, use_container_width=True)
+        st.caption(
+            "This model includes rent growth and property appreciation assumptions from the spreadsheet. "
+            "Your real costs depend on location, flat type, and loan package."
+        )
+    else:
+        st.info("Add `data/RentalIncome.xlsx` to enable the rent-vs-buy worked example.")
+
+    if not filtered_df.empty and rent_or_buy in ("Buy", "Still deciding"):
+        med = filtered_df["price"].median()
+        st.write(
+            f"For your **filtered purchase data**, the median transaction price is **{format_currency(med)}**. "
+            "Compare this with your savings, grants, and loan eligibility."
+        )
+    if rent_or_buy == "Rent":
+        st.write(
+            "When renting, you do not build equity, but you avoid down payment, stamp duty, and maintenance. "
+            "Use the worked example above to compare monthly cash outlay."
+        )
+
+
+def show_affordability_calculator(default_price: float = 600_000.0):
+    st.subheader("Affordability calculator")
+    st.write("Rough MSR (HDB) vs TDSR (private) check — not a bank approval.")
     with st.form("affordability"):
         gross_income = st.number_input("Monthly gross income (SGD)", min_value=0.0, value=5000.0, step=100.0)
-        property_price = st.number_input("Property price (SGD)", min_value=0.0, value=600000.0, step=10000.0)
+        property_price = st.number_input("Property price (SGD)", min_value=0.0, value=float(default_price), step=10000.0)
         downpayment_pct = st.slider("Down payment (%)", min_value=5, max_value=50, value=25, step=5)
         interest_rate = st.number_input("Annual loan interest rate (%)", min_value=0.0, value=3.5, step=0.1)
         loan_term_years = st.selectbox("Loan tenure (years)", [15, 20, 25, 30])
@@ -212,157 +209,226 @@ def show_affordability_calculator():
         remaining_tdsr = max(tdsr_limit - other_monthly_debt, 0)
 
         st.metric("Estimated monthly loan payment", format_currency(monthly_payment))
-        st.write(f"Maximum HDB MSR allowance: {format_currency(msr_limit)} per month")
+        st.write(f"Maximum HDB MSR allowance: {format_currency(msr_limit)} / month")
         if monthly_payment <= msr_limit:
-            st.success("Your estimated payment is within the HDB MSR guideline.")
+            st.success("Within HDB MSR guideline (30%).")
         else:
-            st.error("Your estimated payment is above the HDB MSR guideline.")
-        st.write(f"Maximum private-property TDSR allowance: {format_currency(remaining_tdsr)} per month after other debts")
+            st.error("Above HDB MSR guideline (30%).")
+        st.write(f"Maximum private TDSR allowance: {format_currency(remaining_tdsr)} / month after other debts")
         if monthly_payment <= remaining_tdsr:
-            st.success("Your estimated payment is within the private property TDSR guideline.")
+            st.success("Within private TDSR guideline (55%).")
         else:
-            st.warning("Your estimated payment may exceed the private property TDSR guideline.")
-
-        st.write(
-            "**Note:** MSR is usually 30% of gross salary for HDB loan decisions, while TDSR is usually 55% for private property. "
-            "Actual bank assessment may vary and depends on your CPF, existing loans, and family situation."
-        )
+            st.warning("May exceed private TDSR guideline (55%).")
 
 
 def show_distance_tools():
-    st.header("Estimate distance and commute time")
+    st.subheader("Commute estimate")
     google_key = os.environ.get("GOOGLE_MAPS_API_KEY")
     with st.form("distance"):
-        origin = st.text_input("Enter an address or landmark near the property", value="Tampines Street 61")
-        destination = st.text_input("Enter a destination or MRT station", value="Tampines MRT Station")
+        origin = st.text_input("Address near the home", value="Tampines Street 61")
+        destination = st.text_input("Destination (work / school / MRT)", value="Tampines MRT Station")
         submitted = st.form_submit_button("Estimate")
 
     if submitted:
         if google_key:
             result = google_distance(origin, destination, google_key)
             if result:
-                st.success(f"Estimated commute: {result['duration_text']} by transit, {result['distance_text']}.")
+                st.success(f"Transit: {result['duration_text']}, {result['distance_text']}.")
             else:
-                st.warning("Google Distance Matrix returned no result. Please check the address or your API key.")
+                st.warning("Google Distance Matrix returned no result.")
         else:
-            st.info("No Google Maps API key found. Using straight-line distance estimate.")
+            st.info("No Google Maps API key — using straight-line distance (OpenStreetMap).")
             origin_loc = geocode_place(origin)
             destination_loc = geocode_place(destination)
             if origin_loc and destination_loc:
                 km = haversine_distance(origin_loc[0], origin_loc[1], destination_loc[0], destination_loc[1])
-                st.write(f"Approximate straight-line distance: {km:.1f} km.")
-                if km < 1:
-                    st.write("This is very close by. Travel time is likely under 15 minutes by transit or walking.")
-                elif km < 5:
-                    st.write("This is a short trip. Transit or driving may take 15–30 minutes depending on connections.")
-                else:
-                    st.write("This is a longer trip. Transit may take 30+ minutes.")
+                st.write(f"Approximate distance: **{km:.1f} km** (straight line).")
             else:
-                st.warning("Could not resolve one of the locations using OpenStreetMap.")
+                st.warning("Could not geocode one of the locations.")
+
+
+def render_sidebar_controls(df, property_options):
+    st.sidebar.header("Your profile")
+    st.session_state.residency = st.sidebar.selectbox(
+        "Residency",
+        ["Singapore Citizen", "Permanent Resident", "Foreigner"],
+        index=["Singapore Citizen", "Permanent Resident", "Foreigner"].index(st.session_state.residency),
+    )
+    st.session_state.own_hdb = st.sidebar.selectbox(
+        "Own HDB?",
+        ["No", "Yes"],
+        index=["No", "Yes"].index(st.session_state.own_hdb),
+    )
+    tip = BUYER_TIPS.get((st.session_state.residency, st.session_state.own_hdb))
+    if tip:
+        st.sidebar.info(tip)
+
+    st.session_state.rent_or_buy = st.sidebar.selectbox(
+        "Rent or buy?",
+        ["Rent", "Buy", "Still deciding"],
+        index=["Rent", "Buy", "Still deciding"].index(st.session_state.rent_or_buy),
+    )
+    st.session_state.first_property = st.sidebar.selectbox(
+        "First property in Singapore?",
+        ["Yes — first property", "No — I already own property"],
+        index=0 if st.session_state.first_property.startswith("Yes") else 1,
+    )
+
+    defaults = story_default_property_types(df, property_options)
+    property_choices = st.sidebar.multiselect("Property types", property_options, default=defaults)
+
+    area_labels = sorted(df["area_name"].dropna().unique()) if "area_name" in df.columns else sorted(df["town"].dropna().unique())
+    selected_areas = st.sidebar.multiselect("Areas (towns / districts)", area_labels, default=[])
+
+    year_options = sorted(df["year"].dropna().astype(int).unique())
+    yr_start, yr_end = default_year_range(year_options)
+    start_year, end_year = st.sidebar.select_slider(
+        "Year range (last 5 years by default)",
+        options=year_options,
+        value=(yr_start, yr_end),
+    )
+
+    if st.sidebar.button("Restart guided journey"):
+        st.session_state.journey_mode = None
+        st.session_state.story_step = 0
+        st.session_state.story_complete = False
+        st.rerun()
+
+    return property_choices, selected_areas, start_year, end_year
+
+
+def filter_dataframe(df, property_choices, selected_areas):
+    filtered = apply_story_filters(df)
+    if property_choices:
+        filtered = filtered[filtered["property_type"].isin(property_choices)]
+    if selected_areas and "area_name" in filtered.columns:
+        filtered = filtered[filtered["area_name"].isin(selected_areas)]
+    return filtered
 
 
 def main():
-    st.title("🏡 Singapore Housing Transaction Viewer")
+    init_story_state()
+
+    st.title("🏡 Singapore Housing Journey")
     st.write(
-        "A beginner-friendly dashboard for HDB resale, condos, EC, and landed property. "
-        "Compare trends, see price gain, and check your affordability in simple terms."
+        "Learn how HDB and private housing prices move in Singapore — then check affordability, "
+        "stamp duty, and rent-vs-buy in plain language."
     )
 
-    df = load_app_data()
+    mode_label = "local Excel workbooks" if DATA_SOURCE_MODE == "local_xlsx" else "live government API"
+    st.caption(f"Data: **{mode_label}** · Toggle via `HTV_DATA_SOURCE` in `data_sources.py`")
+
+    with st.spinner("Loading transaction data…"):
+        df = load_app_data()
+
     if df.empty:
-        st.error("No data available yet. Run the updater script or check your CSV files in data/latest/.")
+        st.error("No data found. Place xlsx files in `data/` or run `python scripts/update_data.py`.")
         return
 
-    st.sidebar.header("Get started")
-    buyer_type = st.sidebar.selectbox(
-        "Buyer profile",
-        ["Singapore Citizen", "Permanent Resident", "Foreigner"],
-        help="Choose the profile that matches your current status.",
-    )
-    own_hdb = st.sidebar.selectbox(
-        "Do you currently own HDB?", ["No", "Yes"], help="Owning HDB changes the rules for buying new property." )
-    property_choices = st.sidebar.multiselect(
-        "Property types to explore",
-        sorted(df["property_type"].dropna().unique()),
-        default=sorted(df["property_type"].dropna().unique())[:3],
-        help="Compare types like HDB resale, condo, executive condo, or landed property.",
-    )
-    selected_towns = st.sidebar.multiselect(
-        "Towns or areas",
-        sorted(df["town"].dropna().unique()),
-        default=[df["town"].dropna().unique().tolist()[0]] if not df.empty else [],
-        help="Select one or more towns for trend comparison.",
-    )
-    start_year, end_year = st.sidebar.select_slider(
-        "Year range",
-        options=sorted(df["year"].dropna().astype(int).unique()),
-        value=(sorted(df["year"].dropna().astype(int).unique())[0], sorted(df["year"].dropna().astype(int).unique())[-1]),
-        help="Choose the year range for price trend charts.",
-    )
+    if st.session_state.journey_mode is None:
+        render_journey_picker()
+        return
 
-    filtered = df[df["property_type"].isin(property_choices)]
-    if selected_towns:
-        filtered = filtered[filtered["town"].isin(selected_towns)]
+    if st.session_state.journey_mode == "guided" and not st.session_state.story_complete:
+        render_story_step()
+        st.divider()
 
-    st.markdown("## Data snapshot")
-    st.write(f"Latest dataset contains **{len(df):,} records** from {df['year'].min():.0f} to {df['year'].max():.0f}.")
-    st.write(f"Showing **{len(filtered):,} records** after filters.")
+    property_options = sorted(df["property_type"].dropna().unique())
+    property_choices, selected_areas, start_year, end_year = render_sidebar_controls(df, property_options)
+    filtered = filter_dataframe(df, property_choices, selected_areas)
 
-    if filtered.empty:
-        st.warning("No records match your filters. Try a broader selection or reset the town/property types.")
-    else:
-        top_summary = (
-            filtered.groupby(["property_type", "town"], as_index=False)["price"].median()
-            .sort_values("price", ascending=False)
-            .head(12)
-        )
-        st.subheader("Top median prices by property type and town")
-        st.dataframe(top_summary.rename(columns={"property_type": "Type", "town": "Town", "price": "Median price (SGD)"}))
+    show_glossary()
 
-        chart = build_trend_chart(filtered, "town" if selected_towns else "property_type", start_year, end_year)
-        if chart is not None:
-            st.plotly_chart(chart, use_container_width=True)
+    st.markdown("## Market snapshot")
+    st.write(f"**{len(df):,}** transactions ({int(df['year'].min())}–{int(df['year'].max())}) · **{len(filtered):,}** after your filters")
 
-        if selected_towns and len(selected_towns) > 0:
-            gain_df = calculate_percent_gain(filtered, "town", start_year, end_year)
-            if not gain_df.empty:
-                st.subheader(f"Percent gain from {start_year} to {end_year}")
-                st.dataframe(gain_df.rename(columns={"town": "Town", "start_price": "Start price", "end_price": "End price", "gain_pct": "Gain (%)"}))
+    m1, m2, m3 = st.columns(3)
+    m1.metric("HDB resale", f"{len(df[df['dataset'] == 'HDB Resale']):,}")
+    m2.metric("Private", f"{len(df[df['dataset'] == 'Private Property']):,}")
+    m3.metric("Median (filtered)", format_currency(filtered["price"].median()) if not filtered.empty else "—")
 
-        if len(property_choices) > 1:
-            compare_chart = build_trend_chart(filtered, "property_type", start_year, end_year)
-            if compare_chart is not None:
-                st.subheader("Compare property types")
-                st.plotly_chart(compare_chart, use_container_width=True)
+    rent_goal = st.session_state.rent_or_buy
+    show_rent_tab = rent_goal in ("Rent", "Still deciding")
+    tab_labels = ["Trends & prices"]
+    if show_rent_tab:
+        tab_labels.append("Rent vs buy")
+    tab_labels.extend(["ABSD & affordability", "Commute", "Policy notes"])
+    tab_objects = st.tabs(tab_labels)
+    ti = 0
+
+    with tab_objects[ti]:
+        ti += 1
+        if filtered.empty:
+            st.warning("No records match your filters — broaden property types or areas.")
+        else:
+            display_col = "area_name" if "area_name" in filtered.columns else "town"
+            top_summary = (
+                filtered.groupby(["property_type", display_col], as_index=False)["price"]
+                .median()
+                .sort_values("price", ascending=False)
+                .head(12)
+            )
+            st.subheader("Highest median prices (your selection)")
+            st.dataframe(
+                top_summary.rename(columns={"property_type": "Type", display_col: "Area", "price": "Median (SGD)"}),
+                use_container_width=True,
+            )
+
+            group_col = display_col if selected_areas else "property_type"
+            chart = build_trend_chart(filtered, group_col, start_year, end_year)
+            if chart:
+                st.plotly_chart(chart, use_container_width=True)
+
+            gain_df = calculate_percent_gain(filtered, group_col, start_year, end_year)
+            if not gain_df.empty and start_year != end_year:
+                st.subheader(f"Price change {start_year} → {end_year}")
+                st.dataframe(gain_df, use_container_width=True)
+
+            if "region" in filtered.columns and filtered["dataset"].eq("Private Property").any():
+                by_region = (
+                    filtered[filtered["dataset"] == "Private Property"]
+                    .groupby("region", as_index=False)["price"]
+                    .median()
+                    .sort_values("price", ascending=False)
+                )
+                st.subheader("Private property by region (CCR / RCR / OCR)")
+                st.dataframe(by_region.rename(columns={"region": "Region", "price": "Median (SGD)"}), use_container_width=True)
+
+    if show_rent_tab:
+        with tab_objects[ti]:
+            show_rent_vs_buy_section(load_rental_scenario(), filtered)
+        ti += 1
+
+    with tab_objects[ti]:
+        tier = absd_tier_from_story() if st.session_state.first_property.startswith("Yes") else "2nd"
+        if st.session_state.first_property.startswith("No"):
+            tier = st.selectbox("ABSD tier", ["2nd", "3rd+"], key="story_absd_tier") or "2nd"
+        show_absd_estimator(st.session_state.residency, tier)
+        default_p = float(filtered["price"].median()) if not filtered.empty else 600_000.0
+        show_affordability_calculator(default_price=default_p)
+    ti += 1
+
+    with tab_objects[ti]:
+        show_distance_tools()
+    ti += 1
+
+    with tab_objects[ti]:
+        if os.path.exists("policy_notes.md"):
+            try:
+                with open("policy_notes.md", "r", encoding="utf-8") as f:
+                    st.markdown(f.read())
+            except UnicodeDecodeError:
+                st.warning("policy_notes.md could not be read (encoding).")
+        else:
+            st.write("Add `policy_notes.md` for eligibility notes.")
 
     with st.expander("Why this matters for first-time buyers"):
         st.markdown(
-            "- HDB resale flat prices are usually lower than private condos, but HDB has ownership rules."
-            "\n- Private condos and landed property have higher ABSD and TDSR requirements."
-            "\n- Comparing several towns over time helps you avoid short-lived price spikes."
-            "\n- If you own HDB, you usually need to sell before buying private property."
+            "- **HDB resale** is usually cheaper than condos but has citizenship and occupancy rules.\n"
+            "- **Private** homes face higher **ABSD** for PRs and foreigners.\n"
+            "- Compare **several years** of prices — one hot quarter can mislead.\n"
+            "- **Renting** avoids down payment and stamp duty but does not build equity."
         )
-
-    left, right = st.columns([2, 1])
-    with left:
-        show_affordability_calculator()
-    with right:
-        st.header("Rules and eligibility")
-        if os.path.exists("policy_notes.md"):
-            with open("policy_notes.md", "r", encoding="utf-8") as f:
-                st.markdown(f.read())
-        else:
-            st.write("Policy notes are not available. Please add policy_notes.md to the repo.")
-
-    show_distance_tools()
-    st.markdown("---")
-    st.markdown("### Quick start tips")
-    st.markdown(
-        "1. Use the side panel to choose property type and towns.\n"
-        "2. Compare median price trends over multiple years.\n"
-        "3. Use the calculator for MSR vs TDSR checks.\n"
-        "4. Add your Google Maps API key in Streamlit Cloud for commute estimates."
-    )
 
 
 if __name__ == "__main__":
