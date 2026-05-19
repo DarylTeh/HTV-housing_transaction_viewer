@@ -38,7 +38,7 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
         col = cards[idx]
         if col.button(label, key=f"dashboard_action_{idx}"):
             state["selected_page"] = value
-            state["nav_index"] = NAVIGATION.index(value)
+            state["pending_page"] = value
         col.write(value)
 
     st.markdown("---")
