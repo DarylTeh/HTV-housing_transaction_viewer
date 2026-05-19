@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 import re
+from components.common import format_price
 
 
 def _normalize(text: str | float | int | None) -> str:
@@ -38,8 +39,8 @@ def build_property_catalog(transactions: pd.DataFrame) -> pd.DataFrame:
         lambda row: _psf_from_sqm(row["average_price"], row["average_size"]), axis=1
     )
     summary["latest_transaction_date"] = summary["latest_date"].dt.strftime("%Y-%m-%d")
-    summary["latest_price_fmt"] = summary["latest_price"].apply(lambda v: f"${v:,.0f}" if pd.notna(v) else "-")
-    summary["median_psf_fmt"] = summary["median_psf"].apply(lambda v: f"${v:,.0f}" if pd.notna(v) else "-")
+    summary["latest_price_fmt"] = summary["latest_price"].apply(lambda v: format_price(v))
+    summary["median_psf_fmt"] = summary["median_psf"].apply(lambda v: format_price(v))
     return summary.sort_values(["transaction_count", "latest_date"], ascending=[False, False])
 
 

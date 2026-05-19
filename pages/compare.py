@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from engine.search_engine import search_properties
+from components.common import format_dataframe_prices
 
 
 def render_compare_page(data: dict[str, pd.DataFrame], state: dict) -> None:
@@ -40,10 +41,7 @@ def render_compare_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         b = search_properties(transactions, query_b, top_n=1)
         if not a.empty and not b.empty:
             compare_df = pd.DataFrame([a.iloc[0].to_dict(), b.iloc[0].to_dict()])
-            st.dataframe(
-                compare_df[["street_name", "area_name", "housing_kind", "latest_price", "median_psf"]],
-                hide_index=True,
-                use_container_width=True,
-            )
+            compare_fmt = format_dataframe_prices(compare_df[["street_name", "area_name", "housing_kind", "latest_price", "median_psf"]].copy(), ["latest_price", "median_psf"])
+            st.dataframe(compare_fmt, hide_index=True, use_container_width=True)
         else:
             st.warning("Enter two valid property search terms.")

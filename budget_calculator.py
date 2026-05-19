@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from components.common import format_price
 
 
 @dataclass
@@ -164,7 +165,7 @@ def calculate_budget(
         
         if cpf_pledge_pct > 100000:
             limitations.append(
-                f"High CPF pledge (${cpf_pledge_pct:,.0f}). Verify with CPF Board and bank; "
+                f"High CPF pledge ({format_price(cpf_pledge_pct)}). Verify with CPF Board and bank; "
                 "may significantly impact down payment capacity."
             )
     
@@ -184,5 +185,5 @@ def calculate_budget(
 
 
 def format_currency(value: float) -> str:
-    """Format value as Singapore Dollar string."""
-    return f"${value:,.0f}"
+    """Format value as Singapore Dollar string using shared helper."""
+    return format_price(value)

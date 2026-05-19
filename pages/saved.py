@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import streamlit as st
+from components.common import format_price
 
 
 def render_saved_page(data: dict[str, object], state: dict) -> None:
@@ -25,7 +26,7 @@ def render_saved_page(data: dict[str, object], state: dict) -> None:
     if saved_scenarios:
         for idx, scenario in enumerate(saved_scenarios):
             cols = st.columns([0.8, 0.2])
-            cols[0].write(f"{scenario.get('name', 'Unnamed')} — {scenario.get('property_type', '')} at {scenario.get('purchase_price', 0):,.0f}")
+            cols[0].write(f"{scenario.get('name', 'Unnamed')} — {scenario.get('property_type', '')} at {format_price(scenario.get('purchase_price', None))}")
             if cols[1].button("Remove", key=f"remove_scenario_{idx}"):
                 saved_scenarios.pop(idx)
     else:

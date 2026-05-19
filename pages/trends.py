@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from engine.trend_engine import market_trend_chart, rent_vs_buy_chart, transaction_volume_price_chart
+from components.common import format_dataframe_prices
 
 
 def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
@@ -40,4 +41,5 @@ def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     if not price_medians.empty:
         latest = price_medians[price_medians["year"] == price_medians["year"].max()]
         st.metric("Latest median listings", len(latest))
-        st.write(latest.head(5))
+        latest_fmt = format_dataframe_prices(latest.head(5), ["median_price", "price"])
+        st.write(latest_fmt)

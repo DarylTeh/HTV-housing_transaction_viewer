@@ -27,7 +27,7 @@ from processed_data import (
 )
 
 st.set_page_config(
-    page_title="Singapore Property Intelligence",
+    page_title="Housing Transaction Viewer",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded",
