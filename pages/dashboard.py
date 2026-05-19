@@ -38,13 +38,7 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
         col = cards[idx]
         if col.button(label, key=f"dashboard_action_{idx}"):
             state["selected_page"] = value
-            # keep sidebar widget and nav index in sync so the app navigates immediately
-            state["nav_index"] = NAV_IDX = None
-            try:
-                state["nav_index"] = __import__("app").NAVIGATION.index(value)
-            except Exception:
-                state["nav_index"] = 0
-            state["nav_page_select"] = value
+            state["nav_index"] = NAVIGATION.index(value)
         col.write(value)
 
     st.markdown("---")
