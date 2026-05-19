@@ -3,7 +3,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from engine.trend_engine import market_trend_chart, rent_vs_buy_chart
+from engine.trend_engine import market_trend_chart, rent_vs_buy_chart, transaction_volume_price_chart
 
 
 def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
@@ -19,6 +19,19 @@ def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     if not price_medians.empty:
         st.subheader("Price trend overview")
         st.plotly_chart(market_trend_chart(price_medians), use_container_width=True)
+
+    housing_kind = st.selectbox(
+        "Housing type for transaction trend",
+        ["All", "HDB", "Condo", "Landed"],
+        index=0,
+        key="trend_housing_kind",
+    )
+    selected_kind = None if housing_kind == "All" else housing_kind
+    st.subheader("Monthly volume and average price")
+    st.plotly_chart(
+        transaction_volume_price_chart(data.get("transactions", pd.DataFrame()), selected_kind),
+        use_container_width=True,
+    )
 
     if not rent_vs_buy.empty:
         st.subheader("Rent versus mortgage cost")

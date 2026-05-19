@@ -13,10 +13,14 @@ def render_compare_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     scenarios = st.session_state.get("saved_scenarios", [])
     if scenarios:
         names = [scenario.get("name", f"Scenario {i+1}") for i, scenario in enumerate(scenarios)]
-        selected = st.multiselect("Pick scenarios to compare", names, default=names[:2])
+        selected = st.multiselect("Pick scenarios to compare", names, default=names[:2], key="compare_scenarios")
         chosen = [scenario for scenario in scenarios if scenario.get("name") in selected]
         if len(chosen) >= 2:
-            st.write(pd.DataFrame(chosen))
+            st.dataframe(
+                pd.DataFrame(chosen),
+                hide_index=True,
+                use_container_width=True,
+            )
         else:
             st.info("Save at least two scenarios from Affordability to compare them here.")
     else:
@@ -36,6 +40,10 @@ def render_compare_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         b = search_properties(transactions, query_b, top_n=1)
         if not a.empty and not b.empty:
             compare_df = pd.DataFrame([a.iloc[0].to_dict(), b.iloc[0].to_dict()])
-            st.dataframe(compare_df[["street_name", "area_name", "housing_kind", "latest_price", "median_psf"]])
+            st.dataframe(
+                compare_df[["street_name", "area_name", "housing_kind", "latest_price", "median_psf"]],
+                hide_index=True,
+                use_container_width=True,
+            )
         else:
             st.warning("Enter two valid property search terms.")

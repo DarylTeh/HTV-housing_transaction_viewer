@@ -72,7 +72,7 @@ def init_session_state() -> None:
         "saved_properties": [],
         "saved_scenarios": [],
         "nav_index": 0,
-        "page_anchor": None,
+        "selected_page": NAVIGATION[0],
         "budget": 1_100_000,
     }
     for key, value in defaults.items():
@@ -101,24 +101,35 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
     interest = st.sidebar.radio("Interest type", INTEREST_TYPES, index=INTEREST_TYPES.index(state.get("interest_type", "Buy")))
     state["interest_type"] = interest
 
-    page = st.sidebar.selectbox("Global navigation", NAVIGATION, index=state.get("nav_index", 0))
+    current_page = state.get("selected_page", NAVIGATION[0])
+    current_index = NAVIGATION.index(current_page) if current_page in NAVIGATION else 0
+    page = st.sidebar.selectbox(
+        "Global navigation",
+        NAVIGATION,
+        index=current_index,
+        key="nav_page_select",
+    )
     state["nav_index"] = NAVIGATION.index(page)
+    state["selected_page"] = page
 
-    if st.sidebar.button("Clear saved lists"):
+    if st.sidebar.button("Clear saved lists", key="clear_saved_lists"):
         state["saved_properties"] = []
         state["saved_scenarios"] = []
         st.sidebar.success("Saved properties and scenarios cleared.")
 
     st.sidebar.markdown("---")
     st.sidebar.write("**Need ideas?**")
-    if st.sidebar.button("Search HDB" ):
-        state["page_anchor"] = "Buy Property"
-    if st.sidebar.button("Explore schools"):
-        state["page_anchor"] = "School Finder"
-    if st.sidebar.button("View market trends"):
-        state["page_anchor"] = "Market Trends"
+    if st.sidebar.button("Search HDB", key="sidebar_search_hdb"):
+        state["selected_page"] = "Buy Property"
+        state["nav_index"] = NAVIGATION.index("Buy Property")
+    if st.sidebar.button("Explore schools", key="sidebar_explore_schools"):
+        state["selected_page"] = "School Finder"
+        state["nav_index"] = NAVIGATION.index("School Finder")
+    if st.sidebar.button("View market trends", key="sidebar_view_market_trends"):
+        state["selected_page"] = "Market Trends"
+        state["nav_index"] = NAVIGATION.index("Market Trends")
 
-    return page
+    return state["selected_page"]
 
 
 def main() -> None:
@@ -126,8 +137,6 @@ def main() -> None:
     data = load_app_data()
 
     page = render_global_sidebar(st.session_state)
-    if st.session_state.get("page_anchor") in NAVIGATION:
-        page = st.session_state.pop("page_anchor")
 
     st.title("Singapore Property Intelligence Platform")
     st.markdown(

@@ -34,9 +34,10 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
         ("Find Rental", "Rent Property"),
         ("Explore Schools", "School Finder"),
     ]
-    for col, (label, value) in zip(cards, actions):
-        if col.button(label):
-            state["page_anchor"] = value
+    for idx, (label, value) in enumerate(actions):
+        col = cards[idx]
+        if col.button(label, key=f"dashboard_action_{idx}"):
+            state["selected_page"] = value
         col.write(value)
 
     st.markdown("---")

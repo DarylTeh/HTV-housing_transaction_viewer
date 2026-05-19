@@ -43,4 +43,10 @@ def render_analytics_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     st.plotly_chart(line_chart(monthly, x="transaction_date", y="average_price", title="Average transaction price over time"), use_container_width=True)
     st.plotly_chart(line_chart(monthly, x="transaction_date", y="transactions", title="Transaction count over time"), use_container_width=True)
     st.markdown("### Recent transactions")
-    st.dataframe(history[["transaction_date", "price", "size_sqm", "lease_remaining", "housing_kind"]].sort_values("transaction_date", ascending=False).head(20))
+    st.dataframe(
+        history[["transaction_date", "price", "size_sqm", "lease_remaining", "housing_kind"]]
+        .sort_values("transaction_date", ascending=False)
+        .head(20),
+        hide_index=True,
+        use_container_width=True,
+    )

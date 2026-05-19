@@ -24,9 +24,17 @@ def render_sell_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     filtered = price_medians if not district else price_medians[price_medians["area_name"] == district]
     latest = filtered[filtered["year"] == filtered["year"].max()]
     st.markdown("### Latest median prices")
-    st.dataframe(latest.head(10))
+    st.dataframe(
+        latest.head(10),
+        hide_index=True,
+        use_container_width=True,
+    )
 
     if district:
         town_tx = transactions[transactions["area_name"] == district]
         st.markdown(f"### Recent transactions in {district}")
-        st.dataframe(town_tx.sort_values("transaction_date", ascending=False).head(10))
+        st.dataframe(
+            town_tx.sort_values("transaction_date", ascending=False).head(10),
+            hide_index=True,
+            use_container_width=True,
+        )
