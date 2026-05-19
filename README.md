@@ -29,7 +29,7 @@ The app is built to:
    ```bash
    streamlit run app.py
    ```
-3. If you want to use Google Maps features, set the env var:
+3. If you want to use Google Maps features locally, set the env var:
    - Windows PowerShell:
      ```powershell
      $env:GOOGLE_MAPS_API_KEY = "YOUR_API_KEY"
@@ -38,6 +38,8 @@ The app is built to:
      ```bash
      export GOOGLE_MAPS_API_KEY="YOUR_API_KEY"
      ```
+
+> Note: this only sets the API key for the current local shell. It does not apply to Streamlit Cloud.
 
 ## Data refresh
 The GitHub Action is scheduled to run daily at 1:00 UTC (9:00 SGT).
@@ -58,6 +60,10 @@ It will:
 3. Connect the repository to Streamlit Cloud.
 4. In Streamlit Cloud, set the required secrets:
    - `GOOGLE_MAPS_API_KEY` (optional, recommended)
+
+### Additional runtime environment variables
+- `HTV_DATA_SOURCE` — optional. Set to `local_xlsx` or `live_api` if using a live data source instead of local CSV/XLSX.
+- `HTV_PREFER_CSV` — optional. Set to `1` to prefer CSV cache when available, or `auto` to let the app decide.
 
 ## What is local CSV vs raw data?
 - **Local CSV**: the app reads and stores transformed data in comma-separated files, which are easy to view, inspect, and commit to GitHub.
