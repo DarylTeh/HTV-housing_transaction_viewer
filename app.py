@@ -19,6 +19,70 @@ st.set_page_config(
     layout="wide",
 )
 
+TAB_STYLE_CSS = """
+<style>
+div[role="tablist"] > button[role="tab"] {
+    border-radius: 16px 16px 0 0;
+    margin-right: 8px;
+    margin-bottom: 0;
+    padding: 0.75rem 1.2rem;
+    border: 1px solid rgba(128, 128, 128, 0.18);
+    background: #f5f3ff;
+    color: #2d2d36;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+div[role="tablist"] > button[role="tab"]:hover {
+    transform: translateY(-1px);
+    background: #ede8ff;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"] {
+    background: #d7d0ff;
+    color: #0f0f2f;
+    border-color: #998cff;
+    box-shadow: 0 6px 18px rgba(118, 102, 255, 0.18);
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(1) {
+    background: #d9f0ff;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(2) {
+    background: #fff2d9;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(3) {
+    background: #e8f7dd;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(4) {
+    background: #ffe5f2;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(5) {
+    background: #f3f8ff;
+}
+
+div[role="tablist"] > button[role="tab"][aria-selected="true"]:nth-child(6) {
+    background: #f7f0ff;
+}
+
+div[role="tablist"] > button[role="tab"]:not([aria-selected="true"]) {
+    background: #f9f8ff;
+}
+
+div[role="tabpanel"] {
+    border: 1px solid rgba(128, 128, 128, 0.18);
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    padding: 1.5rem;
+    background-color: #fbfbff;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+</style>
+"""
+
 BORROWER_RELATIONSHIPS = [
     "Single",
     "Husband & Wife",
@@ -360,10 +424,10 @@ def render_comparison_tab() -> None:
 
 def main() -> None:
     init_session_state()
+    st.markdown(TAB_STYLE_CSS, unsafe_allow_html=True)
     st.title("Singapore Property Affordability Calculator")
     st.markdown(
-        "Use the tabs to describe buyers, current holdings, the new purchase, loan structure, and results. "
-        "This tool is designed to feel like a modern banking calculator with clear metrics, warnings, and scenario comparison."
+        "Fill up the details across the tabs below to see a comprehensive affordability analysis for your next property purchase. "
     )
 
     tab_profile, tab_current, tab_purchase, tab_loan, tab_results, tab_compare = st.tabs(
