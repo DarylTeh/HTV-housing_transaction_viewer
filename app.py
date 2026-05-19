@@ -700,11 +700,14 @@ def main():
 
     st.divider()
     
-    # PRIMARY SECTION: Budget Calculator (Always expanded, always visible)
-    st.markdown("## 💰 Plan Your Budget")
-    show_budget_calculator()
-    
-    st.divider()
+    # PRIMARY SECTION: Budget Calculator (Always expanded, always visible - except in rent mode)
+    if st.session_state.rent_or_buy != "Rent":
+        st.markdown("## 💰 Plan Your Budget")
+        show_budget_calculator()
+        st.divider()
+    else:
+        st.info("💡 Budget calculator is hidden in rental mode. Use the 'Rent vs Buy Comparison' section below to estimate rental costs.")
+        st.divider()
     
     # PRIMARY SECTION: Market Trends (Always expanded)
     st.markdown("## 📊 Market Trends & Prices")
@@ -758,11 +761,14 @@ def main():
 
     st.divider()
     
-    # PRIMARY SECTION: Schools (Always expanded - critical for HDB families)
-    st.markdown("## 🏫 Schools Near Home")
-    show_distance_tools()
-    
-    st.divider()
+    # PRIMARY SECTION: Schools (Always expanded - critical for HDB families, but hidden in rent mode)
+    if st.session_state.rent_or_buy != "Rent":
+        st.markdown("## 🏫 Schools Near Home")
+        show_distance_tools()
+        st.divider()
+    else:
+        st.info("💡 School proximity tools are hidden in rental mode. Rental tenants typically don't need school proximity for children.")
+        st.divider()
     
     # COLLAPSIBLE SECTIONS (All collapsed by default for cleaner UI)
     
@@ -813,168 +819,169 @@ def main():
                 st.write(content)
     st.divider()
     
-    # Advanced Features (collapsed by default)
-    with st.expander("🔍 Advanced: Amenities & POI Proximity", expanded=False):
-        st.subheader("Nearby Services Map")
-        home_query = st.text_input("Enter home address", value="Tampines Street 61", key="amenity_search_home")
-        radius_km = st.slider("Search radius (km)", min_value=0.5, max_value=5.0, value=2.0, step=0.5)
-        
-        if home_query:
-            home_loc = geocode_place(home_query)
-            if home_loc:
-                # Load data
-                pois = load_cached_pois()
-                schools_df = load_school_list()
-                
-                # Filter POIs within radius
-                nearby_pois = []
-                if not pois.empty and "lat" in pois.columns and "lon" in pois.columns:
-                    for _, row in pois.iterrows():
-                        try:
-                            poi_lat = float(row["lat"])
-                            poi_lon = float(row["lon"])
-                            dist = haversine_distance(home_loc[0], home_loc[1], poi_lat, poi_lon)
-                            if dist <= radius_km:
-                                nearby_pois.append({
-                                    "name": row.get("name", "Unknown"),
-                                    "category": row.get("category", "POI"),
-                                    "lat": poi_lat,
-                                    "lon": poi_lon,
-                                    "distance_km": round(dist, 2)
-                                })
-                        except (ValueError, TypeError):
-                            continue
-                
-                # Filter schools within radius
-                nearby_schools = []
-                if not schools_df.empty:
-                    for _, row in schools_df.iterrows():
-                        school_name = row["name"]
-                        loc = geocode_school(school_name)
-                        if loc:
-                            dist = haversine_distance(home_loc[0], home_loc[1], loc[0], loc[1])
-                            if dist <= radius_km:
-                                nearby_schools.append({
-                                    "name": school_name,
-                                    "rank": int(row["rank"]),
-                                    "lat": loc[0],
-                                    "lon": loc[1],
-                                    "distance_km": round(dist, 2)
-                                })
-                
-                # Create map data for pydeck
-                map_data = []
-                
-                # Add home location (blue marker with house icon)
-                map_data.append({
-                    "lat": home_loc[0],
-                    "lon": home_loc[1],
-                    "name": "🏠 Target Home",
-                    "type": "home",
-                    "color": [0, 0, 255]  # Blue
-                })
-                
-                # Add POIs (green markers)
-                for poi in nearby_pois[:50]:  # Limit to 50 for performance
+    # Advanced Features (collapsed by default - hidden in rent mode)
+    if st.session_state.rent_or_buy != "Rent":
+        with st.expander("🔍 Advanced: Amenities & POI Proximity", expanded=False):
+            st.subheader("Nearby Services Map")
+            home_query = st.text_input("Enter home address", value="Tampines Street 61", key="amenity_search_home")
+            radius_km = st.slider("Search radius (km)", min_value=0.5, max_value=5.0, value=2.0, step=0.5)
+            
+            if home_query:
+                home_loc = geocode_place(home_query)
+                if home_loc:
+                    # Load data
+                    pois = load_cached_pois()
+                    schools_df = load_school_list()
+                    
+                    # Filter POIs within radius
+                    nearby_pois = []
+                    if not pois.empty and "lat" in pois.columns and "lon" in pois.columns:
+                        for _, row in pois.iterrows():
+                            try:
+                                poi_lat = float(row["lat"])
+                                poi_lon = float(row["lon"])
+                                dist = haversine_distance(home_loc[0], home_loc[1], poi_lat, poi_lon)
+                                if dist <= radius_km:
+                                    nearby_pois.append({
+                                        "name": row.get("name", "Unknown"),
+                                        "category": row.get("category", "POI"),
+                                        "lat": poi_lat,
+                                        "lon": poi_lon,
+                                        "distance_km": round(dist, 2)
+                                    })
+                            except (ValueError, TypeError):
+                                continue
+                    
+                    # Filter schools within radius
+                    nearby_schools = []
+                    if not schools_df.empty:
+                        for _, row in schools_df.iterrows():
+                            school_name = row["name"]
+                            loc = geocode_school(school_name)
+                            if loc:
+                                dist = haversine_distance(home_loc[0], home_loc[1], loc[0], loc[1])
+                                if dist <= radius_km:
+                                    nearby_schools.append({
+                                        "name": school_name,
+                                        "rank": int(row["rank"]),
+                                        "lat": loc[0],
+                                        "lon": loc[1],
+                                        "distance_km": round(dist, 2)
+                                    })
+                    
+                    # Create map data for pydeck
+                    map_data = []
+                    
+                    # Add home location (blue marker with house icon)
                     map_data.append({
-                        "lat": poi["lat"],
-                        "lon": poi["lon"],
-                        "name": f"📍 {poi['name']} ({poi['category']})",
-                        "type": "poi",
-                        "color": [0, 255, 0]  # Green
-                    })
-                
-                # Add schools (blue markers)
-                for school in nearby_schools[:20]:  # Limit to 20 for performance
-                    map_data.append({
-                        "lat": school["lat"],
-                        "lon": school["lon"],
-                        "name": f"🏫 {school['name']} (Rank #{school['rank']})",
-                        "type": "school",
+                        "lat": home_loc[0],
+                        "lon": home_loc[1],
+                        "name": "🏠 Target Home",
+                        "type": "home",
                         "color": [0, 0, 255]  # Blue
                     })
-                
-                if map_data:
-                    map_df = pd.DataFrame(map_data)
                     
-                    # Create pydeck map with colored markers
-                    view_state = pdk.ViewState(
-                        latitude=home_loc[0],
-                        longitude=home_loc[1],
-                        zoom=13,
-                        pitch=0
-                    )
+                    # Add POIs (green markers)
+                    for poi in nearby_pois[:50]:  # Limit to 50 for performance
+                        map_data.append({
+                            "lat": poi["lat"],
+                            "lon": poi["lon"],
+                            "name": f"📍 {poi['name']} ({poi['category']})",
+                            "type": "poi",
+                            "color": [0, 255, 0]  # Green
+                        })
                     
-                    # Create scatterplot layer with different colors
-                    layer = pdk.Layer(
-                        "ScatterplotLayer",
-                        data=map_df,
-                        get_position="[lon, lat]",
-                        get_color="color",
-                        get_radius=100,
-                        pickable=True
-                    )
+                    # Add schools (blue markers)
+                    for school in nearby_schools[:20]:  # Limit to 20 for performance
+                        map_data.append({
+                            "lat": school["lat"],
+                            "lon": school["lon"],
+                            "name": f"🏫 {school['name']} (Rank #{school['rank']})",
+                            "type": "school",
+                            "color": [0, 0, 255]  # Blue
+                        })
                     
-                    # Create the map
-                    st.pydeck_chart(pdk.Deck(
-                        layers=[layer],
-                        initial_view_state=view_state,
-                        tooltip={
-                            "html": "<b>{name}</b>",
-                            "style": {
-                                "backgroundColor": "steelblue",
-                                "color": "white"
+                    if map_data:
+                        map_df = pd.DataFrame(map_data)
+                        
+                        # Create pydeck map with colored markers
+                        view_state = pdk.ViewState(
+                            latitude=home_loc[0],
+                            longitude=home_loc[1],
+                            zoom=13,
+                            pitch=0
+                        )
+                        
+                        # Create scatterplot layer with different colors
+                        layer = pdk.Layer(
+                            "ScatterplotLayer",
+                            data=map_df,
+                            get_position="[lon, lat]",
+                            get_color="color",
+                            get_radius=100,
+                            pickable=True
+                        )
+                        
+                        # Create the map
+                        st.pydeck_chart(pdk.Deck(
+                            layers=[layer],
+                            initial_view_state=view_state,
+                            tooltip={
+                                "html": "<b>{name}</b>",
+                                "style": {
+                                    "backgroundColor": "steelblue",
+                                    "color": "white"
+                                }
                             }
-                        }
-                    ))
+                        ))
+                        
+                        # Display legend
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.markdown("🏠 **Target Home** (Blue)")
+                        with col2:
+                            st.markdown("📍 **POI** (Green)")
+                        with col3:
+                            st.markdown("🏫 **School** (Blue)")
+                        
+                        # Display nearby locations in tables
+                        col_poi, col_school = st.columns(2)
+                        
+                        with col_poi:
+                            st.subheader(f"Nearby POIs ({len(nearby_pois)})")
+                            if nearby_pois:
+                                poi_df = pd.DataFrame(nearby_pois)
+                                st.dataframe(poi_df[["name", "category", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                            else:
+                                st.info("No POIs found within radius")
+                        
+                        with col_school:
+                            st.subheader(f"Nearby Schools ({len(nearby_schools)})")
+                            if nearby_schools:
+                                school_df = pd.DataFrame(nearby_schools)
+                                st.dataframe(school_df[["name", "rank", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                            else:
+                                st.info("No schools found within radius")
+                    else:
+                        st.warning("No locations found to display on map")
                     
-                    # Display legend
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.markdown("🏠 **Target Home** (Blue)")
-                    with col2:
-                        st.markdown("📍 **POI** (Green)")
-                    with col3:
-                        st.markdown("🏫 **School** (Blue)")
-                    
-                    # Display nearby locations in tables
-                    col_poi, col_school = st.columns(2)
-                    
-                    with col_poi:
-                        st.subheader(f"Nearby POIs ({len(nearby_pois)})")
-                        if nearby_pois:
-                            poi_df = pd.DataFrame(nearby_pois)
-                            st.dataframe(poi_df[["name", "category", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                    # Show data availability info
+                    col_pharma, col_hawker = st.columns(2)
+                    with col_pharma:
+                        pharmacies = load_cached_pharmacies()
+                        if not pharmacies.empty:
+                            st.caption(f"📍 Pharmacies data available: {len(pharmacies)} records")
                         else:
-                            st.info("No POIs found within radius")
+                            st.caption("Pharmacy data not available")
                     
-                    with col_school:
-                        st.subheader(f"Nearby Schools ({len(nearby_schools)})")
-                        if nearby_schools:
-                            school_df = pd.DataFrame(nearby_schools)
-                            st.dataframe(school_df[["name", "rank", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                    with col_hawker:
+                        hawkers = load_cached_hawker_centres()
+                        if not hawkers.empty:
+                            st.caption(f"🍜 Hawker centres data available: {len(hawkers)} records")
                         else:
-                            st.info("No schools found within radius")
+                            st.caption("Hawker centre data not available")
                 else:
-                    st.warning("No locations found to display on map")
-                
-                # Show data availability info
-                col_pharma, col_hawker = st.columns(2)
-                with col_pharma:
-                    pharmacies = load_cached_pharmacies()
-                    if not pharmacies.empty:
-                        st.caption(f"📍 Pharmacies data available: {len(pharmacies)} records")
-                    else:
-                        st.caption("Pharmacy data not available")
-                
-                with col_hawker:
-                    hawkers = load_cached_hawker_centres()
-                    if not hawkers.empty:
-                        st.caption(f"🍜 Hawker centres data available: {len(hawkers)} records")
-                    else:
-                        st.caption("Hawker centre data not available")
-            else:
-                st.warning("Could not locate that address. Try block + street + Singapore.")
+                    st.warning("Could not locate that address. Try block + street + Singapore.")
 
     with st.expander("💡 Why this matters for first-time buyers", expanded=False):
         st.markdown(
