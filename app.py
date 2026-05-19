@@ -522,7 +522,6 @@ def show_distance_tools():
                 ),
                 hide_index=True,
                 use_container_width=True,
-                hide_index=True,
                 height=400,
             )
 
