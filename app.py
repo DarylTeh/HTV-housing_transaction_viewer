@@ -634,7 +634,6 @@ def main():
             st.caption("💡 Click outside to close")
 
     mode_label = "local Excel workbooks" if DATA_SOURCE_MODE == "local_xlsx" else "live government API"
-    st.caption(f"Data: **{mode_label}** · Toggle via `HTV_DATA_SOURCE` in `data_sources.py`")
 
     # Progress bar for data loading
     progress_bar = st.progress(0, text="Initializing...")
