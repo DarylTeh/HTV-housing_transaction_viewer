@@ -27,7 +27,7 @@ from processed_data import (
 )
 
 st.set_page_config(
-    page_title="Housing Transaction Viewer",
+    page_title="Housing Transaction Viewer",    
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -74,7 +74,8 @@ def init_session_state() -> None:
         "saved_scenarios": [],
         "nav_index": 0,
         "selected_page": NAVIGATION[0],
-        "budget": 1_100_000,
+        # `budget` is set when the user runs the Affordability assessment.
+        "budget_calculated": False,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -105,6 +106,10 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
 
     current_page = state.get("selected_page", NAVIGATION[0])
     current_index = NAVIGATION.index(current_page) if current_page in NAVIGATION else 0
+    # Ensure the selectbox widget reflects the programmatic `selected_page` value
+    # by setting the widget state before rendering it. This keeps dashboard/other
+    # page buttons in sync with the sidebar selection.
+    st.session_state["nav_page_select"] = current_page
     page = st.sidebar.selectbox(
         "Global navigation",
         NAVIGATION,
@@ -124,12 +129,15 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
     if st.sidebar.button("Search HDB", key="sidebar_search_hdb"):
         state["selected_page"] = "Buy Property"
         state["nav_index"] = NAVIGATION.index("Buy Property")
+        state["nav_page_select"] = "Buy Property"
     if st.sidebar.button("Explore schools", key="sidebar_explore_schools"):
         state["selected_page"] = "School Finder"
         state["nav_index"] = NAVIGATION.index("School Finder")
+        state["nav_page_select"] = "School Finder"
     if st.sidebar.button("View market trends", key="sidebar_view_market_trends"):
         state["selected_page"] = "Market Trends"
         state["nav_index"] = NAVIGATION.index("Market Trends")
+        state["nav_page_select"] = "Market Trends"
 
     return state["selected_page"]
 

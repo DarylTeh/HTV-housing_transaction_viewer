@@ -30,6 +30,7 @@ def render_affordability_page(data: dict[str, pd.DataFrame], state: dict) -> Non
 
     if st.button("Run affordability assessment"):
         state["budget"] = purchase_price
+        state["budget_calculated"] = True
 
     result = calculate_affordability(
         buyers=[

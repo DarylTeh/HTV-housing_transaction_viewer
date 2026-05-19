@@ -38,6 +38,13 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
         col = cards[idx]
         if col.button(label, key=f"dashboard_action_{idx}"):
             state["selected_page"] = value
+            # keep sidebar widget and nav index in sync so the app navigates immediately
+            state["nav_index"] = NAV_IDX = None
+            try:
+                state["nav_index"] = __import__("app").NAVIGATION.index(value)
+            except Exception:
+                state["nav_index"] = 0
+            state["nav_page_select"] = value
         col.write(value)
 
     st.markdown("---")
@@ -45,12 +52,14 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
     if not medians.empty:
         st.plotly_chart(market_trend_chart(medians), use_container_width=True)
 
-    budget = state.get("budget", 1_100_000)
-    recommendations = recommend_properties(data.get("transactions", pd.DataFrame()), budget)
-    if recommendations:
-        st.subheader("Recommended properties for your budget")
-        for rec in recommendations:
-            st.write(f"- {rec.get('street_name','')} in {rec.get('area_name','')} ({rec.get('housing_kind','')}) — {format_currency(rec.get('latest_price'))}")
+    # Only show budget recommendations if the user has run the affordability assessment
+    if state.get("budget_calculated", False):
+        budget = state.get("budget")
+        recommendations = recommend_properties(data.get("transactions", pd.DataFrame()), budget)
+        if recommendations:
+            st.subheader("Recommended properties for your budget")
+            for rec in recommendations:
+                st.write(f"- {rec.get('street_name','')} in {rec.get('area_name','')} ({rec.get('housing_kind','')}) — {format_currency(rec.get('latest_price'))}")
 
     if saved := state.get("saved_properties", []):
         st.markdown("---")
