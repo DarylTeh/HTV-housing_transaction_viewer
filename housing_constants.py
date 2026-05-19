@@ -41,40 +41,6 @@ ABSD_RATES: dict[str, dict[str, float]] = {
     "Foreigner": {"1st": 0.60, "2nd": 0.60, "3rd+": 0.60},
 }
 
-LOCATION_GUIDANCE: list[tuple[str, str]] = [
-    (
-        "Primary school distance (1 km)",
-        "For popular primary schools, children living **within 1 km** of the school get **higher balloting priority** "
-        "(Phase 2A/2B/2C). Within 2 km is still helpful but weaker. If you plan to have children, check MOE’s live "
-        "school cut-off distances before committing to an address.",
-    ),
-    (
-        "HDB Minimum Occupation Period (MOP)",
-        "Most HDB flats must be occupied for **5 years** before you can sell or rent out the whole flat. "
-        "During MOP you must live there — location choices affect schools, commute, and daily errands for years.",
-    ),
-    (
-        "Supermarkets & hawker centres",
-        "Young families shop often. Being near **NTUC / Giant / Cold Storage** and a **hawker centre or market** "
-        "saves time and money. Use the amenity checker below with your shortlisted address.",
-    ),
-    (
-        "Ethnic Integration Policy (EIP)",
-        "HDB blocks have EIP quotas by ethnicity. When buying resale, check the block’s quota status on HDB’s portal — "
-        "it can affect who you can sell to later.",
-    ),
-    (
-        "Living near parents (BTO priority)",
-        "Some BTO schemes give **priority** if you live near your parents. Even for resale, being close to family "
-        "helps with childcare — factor this into location.",
-    ),
-    (
-        "Lease decay (older flats)",
-        "Shorter remaining leases mean lower valuations and stricter loan limits. Compare **remaining lease** "
-        "in the transaction data when choosing older HDB towns.",
-    ),
-]
-
 GLOSSARY: dict[str, str] = {
     "HDB": "Housing & Development Board flats — subsidised public housing for eligible Singapore households.",
     "BTO": "Build-To-Order — new HDB flats sold before they are built, usually with grants for eligible buyers.",
@@ -86,10 +52,6 @@ GLOSSARY: dict[str, str] = {
     "CCR / RCR / OCR": "Core Central, Rest of Central, Outside Central — URA market segments for private property.",
     "Leasehold": "You own the home for a fixed period (e.g. 99 years); value may fall as the lease runs down.",
     "Freehold": "Ownership without a fixed lease expiry (still subject to government rules and redevelopment).",
-    "MOP": "Minimum Occupation Period — years you must physically live in your HDB flat before selling or renting it out.",
-    "1 km priority": "Homes within 1 km of a school get better chance in MOE Primary 1 registration balloting.",
-    "Pledge / Unpledge": "Ways for parents to support your loan: pledge their income or park CPF in your account so the bank counts it.",
-    "IPA": "In-Principle Approval — bank’s preliminary loan offer based on your income, age, and debts (not the flat price).",
 }
 
 
