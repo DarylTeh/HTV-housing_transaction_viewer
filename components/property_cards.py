@@ -6,13 +6,9 @@ import streamlit as st
 def render_property_card(project: dict, key: str, saved: bool = False) -> None:
     title = f"{project.get('street_name', 'Unknown')} — {project.get('area_name', '')}"
     housing_kind = project.get('housing_kind', '')
-    cols = st.columns([0.18, 0.65, 0.17])
+    # No images available in dataset — show numeric/textual details only
+    cols = st.columns([0.75, 0.25])
     with cols[0]:
-        st.image(
-            "https://via.placeholder.com/160x120.png?text=Property",
-            use_column_width=True,
-        )
-    with cols[1]:
         st.markdown(f"### {title}")
         st.markdown(
             """
@@ -31,7 +27,7 @@ def render_property_card(project: dict, key: str, saved: bool = False) -> None:
         )
         if project.get("rental_yield") is not None:
             st.markdown(f"**Estimated yield:** {project['rental_yield']:.1f}%")
-    with cols[2]:
+    with cols[1]:
         if st.button("View Analytics", key=f"analytics_{key}"):
             st.session_state["selected_property"] = title
         if st.button("Save", key=f"save_{key}"):
