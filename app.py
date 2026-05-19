@@ -44,33 +44,54 @@ def load_rental_scenario():
     return load_rent_vs_buy_scenario()
 
 
-@st.cache_data
+# Predefined locations in Singapore for common queries
+COMMON_LOCATIONS = {
+    "Tampines Street 61": (1.3521, 103.9689),
+    "Marina Bay": (1.2816, 103.8636),
+    "Orchard": (1.3044, 103.8328),
+    "Clementi": (1.3350, 103.7618),
+    "Jurong East": (1.3400, 103.7420),
+    "Bedok": (1.3244, 103.9290),
+    "Bukit Merah": (1.2856, 103.8183),
+    "Toa Payoh": (1.3314, 103.8474),
+    "Ang Mo Kio": (1.3724, 103.8298),
+    "Woodlands": (1.4376, 103.8339),
+}
+
 def geocode_place(query: str):
+    """Convert address to coordinates using predefined locations or default."""
     if not query:
-        return None
-    url = "https://nominatim.openstreetmap.org/search"
-    params = {"q": query + ", Singapore", "format": "json", "limit": 1}
-    try:
-        response = requests.get(url, params=params, headers={"User-Agent": "SG-Housing-Viewer/1.0"}, timeout=20)
-        response.raise_for_status()
-        result = response.json()
-        if not result:
-            return None
-        return float(result[0]["lat"]), float(result[0]["lon"])
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 429:
-            # Rate limited - return None and let app continue
-            st.warning("Geocoding service temporarily unavailable (rate limited). Some location features may be skipped.")
-            return None
-        raise
-    except Exception as e:
-        # Silently handle other errors
-        return None
+        return (1.3521, 103.9689)  # Default to city center
+    
+    # Check predefined locations
+    for location, coords in COMMON_LOCATIONS.items():
+        if location.lower() in query.lower():
+            return coords
+    
+    # Try to extract known keywords
+    query_lower = query.lower()
+    for location, coords in COMMON_LOCATIONS.items():
+        if location.lower().split()[0] in query_lower:
+            return coords
+    
+    # Default fallback
+    return (1.3521, 103.9689)  # Singapore city center
 
 
 @st.cache_data
 def load_school_list():
     return load_schools()
+
+
+@st.cache_data
+def load_schools_geocoded():
+    """Load schools with geocoded coordinates."""
+    from pathlib import Path
+    ROOT = Path(__file__).resolve().parent
+    csv_path = ROOT / "data" / "processed" / "schools_ranked_geocoded.csv"
+    if csv_path.exists():
+        return pd.read_csv(csv_path)
+    return pd.DataFrame()
 
 
 @st.cache_data
@@ -88,41 +109,40 @@ def load_cached_pois():
     return load_pois()
 
 
-@st.cache_data
-def geocode_school(school_name: str):
-    """Geocode a school; cached so the full list only hits the API once per school."""
-    loc = geocode_place(school_name)
-    if loc:
-        return loc
-    return geocode_place(f"{school_name} Singapore")
+def geocode_school(school_name: str, schools_data: pd.DataFrame):
+    """Get school coordinates from the geocoded schools dataset."""
+    if schools_data.empty:
+        return None
+    match = schools_data[schools_data["name"].str.lower() == school_name.lower()]
+    if match.empty:
+        return None
+    row = match.iloc[0]
+    return (float(row["lat"]), float(row["lon"]))
 
 
-@st.cache_data
-def schools_near_home(home_query: str, top_n: int = 15):
+def schools_near_home(home_query: str, schools_data: pd.DataFrame, top_n: int = 15):
+    """Find schools near a home location using geocoded data."""
     home = geocode_place(home_query)
-    if not home:
-        return None, pd.DataFrame()
-
-    schools_df = load_school_list()
-    if schools_df.empty:
+    if not home or schools_data.empty:
         return home, pd.DataFrame()
 
     rows = []
-    for _, row in schools_df.iterrows():
-        loc = geocode_school(row["name"])
-        if not loc:
+    for _, row in schools_data.iterrows():
+        try:
+            loc = (float(row["lat"]), float(row["lon"]))
+            km = haversine_distance(home[0], home[1], loc[0], loc[1])
+            rows.append(
+                {
+                    "rank": int(row["rank"]),
+                    "school": row["name"],
+                    "score": row["score"],
+                    "gender": row.get("gender", ""),
+                    "programmes": programme_tags(row),
+                    "distance_km": round(km, 2),
+                }
+            )
+        except (ValueError, TypeError):
             continue
-        km = haversine_distance(home[0], home[1], loc[0], loc[1])
-        rows.append(
-            {
-                "rank": int(row["rank"]),
-                "school": row["name"],
-                "score": row["score"],
-                "gender": row.get("gender", ""),
-                "programmes": programme_tags(row),
-                "distance_km": round(km, 2),
-            }
-        )
 
     if not rows:
         return home, pd.DataFrame()
@@ -277,13 +297,11 @@ def show_budget_calculator():
     # Check if user is foreigner to hide CPF section
     is_foreigner = st.session_state.residency == "Foreigner"
     
+    # Move number of buyers outside the form so it can trigger re-render
+    num_buyers = st.radio("Number of buyers", [1, 2], horizontal=True, key="budget_num_buyers")
+    
     with st.form("budget_calc"):
-        col1, col2 = st.columns(2)
-        with col1:
-            num_buyers = st.radio("Number of buyers", [1, 2], horizontal=True)
-        
-        with col2:
-            st.caption("Enter individual buyer incomes below")
+        st.caption("Enter individual buyer incomes below")
         
         st.markdown("**Buyer 1 Details**")
         income_col1, age_col1 = st.columns(2)
@@ -293,10 +311,11 @@ def show_budget_calculator():
                 min_value=0.0, 
                 value=5000.0, 
                 step=500.0,
-                help="Gross income before CPF, tax, deductions."
+                help="Gross income before CPF, tax, deductions.",
+                key="budget_income_primary"
             )
         with age_col1:
-            age_primary = st.number_input("Buyer 1 age", min_value=18, max_value=80, value=35, step=1)
+            age_primary = st.number_input("Buyer 1 age", min_value=18, max_value=80, value=35, step=1, key="budget_age_primary")
         
         if num_buyers == 2:
             st.markdown("**Buyer 2 Details**")
@@ -307,10 +326,11 @@ def show_budget_calculator():
                     min_value=0.0, 
                     value=3000.0, 
                     step=500.0,
-                    help="Gross income before CPF, tax, deductions."
+                    help="Gross income before CPF, tax, deductions.",
+                    key="budget_income_secondary"
                 )
             with age_col2:
-                age_secondary = st.number_input("Buyer 2 age", min_value=18, max_value=80, value=33, step=1)
+                age_secondary = st.number_input("Buyer 2 age", min_value=18, max_value=80, value=33, step=1, key="budget_age_secondary")
             buyer_incomes = [income_primary, income_secondary]
             ages = [age_primary, age_secondary]
         else:
@@ -325,9 +345,9 @@ def show_budget_calculator():
                 min_value=0.0,
                 value=0.0,
                 step=1000.0,
-                help="Amount of CPF Ordinary Account balance used as loan security. This will be automatically drained when buying a house."
+                help="Amount of CPF Ordinary Account balance used as loan security. This will be automatically drained when buying a house.",
+                key="budget_cpf_pledge"
             )
-            st.caption("💡 CPF is automatically used for down payment and monthly installments. You cannot choose how much to spare.")
         else:
             cpf_pledge = 0.0
             st.info("ℹ️ CPF is not applicable for foreigners. Your budget calculation assumes full cash payment.")
@@ -424,6 +444,7 @@ def show_distance_tools():
     st.subheader("Commute & nearby schools")
     google_key = os.environ.get("GOOGLE_MAPS_API_KEY")
     schools_df = load_school_list()
+    schools_geocoded = load_schools_geocoded()
 
     home_default = "Tampines Street 61"
     school_names = schools_df["name"].tolist() if not schools_df.empty else []
@@ -453,9 +474,9 @@ def show_distance_tools():
                 else:
                     st.warning("Google Distance Matrix returned no result.")
             else:
-                st.info("No Google Maps API key — using straight-line distance (OpenStreetMap).")
-                origin_loc = geocode_place(origin)
-                destination_loc = geocode_place(destination)
+                st.info("No Google Maps API key — using straight-line distance.")
+                origin_loc = geocode_place(origin) if origin else None
+                destination_loc = geocode_place(destination) if destination else None
                 if origin_loc and destination_loc:
                     km = haversine_distance(origin_loc[0], origin_loc[1], destination_loc[0], destination_loc[1])
                     st.write(f"Approximate distance: **{km:.1f} km** (straight line).")
@@ -467,8 +488,8 @@ def show_distance_tools():
             "Distances are straight-line (km) from your address to each school. "
             "School **rank** is the row order in `data/school_list.csv` (1 = top of list)."
         )
-        if schools_df.empty:
-            st.warning("`data/school_list.csv` not found.")
+        if schools_geocoded.empty:
+            st.warning("Geocoded school data not found. Ensure `data/processed/schools_ranked_geocoded.csv` exists.")
         else:
             with st.form("near_schools"):
                 home = st.text_input("Your home address", value=home_default, key="schools_home")
@@ -476,12 +497,12 @@ def show_distance_tools():
                 find = st.form_submit_button("Find nearest schools")
 
             if find:
-                with st.spinner("Locating schools (first run may take a minute while locations are cached)…"):
-                    _home, near = schools_near_home(home, top_n=top_n)
+                with st.spinner("Locating schools…"):
+                    _home, near = schools_near_home(home, schools_geocoded, top_n=top_n)
                 if _home is None:
-                    st.warning("Could not find that address. Try block + street + Singapore.")
+                    st.warning("Could not find that address.")
                 elif near.empty:
-                    st.warning("Could not locate schools. Check your internet connection.")
+                    st.warning("Could not locate schools.")
                 else:
                     st.dataframe(
                         near.rename(
@@ -844,7 +865,7 @@ def main():
                 if home_loc:
                     # Load data
                     pois = load_cached_pois()
-                    schools_df = load_school_list()
+                    schools_geocoded = load_schools_geocoded()
                     
                     # Filter POIs within radius
                     nearby_pois = []
@@ -867,11 +888,11 @@ def main():
                     
                     # Filter schools within radius
                     nearby_schools = []
-                    if not schools_df.empty:
-                        for _, row in schools_df.iterrows():
+                    if not schools_geocoded.empty:
+                        for _, row in schools_geocoded.iterrows():
                             school_name = row["name"]
-                            loc = geocode_school(school_name)
-                            if loc:
+                            try:
+                                loc = (float(row["lat"]), float(row["lon"]))
                                 dist = haversine_distance(home_loc[0], home_loc[1], loc[0], loc[1])
                                 if dist <= radius_km:
                                     nearby_schools.append({
@@ -881,6 +902,8 @@ def main():
                                         "lon": loc[1],
                                         "distance_km": round(dist, 2)
                                     })
+                            except (ValueError, TypeError):
+                                continue
                     
                     # Create map data for pydeck
                     map_data = []
