@@ -7,8 +7,10 @@ import plotly.express as px
 def market_trend_chart(price_medians: pd.DataFrame) -> px.line:
     if price_medians.empty:
         return px.line()
-    latest = price_medians.groupby("housing_kind", group_keys=False).apply(
-        lambda df: df.sort_values("year").tail(100)
+    latest = (
+        price_medians.sort_values(["housing_kind", "year"])
+        .groupby("housing_kind", group_keys=False)
+        .tail(100)
     )
     fig = px.line(latest, x="year", y="median_price", color="housing_kind", title="Median price trend by housing type")
     fig.update_layout(hovermode="x unified", template="plotly_white")
