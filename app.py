@@ -16,6 +16,7 @@ from pages.saved import render_saved_page
 from pages.sell import render_sell_page
 from pages.schools import render_schools_page
 from pages.trends import render_trends_page
+from amenity_search import load_pois
 from processed_data import (
     load_hawker_centres,
     load_price_medians,
@@ -86,6 +87,7 @@ def load_app_data() -> dict[str, pd.DataFrame]:
         "transactions": load_transactions(),
         "price_medians": load_price_medians(),
         "schools_geocoded": load_schools_ranked_geocoded(),
+        "pois": load_pois(),
         "supermarkets": load_supermarkets(),
         "hawker_centres": load_hawker_centres(),
         "rent_vs_buy": load_rent_vs_buy_timeline(),
