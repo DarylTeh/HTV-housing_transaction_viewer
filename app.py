@@ -3,6 +3,7 @@ import os
 
 import pandas as pd
 import plotly.express as px
+import pydeck as pdk
 import requests
 import streamlit as st
 
@@ -268,27 +269,40 @@ def show_budget_calculator():
         col1, col2 = st.columns(2)
         with col1:
             num_buyers = st.radio("Number of buyers", [1, 2], horizontal=True)
-            st.caption("If 2 buyers, enter combined gross income below")
         
         with col2:
-            gross_income = st.number_input(
-                "Combined monthly gross income (SGD)", 
-                min_value=0.0, 
-                value=6000.0, 
-                step=500.0,
-                help="Total gross income before CPF, tax, deductions."
-            )
+            st.caption("Enter individual buyer incomes below")
         
-        st.markdown("**Buyer details**")
-        age_col1, age_col2 = st.columns(2)
+        st.markdown("**Buyer 1 Details**")
+        income_col1, age_col1 = st.columns(2)
+        with income_col1:
+            income_primary = st.number_input(
+                "Buyer 1 monthly gross income (SGD)", 
+                min_value=0.0, 
+                value=5000.0, 
+                step=500.0,
+                help="Gross income before CPF, tax, deductions."
+            )
         with age_col1:
-            age_primary = st.number_input("Primary buyer age", min_value=18, max_value=80, value=35, step=1)
+            age_primary = st.number_input("Buyer 1 age", min_value=18, max_value=80, value=35, step=1)
         
         if num_buyers == 2:
+            st.markdown("**Buyer 2 Details**")
+            income_col2, age_col2 = st.columns(2)
+            with income_col2:
+                income_secondary = st.number_input(
+                    "Buyer 2 monthly gross income (SGD)", 
+                    min_value=0.0, 
+                    value=3000.0, 
+                    step=500.0,
+                    help="Gross income before CPF, tax, deductions."
+                )
             with age_col2:
-                age_secondary = st.number_input("Co-buyer age", min_value=18, max_value=80, value=33, step=1)
+                age_secondary = st.number_input("Buyer 2 age", min_value=18, max_value=80, value=33, step=1)
+            buyer_incomes = [income_primary, income_secondary]
             ages = [age_primary, age_secondary]
         else:
+            buyer_incomes = [income_primary]
             ages = [age_primary]
         
         # CPF section - only show for Singapore Citizens and PRs
@@ -310,10 +324,11 @@ def show_budget_calculator():
     
     if submitted:
         result = calculate_budget(
-            gross_monthly_income=gross_income,
+            gross_monthly_income=sum(buyer_incomes),  # Pass combined income for backward compatibility
             num_buyers=num_buyers,
             ages=ages,
             cpf_pledge_pct=cpf_pledge,
+            buyer_incomes=buyer_incomes,  # Pass individual incomes
         )
         
         st.markdown("### Your Maximum Budget")
@@ -801,31 +816,164 @@ def main():
     
     # Advanced Features (collapsed by default)
     with st.expander("🔍 Advanced: Amenities & POI Proximity", expanded=False):
-        st.subheader("Nearby Services")
+        st.subheader("Nearby Services Map")
         home_query = st.text_input("Enter home address", value="Tampines Street 61", key="amenity_search_home")
+        radius_km = st.slider("Search radius (km)", min_value=0.5, max_value=5.0, value=2.0, step=0.5)
         
         if home_query:
             home_loc = geocode_place(home_query)
             if home_loc:
-                col_pharma, col_hawker = st.columns(2)
+                # Load data
+                pois = load_cached_pois()
+                schools_df = load_school_list()
                 
+                # Filter POIs within radius
+                nearby_pois = []
+                if not pois.empty and "lat" in pois.columns and "lon" in pois.columns:
+                    for _, row in pois.iterrows():
+                        try:
+                            poi_lat = float(row["lat"])
+                            poi_lon = float(row["lon"])
+                            dist = haversine_distance(home_loc[0], home_loc[1], poi_lat, poi_lon)
+                            if dist <= radius_km:
+                                nearby_pois.append({
+                                    "name": row.get("name", "Unknown"),
+                                    "category": row.get("category", "POI"),
+                                    "lat": poi_lat,
+                                    "lon": poi_lon,
+                                    "distance_km": round(dist, 2)
+                                })
+                        except (ValueError, TypeError):
+                            continue
+                
+                # Filter schools within radius
+                nearby_schools = []
+                if not schools_df.empty:
+                    for _, row in schools_df.iterrows():
+                        school_name = row["name"]
+                        loc = geocode_school(school_name)
+                        if loc:
+                            dist = haversine_distance(home_loc[0], home_loc[1], loc[0], loc[1])
+                            if dist <= radius_km:
+                                nearby_schools.append({
+                                    "name": school_name,
+                                    "rank": int(row["rank"]),
+                                    "lat": loc[0],
+                                    "lon": loc[1],
+                                    "distance_km": round(dist, 2)
+                                })
+                
+                # Create map data for pydeck
+                map_data = []
+                
+                # Add home location (blue marker with house icon)
+                map_data.append({
+                    "lat": home_loc[0],
+                    "lon": home_loc[1],
+                    "name": "🏠 Target Home",
+                    "type": "home",
+                    "color": [0, 0, 255]  # Blue
+                })
+                
+                # Add POIs (green markers)
+                for poi in nearby_pois[:50]:  # Limit to 50 for performance
+                    map_data.append({
+                        "lat": poi["lat"],
+                        "lon": poi["lon"],
+                        "name": f"📍 {poi['name']} ({poi['category']})",
+                        "type": "poi",
+                        "color": [0, 255, 0]  # Green
+                    })
+                
+                # Add schools (blue markers)
+                for school in nearby_schools[:20]:  # Limit to 20 for performance
+                    map_data.append({
+                        "lat": school["lat"],
+                        "lon": school["lon"],
+                        "name": f"🏫 {school['name']} (Rank #{school['rank']})",
+                        "type": "school",
+                        "color": [0, 0, 255]  # Blue
+                    })
+                
+                if map_data:
+                    map_df = pd.DataFrame(map_data)
+                    
+                    # Create pydeck map with colored markers
+                    view_state = pdk.ViewState(
+                        latitude=home_loc[0],
+                        longitude=home_loc[1],
+                        zoom=13,
+                        pitch=0
+                    )
+                    
+                    # Create scatterplot layer with different colors
+                    layer = pdk.Layer(
+                        "ScatterplotLayer",
+                        data=map_df,
+                        get_position="[lon, lat]",
+                        get_color="color",
+                        get_radius=100,
+                        pickable=True
+                    )
+                    
+                    # Create the map
+                    st.pydeck_chart(pdk.Deck(
+                        layers=[layer],
+                        initial_view_state=view_state,
+                        tooltip={
+                            "html": "<b>{name}</b>",
+                            "style": {
+                                "backgroundColor": "steelblue",
+                                "color": "white"
+                            }
+                        }
+                    ))
+                    
+                    # Display legend
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.markdown("🏠 **Target Home** (Blue)")
+                    with col2:
+                        st.markdown("📍 **POI** (Green)")
+                    with col3:
+                        st.markdown("🏫 **School** (Blue)")
+                    
+                    # Display nearby locations in tables
+                    col_poi, col_school = st.columns(2)
+                    
+                    with col_poi:
+                        st.subheader(f"Nearby POIs ({len(nearby_pois)})")
+                        if nearby_pois:
+                            poi_df = pd.DataFrame(nearby_pois)
+                            st.dataframe(poi_df[["name", "category", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                        else:
+                            st.info("No POIs found within radius")
+                    
+                    with col_school:
+                        st.subheader(f"Nearby Schools ({len(nearby_schools)})")
+                        if nearby_schools:
+                            school_df = pd.DataFrame(nearby_schools)
+                            st.dataframe(school_df[["name", "rank", "distance_km"]].head(20), use_container_width=True, hide_index=True)
+                        else:
+                            st.info("No schools found within radius")
+                else:
+                    st.warning("No locations found to display on map")
+                
+                # Show data availability info
+                col_pharma, col_hawker = st.columns(2)
                 with col_pharma:
-                    st.subheader("📍 Licensed Pharmacies")
                     pharmacies = load_cached_pharmacies()
                     if not pharmacies.empty:
-                        st.info(f"Pharmacies data loaded: {len(pharmacies)} records")
-                        st.caption("Coming soon: Display nearby pharmacies")
+                        st.caption(f"📍 Pharmacies data available: {len(pharmacies)} records")
                     else:
-                        st.warning("Pharmacy data not available")
+                        st.caption("Pharmacy data not available")
                 
                 with col_hawker:
-                    st.subheader("🍜 Hawker Centres")
                     hawkers = load_cached_hawker_centres()
                     if not hawkers.empty:
-                        st.info(f"Hawker centres data loaded: {len(hawkers)} records")
-                        st.caption("Coming soon: Display nearby hawker centres")
+                        st.caption(f"🍜 Hawker centres data available: {len(hawkers)} records")
                     else:
-                        st.warning("Hawker centre data not available")
+                        st.caption("Hawker centre data not available")
             else:
                 st.warning("Could not locate that address. Try block + street + Singapore.")
 

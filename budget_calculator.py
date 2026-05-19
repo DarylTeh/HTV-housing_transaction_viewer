@@ -60,22 +60,42 @@ def calculate_budget(
     ages: list[int] | None = None,
     cpf_pledge_pct: float = 0.0,
     max_loan_completion_age: int = 65,
+    buyer_incomes: list[float] | None = None,
 ) -> BudgetResult:
     """
     Calculate maximum budget for HDB and private property.
     
     Args:
-        gross_monthly_income: Combined monthly gross income (all buyers)
+        gross_monthly_income: Combined monthly gross income (all buyers) - deprecated, use buyer_incomes instead
         num_buyers: Number of buyers (1 or 2)
         ages: List of buyer ages (e.g., [35] or [35, 33])
         cpf_pledge_pct: CPF OA balance pledged as absolute amount in SGD (now treated as SGD amount)
         max_loan_completion_age: Max age at end of loan (typically 65)
+        buyer_incomes: List of individual buyer incomes (e.g., [5000.0] or [5000.0, 3000.0])
     
     Returns:
         BudgetResult with HDB and private budgets
     """
     if ages is None:
         ages = [35] * num_buyers
+    
+    # Use individual buyer incomes if provided, otherwise use combined income
+    if buyer_incomes is not None and len(buyer_incomes) == num_buyers:
+        gross_monthly_income = sum(buyer_incomes)
+    elif buyer_incomes is None:
+        # If no individual incomes provided, use the combined income parameter
+        if gross_monthly_income <= 0:
+            limitations.append("Monthly income must be positive")
+            return BudgetResult(
+                gross_monthly_income=gross_monthly_income,
+                num_buyers=num_buyers,
+                ages=ages,
+                cpf_pledge_pct=cpf_pledge_pct,
+                hdb_max_budget=0.0,
+                private_max_budget=0.0,
+                recommended_budget=0.0,
+                limitations=limitations,
+            )
     
     limitations = []
     
