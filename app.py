@@ -50,12 +50,22 @@ def geocode_place(query: str):
         return None
     url = "https://nominatim.openstreetmap.org/search"
     params = {"q": query + ", Singapore", "format": "json", "limit": 1}
-    response = requests.get(url, params=params, headers={"User-Agent": "SG-Housing-Viewer/1.0"}, timeout=20)
-    response.raise_for_status()
-    result = response.json()
-    if not result:
+    try:
+        response = requests.get(url, params=params, headers={"User-Agent": "SG-Housing-Viewer/1.0"}, timeout=20)
+        response.raise_for_status()
+        result = response.json()
+        if not result:
+            return None
+        return float(result[0]["lat"]), float(result[0]["lon"])
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 429:
+            # Rate limited - return None and let app continue
+            st.warning("Geocoding service temporarily unavailable (rate limited). Some location features may be skipped.")
+            return None
+        raise
+    except Exception as e:
+        # Silently handle other errors
         return None
-    return float(result[0]["lat"]), float(result[0]["lon"])
 
 
 @st.cache_data
@@ -178,11 +188,13 @@ def build_trend_chart(df, group_col: str, start_year, end_year):
 
 
 def calculate_percent_gain(df, group_col: str, start_year, end_year, top_n=10):
-    pivot = df[df["year"].isin([start_year, end_year])].copy()
+    # Use min year in data to start_year (beginning of dataset)
+    min_year = int(df["year"].min())
+    pivot = df[df["year"].isin([min_year, end_year])].copy()
     if pivot.empty or group_col not in pivot.columns:
         return pd.DataFrame()
     medians = pivot.groupby([group_col, "year"], as_index=False)["price"].median()
-    start = medians[medians["year"] == start_year].set_index(group_col)["price"]
+    start = medians[medians["year"] == min_year].set_index(group_col)["price"]
     end = medians[medians["year"] == end_year].set_index(group_col)["price"]
     joined = pd.DataFrame({"start_price": start, "end_price": end}).dropna()
     joined["gain_pct"] = (joined["end_price"] - joined["start_price"]) / joined["start_price"] * 100
@@ -508,6 +520,7 @@ def show_distance_tools():
                         "programmes": "Programmes",
                     }
                 ),
+                hide_index=True,
                 use_container_width=True,
                 hide_index=True,
                 height=400,
@@ -731,7 +744,7 @@ def main():
             }
         )
         display_df["Median (SGD)"] = display_df["Median (SGD)"].apply(format_currency)
-        st.dataframe(display_df, use_container_width=True)
+        st.dataframe(display_df, use_container_width=True, hide_index=True)
 
         group_col = display_col if selected_areas else "size_label"
         chart = build_trend_chart(filtered, group_col, start_year, end_year)
@@ -740,12 +753,13 @@ def main():
 
         gain_df = calculate_percent_gain(filtered, group_col, start_year, end_year)
         if not gain_df.empty and start_year != end_year:
-            st.subheader(f"Price change {start_year} → {end_year}")
+            min_year = int(filtered["year"].min())
+            st.subheader(f"Price change {min_year} → {end_year}")
             gain_display = gain_df.copy()
             gain_display["start_price"] = gain_display["start_price"].apply(format_currency)
             gain_display["end_price"] = gain_display["end_price"].apply(format_currency)
             gain_display["gain_pct"] = gain_display["gain_pct"].round(1).astype(str) + "%"
-            st.dataframe(gain_display, use_container_width=True)
+            st.dataframe(gain_display, use_container_width=True, hide_index=True)
 
         if "region" in filtered.columns and filtered["dataset"].eq("Private Property").any():
             by_region = (
@@ -757,7 +771,7 @@ def main():
             st.subheader("Private property by region (CCR / RCR / OCR)")
             region_display = by_region.rename(columns={"region": "Region", "price": "Median (SGD)"})
             region_display["Median (SGD)"] = region_display["Median (SGD)"].apply(format_currency)
-            st.dataframe(region_display, use_container_width=True)
+            st.dataframe(region_display, use_container_width=True, hide_index=True)
 
     st.divider()
     
