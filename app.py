@@ -20,6 +20,9 @@ from story import (
     render_journey_picker,
     render_story_step,
 )
+from budget_calculator import calculate_budget, format_currency as fmt_currency
+from amenity_search import load_pharmacies, load_hawker_centres, load_pois, filter_pois_by_type
+from policy_context import POLICY_EDUCATION
 
 st.set_page_config(
     page_title="Singapore Housing Journey",
@@ -57,6 +60,21 @@ def geocode_place(query: str):
 @st.cache_data
 def load_school_list():
     return load_schools()
+
+
+@st.cache_data
+def load_cached_pharmacies():
+    return load_pharmacies()
+
+
+@st.cache_data
+def load_cached_hawker_centres():
+    return load_hawker_centres()
+
+
+@st.cache_data
+def load_cached_pois():
+    return load_pois()
 
 
 @st.cache_data
@@ -231,6 +249,101 @@ def show_rent_vs_buy_section(scenario: dict | None, filtered_df: pd.DataFrame):
         st.write(
             "When renting, you do not build equity, but you avoid down payment, stamp duty, and maintenance. "
             "Use the worked example above to compare monthly cash outlay."
+        )
+
+
+def show_budget_calculator():
+    """Show new income-based budget calculator (primary feature)."""
+    st.subheader("💰 Budget Calculator — How much can I afford?")
+    st.write(
+        "Enter your income and details. The calculator shows max budget for HDB and private property "
+        "based on bank lending limits (MSR for HDB, TDSR for private). **Property price is not needed** — "
+        "the bank checks your income, not the price."
+    )
+    
+    with st.form("budget_calc"):
+        col1, col2 = st.columns(2)
+        with col1:
+            num_buyers = st.radio("Number of buyers", [1, 2], horizontal=True)
+            st.caption("If 2 buyers, enter combined gross income below")
+        
+        with col2:
+            gross_income = st.number_input(
+                "Combined monthly gross income (SGD)", 
+                min_value=0.0, 
+                value=6000.0, 
+                step=500.0,
+                help="Total gross income before CPF, tax, deductions."
+            )
+        
+        st.markdown("**Buyer details** (primary buyer)")
+        age_col1, age_col2 = st.columns(2)
+        with age_col1:
+            age_primary = st.number_input("Primary buyer age", min_value=18, max_value=80, value=35, step=1)
+        
+        if num_buyers == 2:
+            with age_col2:
+                age_secondary = st.number_input("Co-buyer age", min_value=18, max_value=80, value=33, step=1)
+            ages = [age_primary, age_secondary]
+        else:
+            ages = [age_primary]
+        
+        cpf_pledge = st.slider(
+            "CPF OA balance pledged to bank (%)",
+            min_value=0,
+            max_value=100,
+            value=0,
+            step=5,
+            help="% of your CPF Ordinary Account balance used as loan security. Higher = more risk to your retirement."
+        )
+        
+        submitted = st.form_submit_button("Calculate My Budget", use_container_width=True, type="primary")
+    
+    if submitted:
+        result = calculate_budget(
+            gross_monthly_income=gross_income,
+            num_buyers=num_buyers,
+            ages=ages,
+            cpf_pledge_pct=cpf_pledge,
+        )
+        
+        st.markdown("### Your Maximum Budget")
+        
+        # Display limitations if any
+        if result.limitations:
+            st.warning("⚠️ **Notes:**\n" + "\n".join(f"- {lim}" for lim in result.limitations))
+        
+        col_hdb, col_private, col_recommended = st.columns(3)
+        
+        with col_hdb:
+            st.metric(
+                "HDB Max",
+                fmt_currency(result.hdb_max_budget),
+                help="Based on 30% MSR (Mortgage Servicing Ratio) limit"
+            )
+        
+        with col_private:
+            st.metric(
+                "Private Max",
+                fmt_currency(result.private_max_budget),
+                help="Based on 55% TDSR (Total Debt Servicing Ratio) limit"
+            )
+        
+        with col_recommended:
+            st.metric(
+                "Recommended 🎯",
+                fmt_currency(result.recommended_budget),
+                help="80% of lower max as safety net"
+            )
+        
+        st.info(
+            f"**What this means:**\n\n"
+            f"- **HDB**: Banks typically limit your monthly mortgage to **{result.gross_monthly_income * 0.30:,.0f}** "
+            f"(30% of {fmt_currency(result.gross_monthly_income)}).\n"
+            f"- **Private**: Banks typically limit total debt to **{result.gross_monthly_income * 0.55:,.0f}** "
+            f"(55% of {fmt_currency(result.gross_monthly_income)}).\n"
+            f"- **Recommended**: Stay at **{fmt_currency(result.recommended_budget)}** for breathing room.\n\n"
+            f"**Next step**: Use this budget to filter properties and explore in the Market Snapshot tab below."
         )
 
 
@@ -498,79 +611,91 @@ def main():
     m2.metric("Private", f"{len(df[df['dataset'] == 'Private Property']):,}")
     m3.metric("Median (filtered)", format_currency(filtered["price"].median()) if not filtered.empty else "—")
 
-    rent_goal = st.session_state.rent_or_buy
-    show_rent_tab = rent_goal in ("Rent", "Still deciding")
-    tab_labels = ["Trends & prices"]
-    if show_rent_tab:
-        tab_labels.append("Rent vs buy")
-    tab_labels.extend(["ABSD & affordability", "Commute & schools", "Policy notes"])
-    tab_objects = st.tabs(tab_labels)
-    ti = 0
+    st.divider()
+    
+    # PRIMARY SECTION: Budget Calculator (Always expanded, always visible)
+    st.markdown("## 💰 Plan Your Budget")
+    show_budget_calculator()
+    
+    st.divider()
+    
+    # PRIMARY SECTION: Market Trends (Always expanded)
+    st.markdown("## 📊 Market Trends & Prices")
+    if filtered.empty:
+        st.warning("No records match your filters — try more home types, sizes, or areas.")
+    else:
+        display_col = "area_name" if "area_name" in filtered.columns else "town"
+        top_summary = (
+            filtered.groupby(["housing_kind", "size_label", display_col], as_index=False)["price"]
+            .median()
+            .sort_values("price", ascending=False)
+            .head(12)
+        )
+        st.subheader("Highest median prices (your selection)")
+        st.dataframe(
+            top_summary.rename(
+                columns={
+                    "housing_kind": "Home type",
+                    "size_label": "Size",
+                    display_col: "Area",
+                    "price": "Median (SGD)",
+                }
+            ),
+            use_container_width=True,
+        )
 
-    with tab_objects[ti]:
-        ti += 1
-        if filtered.empty:
-            st.warning("No records match your filters — try more home types, sizes, or areas.")
-        else:
-            display_col = "area_name" if "area_name" in filtered.columns else "town"
-            top_summary = (
-                filtered.groupby(["housing_kind", "size_label", display_col], as_index=False)["price"]
+        group_col = display_col if selected_areas else "size_label"
+        chart = build_trend_chart(filtered, group_col, start_year, end_year)
+        if chart:
+            st.plotly_chart(chart, use_container_width=True)
+
+        gain_df = calculate_percent_gain(filtered, group_col, start_year, end_year)
+        if not gain_df.empty and start_year != end_year:
+            st.subheader(f"Price change {start_year} → {end_year}")
+            st.dataframe(gain_df, use_container_width=True)
+
+        if "region" in filtered.columns and filtered["dataset"].eq("Private Property").any():
+            by_region = (
+                filtered[filtered["dataset"] == "Private Property"]
+                .groupby("region", as_index=False)["price"]
                 .median()
                 .sort_values("price", ascending=False)
-                .head(12)
             )
-            st.subheader("Highest median prices (your selection)")
-            st.dataframe(
-                top_summary.rename(
-                    columns={
-                        "housing_kind": "Home type",
-                        "size_label": "Size",
-                        display_col: "Area",
-                        "price": "Median (SGD)",
-                    }
-                ),
-                use_container_width=True,
-            )
+            st.subheader("Private property by region (CCR / RCR / OCR)")
+            st.dataframe(by_region.rename(columns={"region": "Region", "price": "Median (SGD)"}), use_container_width=True)
 
-            group_col = display_col if selected_areas else "size_label"
-            chart = build_trend_chart(filtered, group_col, start_year, end_year)
-            if chart:
-                st.plotly_chart(chart, use_container_width=True)
-
-            gain_df = calculate_percent_gain(filtered, group_col, start_year, end_year)
-            if not gain_df.empty and start_year != end_year:
-                st.subheader(f"Price change {start_year} → {end_year}")
-                st.dataframe(gain_df, use_container_width=True)
-
-            if "region" in filtered.columns and filtered["dataset"].eq("Private Property").any():
-                by_region = (
-                    filtered[filtered["dataset"] == "Private Property"]
-                    .groupby("region", as_index=False)["price"]
-                    .median()
-                    .sort_values("price", ascending=False)
-                )
-                st.subheader("Private property by region (CCR / RCR / OCR)")
-                st.dataframe(by_region.rename(columns={"region": "Region", "price": "Median (SGD)"}), use_container_width=True)
-
+    st.divider()
+    
+    # PRIMARY SECTION: Schools (Always expanded - critical for HDB families)
+    st.markdown("## 🏫 Schools Near Home")
+    show_distance_tools()
+    
+    st.divider()
+    
+    # COLLAPSIBLE SECTIONS
+    
+    # Rent vs Buy
+    rent_goal = st.session_state.rent_or_buy
+    show_rent_tab = rent_goal in ("Rent", "Still deciding")
     if show_rent_tab:
-        with tab_objects[ti]:
+        with st.expander("🏠 Rent vs Buy Comparison", expanded=False):
             show_rent_vs_buy_section(load_rental_scenario(), filtered)
-        ti += 1
-
-    with tab_objects[ti]:
+        st.divider()
+    
+    # ABSD & Advanced Affordability
+    with st.expander("📋 ABSD & Advanced Affordability", expanded=False):
         tier = absd_tier_from_story() if st.session_state.first_property.startswith("Yes") else "2nd"
         if st.session_state.first_property.startswith("No"):
             tier = st.selectbox("ABSD tier", ["2nd", "3rd+"], key="story_absd_tier") or "2nd"
         show_absd_estimator(st.session_state.residency, tier)
+        st.divider()
+        st.subheader("Advanced: Check if property price fits your loan")
         default_p = float(filtered["price"].median()) if not filtered.empty else 600_000.0
         show_affordability_calculator(default_price=default_p)
-    ti += 1
-
-    with tab_objects[ti]:
-        show_distance_tools()
-    ti += 1
-
-    with tab_objects[ti]:
+    st.divider()
+    
+    # Policy Notes
+    with st.expander("📚 Housing Policies & Rules", expanded=False):
         if os.path.exists("policy_notes.md"):
             try:
                 with open("policy_notes.md", "r", encoding="utf-8") as f:
@@ -579,8 +704,50 @@ def main():
                 st.warning("policy_notes.md could not be read (encoding).")
         else:
             st.write("Add `policy_notes.md` for eligibility notes.")
+        
+        st.markdown("---")
+        st.markdown("### 💡 Key Policies for First-Time Buyers")
+        for title, content in [
+            (POLICY_EDUCATION["hdb_mop"]["title"], POLICY_EDUCATION["hdb_mop"]["content"]),
+            (POLICY_EDUCATION["school_priority"]["title"], POLICY_EDUCATION["school_priority"]["content"]),
+            (POLICY_EDUCATION["family_planning"]["title"], POLICY_EDUCATION["family_planning"]["content"]),
+            (POLICY_EDUCATION["cpf_usage"]["title"], POLICY_EDUCATION["cpf_usage"]["content"]),
+        ]:
+            with st.expander(title, expanded=False):
+                st.write(content)
+    st.divider()
+    
+    # Advanced Features
+    with st.expander("🔍 Advanced: Amenities & POI Proximity", expanded=False):
+        st.subheader("Nearby Services")
+        home_query = st.text_input("Enter home address", value="Tampines Street 61", key="amenity_search_home")
+        
+        if home_query:
+            home_loc = geocode_place(home_query)
+            if home_loc:
+                col_pharma, col_hawker = st.columns(2)
+                
+                with col_pharma:
+                    st.subheader("📍 Licensed Pharmacies")
+                    pharmacies = load_cached_pharmacies()
+                    if not pharmacies.empty:
+                        st.info(f"Pharmacies data loaded: {len(pharmacies)} records")
+                        st.caption("Coming soon: Display nearby pharmacies")
+                    else:
+                        st.warning("Pharmacy data not available")
+                
+                with col_hawker:
+                    st.subheader("🍜 Hawker Centres")
+                    hawkers = load_cached_hawker_centres()
+                    if not hawkers.empty:
+                        st.info(f"Hawker centres data loaded: {len(hawkers)} records")
+                        st.caption("Coming soon: Display nearby hawker centres")
+                    else:
+                        st.warning("Hawker centre data not available")
+            else:
+                st.warning("Could not locate that address. Try block + street + Singapore.")
 
-    with st.expander("Why this matters for first-time buyers"):
+    with st.expander("Why this matters for first-time buyers", expanded=False):
         st.markdown(
             "- **HDB resale** is usually cheaper than condos but has citizenship and occupancy rules.\n"
             "- **Private** homes face higher **ABSD** for PRs and foreigners.\n"
