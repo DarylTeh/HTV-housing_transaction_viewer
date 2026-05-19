@@ -68,7 +68,7 @@ def calculate_budget(
         gross_monthly_income: Combined monthly gross income (all buyers)
         num_buyers: Number of buyers (1 or 2)
         ages: List of buyer ages (e.g., [35] or [35, 33])
-        cpf_pledge_pct: CPF OA balance pledged as percentage (0-100)
+        cpf_pledge_pct: CPF OA balance pledged as absolute amount in SGD (now treated as SGD amount)
         max_loan_completion_age: Max age at end of loan (typically 65)
     
     Returns:
@@ -96,14 +96,24 @@ def calculate_budget(
             limitations=limitations,
         )
     
-    # Check age at loan completion (25 years)
-    primary_age = ages[0]
-    age_at_completion = primary_age + 25
+    # Check age at loan completion for both buyers (25 years max loan)
+    # For dual buyers, use the older buyer's age for loan tenure calculation
+    # as banks typically use the older buyer's age to determine max loan tenure
+    max_age = max(ages)
+    age_at_completion = max_age + 25
     if age_at_completion > max_loan_completion_age:
-        limitations.append(
-            f"Primary buyer age at loan end ({age_at_completion}) exceeds {max_loan_completion_age}. "
-            f"May need shorter loan or co-buyer."
-        )
+        # Calculate reduced loan tenure based on age
+        remaining_years = max_loan_completion_age - max_age
+        if remaining_years < 15:
+            limitations.append(
+                f"Oldest buyer age ({max_age}) exceeds {max_loan_completion_age - 25} for 25-year loan. "
+                f"Maximum loan tenure reduced to {max(remaining_years, 15)} years. This significantly reduces borrowing capacity."
+            )
+        else:
+            limitations.append(
+                f"Oldest buyer age at loan end ({age_at_completion}) exceeds {max_loan_completion_age}. "
+                f"Loan tenure may be reduced to {remaining_years} years."
+            )
     
     # HDB: MSR (Mortgage Servicing Ratio) = 30% of gross income
     hdb_max_loan = calculate_max_loan_amount(gross_monthly_income, 0.30)
@@ -124,17 +134,18 @@ def calculate_budget(
     private_down_payment_rate = 0.25
     private_budget = private_max_loan / (1 - private_down_payment_rate)
     
-    # CPF pledge impact: reduces OA balance available for down payment
-    # (represented as percentage loss of down payment capacity)
+    # CPF pledge impact: now treated as absolute SGD amount
+    # Reduce budget by the pledged amount (as it's less capital available for down payment)
     if cpf_pledge_pct > 0:
-        # Reduce budget slightly if pledging CPF (less capital available)
-        pledge_impact = cpf_pledge_pct / 100.0 * 0.1  # 1% pledge = 0.1% budget reduction
-        hdb_budget *= (1 - pledge_impact)
-        private_budget *= (1 - pledge_impact)
-        if cpf_pledge_pct > 50:
+        # Reduce budget by the pledged CPF amount
+        # Assuming CPF pledge reduces effective down payment capacity
+        hdb_budget = max(0, hdb_budget - cpf_pledge_pct)
+        private_budget = max(0, private_budget - cpf_pledge_pct)
+        
+        if cpf_pledge_pct > 100000:
             limitations.append(
-                f"High CPF pledge ({cpf_pledge_pct}%). Verify with CPF Board and bank; "
-                "may impact down payment capacity."
+                f"High CPF pledge (${cpf_pledge_pct:,.0f}). Verify with CPF Board and bank; "
+                "may significantly impact down payment capacity."
             )
     
     # Recommended budget (safety net at 80% of max)

@@ -60,7 +60,7 @@ def filter_pois_by_type(pois_df: pd.DataFrame, poi_type: str) -> pd.DataFrame:
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """Calculate straight-line distance in km between two points."""
     import math
-    R = 6371  # Earth radius in km
+    R = 6371 #km
     phi1 = math.radians(lat1)
     phi2 = math.radians(lat2)
     delta_phi = math.radians(lat2 - lat1)
