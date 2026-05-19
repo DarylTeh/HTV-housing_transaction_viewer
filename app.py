@@ -72,9 +72,7 @@ def init_session_state() -> None:
     defaults = {
         "saved_properties": [],
         "saved_scenarios": [],
-        "nav_index": 0,
         "selected_page": NAVIGATION[0],
-        "pending_page": None,
         # `budget` is set when the user runs the Affordability assessment.
         "budget_calculated": False,
     }
@@ -106,23 +104,16 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
     state["interest_type"] = interest
 
     current_page = state.get("selected_page", NAVIGATION[0])
-    if state.get("pending_page"):
-        current_page = state["pending_page"]
-        state["selected_page"] = current_page
-        state["pending_page"] = None
-    current_index = NAVIGATION.index(current_page) if current_page in NAVIGATION else 0
     if "nav_page_select" not in st.session_state:
-        st.session_state["nav_page_select"] = current_page
-    elif state.get("pending_page"):
         st.session_state["nav_page_select"] = current_page
     page = st.sidebar.selectbox(
         "Global navigation",
         NAVIGATION,
-        index=current_index,
+        index=NAVIGATION.index(current_page) if current_page in NAVIGATION else 0,
         key="nav_page_select",
     )
-    state["nav_index"] = NAVIGATION.index(page)
-    state["selected_page"] = page
+    if page != state.get("selected_page"):
+        state["selected_page"] = page
 
     if st.sidebar.button("Clear saved lists", key="clear_saved_lists"):
         state["saved_properties"] = []
@@ -133,16 +124,13 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
     st.sidebar.write("**Need ideas?**")
     if st.sidebar.button("Search HDB", key="sidebar_search_hdb"):
         state["selected_page"] = "Buy Property"
-        state["nav_index"] = NAVIGATION.index("Buy Property")
-        state["pending_page"] = "Buy Property"
-    if st.sidebar.button("Explore schools", key="sidebar_explore_schools"):
+        st.session_state["nav_page_select"] = "Buy Property"
+    if st.sidebar.button("Explore schools", key="sidebar_search_schools"):
         state["selected_page"] = "School Finder"
-        state["nav_index"] = NAVIGATION.index("School Finder")
-        state["pending_page"] = "School Finder"
+        st.session_state["nav_page_select"] = "School Finder"
     if st.sidebar.button("View market trends", key="sidebar_view_market_trends"):
         state["selected_page"] = "Market Trends"
-        state["nav_index"] = NAVIGATION.index("Market Trends")
-        state["pending_page"] = "Market Trends"
+        st.session_state["nav_page_select"] = "Market Trends"
 
     return state["selected_page"]
 
