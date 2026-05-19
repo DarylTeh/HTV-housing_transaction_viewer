@@ -17,7 +17,6 @@ import requests
 
 ROOT = Path(__file__).resolve().parent
 LATEST_DIR = ROOT / "data" / "latest"
-PROCESSED_DIR = ROOT / "data" / "processed"
 
 # --- Toggle: swap "local_xlsx" <-> "live_api" when the daily API refresh is ready ---
 DATA_SOURCE_MODE = os.environ.get("HTV_DATA_SOURCE", "local_xlsx").strip().lower()
@@ -258,24 +257,14 @@ def _enrich(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_all_transactions() -> pd.DataFrame:
-    """Load transactions — prefers pre-built data/processed/transactions_all.csv."""
-    processed_path = PROCESSED_DIR / "transactions_all.csv"
-    if processed_path.exists():
-        try:
-            df = pd.read_csv(processed_path)
-            if not df.empty:
-                if "transaction_date" in df.columns:
-                    df["transaction_date"] = pd.to_datetime(df["transaction_date"], errors="coerce")
-                return df
-        except Exception as exc:
-            print(f"Warning: processed transactions read failed: {exc}", file=sys.stderr)
-
+    """Load and combine HDB resale and private property transactions."""
     hdb = load_dataset("hdb_resale")
     private = load_dataset("private_property")
     frames = [df for df in (hdb, private) if not df.empty]
     if not frames:
         return pd.DataFrame()
-    return pd.concat(frames, ignore_index=True)
+    combined = pd.concat(frames, ignore_index=True)
+    return _enrich(combined)
 
 
 def save_latest_csv(name: str, df: pd.DataFrame) -> Path | None:

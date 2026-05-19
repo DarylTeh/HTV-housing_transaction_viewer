@@ -1,4 +1,4 @@
-"""Rent vs buy — prefers data/processed/ slices from RentalIncome.xlsx."""
+"""Load rent-vs-buy scenario from RentalIncome.xlsx (educational workbook)."""
 
 from __future__ import annotations
 
@@ -6,29 +6,20 @@ from pathlib import Path
 
 import pandas as pd
 
-from processed_data import load_rent_vs_buy_meta, load_rent_vs_buy_timeline, load_savings_projection as load_savings_csv
-
 ROOT = Path(__file__).resolve().parent
 RENTAL_XLSX = ROOT / "data" / "RentalIncome.xlsx"
 
 
 def load_rent_vs_buy_scenario() -> dict | None:
-    meta = load_rent_vs_buy_meta()
-    timeline = load_rent_vs_buy_timeline()
-    if meta and not timeline.empty:
-        first = timeline.iloc[0]
-        return {
-            **meta,
-            "starting_monthly_rent": float(first.get("monthly_rent", 0)),
-            "starting_monthly_instalment": float(first.get("monthly_instalment", 0)),
-            "timeline": timeline,
-        }
-
+    """
+    Parse the 'Rental' sheet: a worked condo example ($1.5M) comparing monthly rent vs mortgage.
+    Returns None if the file is missing or unreadable.
+    """
     if not RENTAL_XLSX.exists():
         return None
     try:
         raw = pd.read_excel(RENTAL_XLSX, sheet_name="Rental", engine="openpyxl", header=None)
-        meta_xl = pd.read_excel(RENTAL_XLSX, sheet_name="HomeLoan", engine="openpyxl", header=None)
+        meta = pd.read_excel(RENTAL_XLSX, sheet_name="HomeLoan", engine="openpyxl", header=None)
         timeline = pd.read_excel(RENTAL_XLSX, sheet_name="Rental", engine="openpyxl", header=10)
     except Exception:
         return None
@@ -41,19 +32,28 @@ def load_rent_vs_buy_scenario() -> dict | None:
     except (ValueError, TypeError, IndexError):
         pass
 
-    loan_amount, interest_rate, tenure_years = 900_000.0, 0.025, 30
+    loan_amount = 900_000.0
+    interest_rate = 0.025
+    tenure_years = 30
     try:
-        loan_amount = float(meta_xl.iloc[0, 1])
-        interest_rate = float(meta_xl.iloc[1, 1])
-        tenure_years = int(float(meta_xl.iloc[2, 1]))
+        loan_amount = float(meta.iloc[0, 1])
+        interest_rate = float(meta.iloc[1, 1])
+        tenure_years = int(float(meta.iloc[2, 1]))
     except (ValueError, TypeError, IndexError):
         pass
 
-    timeline = timeline.dropna(subset=["Year"]).copy()
-    timeline["year"] = timeline["Year"].astype(int)
-    timeline["monthly_rent"] = pd.to_numeric(timeline["Rent-M"], errors="coerce")
-    timeline["monthly_instalment"] = pd.to_numeric(timeline["Instal-M"], errors="coerce")
-    timeline["property_value"] = pd.to_numeric(timeline["Price"], errors="coerce")
+    cols = {c: c for c in timeline.columns}
+    year_col = cols.get("Year", "Year")
+    rent_col = cols.get("Rent-M", "Rent-M")
+    instal_col = cols.get("Instal-M", "Instal-M")
+    price_col = cols.get("Price", "Price")
+
+    timeline = timeline.dropna(subset=[year_col]).copy()
+    timeline["year"] = timeline[year_col].astype(int)
+    timeline["monthly_rent"] = pd.to_numeric(timeline[rent_col], errors="coerce")
+    timeline["monthly_instalment"] = pd.to_numeric(timeline[instal_col], errors="coerce")
+    timeline["property_value"] = pd.to_numeric(timeline[price_col], errors="coerce")
+
     first = timeline.iloc[0]
     return {
         "property_label": "Condo (worked example from RentalIncome.xlsx)",
@@ -65,29 +65,3 @@ def load_rent_vs_buy_scenario() -> dict | None:
         "starting_monthly_instalment": float(first["monthly_instalment"]),
         "timeline": timeline[["year", "monthly_rent", "monthly_instalment", "property_value"]],
     }
-
-
-def load_savings_projection() -> pd.DataFrame | None:
-    df = load_savings_csv()
-    if not df.empty:
-        return df
-    if not RENTAL_XLSX.exists():
-        return None
-    try:
-        df = pd.read_excel(RENTAL_XLSX, sheet_name="Savings", engine="openpyxl", header=1)
-        df = df.rename(
-            columns={
-                "Yr": "year",
-                "Age": "age",
-                "Start": "start_balance",
-                "Mthly": "monthly_save",
-                "End": "end_balance",
-            }
-        )
-        keep = [c for c in ["year", "age", "start_balance", "monthly_save", "end_balance"] if c in df.columns]
-        df = df.dropna(subset=["year"]).copy()
-        for col in keep:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
-        return df[keep]
-    except Exception:
-        return None
