@@ -120,18 +120,6 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
         state["saved_scenarios"] = []
         st.sidebar.success("Saved properties and scenarios cleared.")
 
-    st.sidebar.markdown("---")
-    st.sidebar.write("**Need ideas?**")
-    if st.sidebar.button("Search HDB", key="sidebar_search_hdb"):
-        state["selected_page"] = "Buy Property"
-        st.session_state["nav_page_select"] = "Buy Property"
-    if st.sidebar.button("Explore schools", key="sidebar_search_schools"):
-        state["selected_page"] = "School Finder"
-        st.session_state["nav_page_select"] = "School Finder"
-    if st.sidebar.button("View market trends", key="sidebar_view_market_trends"):
-        state["selected_page"] = "Market Trends"
-        st.session_state["nav_page_select"] = "Market Trends"
-
     return state["selected_page"]
 
 
