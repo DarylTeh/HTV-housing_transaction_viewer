@@ -113,7 +113,7 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
     current_index = NAVIGATION.index(current_page) if current_page in NAVIGATION else 0
     if "nav_page_select" not in st.session_state:
         st.session_state["nav_page_select"] = current_page
-    elif st.session_state["nav_page_select"] != current_page:
+    elif state.get("pending_page"):
         st.session_state["nav_page_select"] = current_page
     page = st.sidebar.selectbox(
         "Global navigation",
