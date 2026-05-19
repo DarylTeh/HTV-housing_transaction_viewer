@@ -501,15 +501,23 @@ def show_distance_tools():
 
 def render_sidebar_controls(df):
     st.sidebar.header("Your profile")
+    
+    def update_filters():
+        st.rerun()
+    
     st.session_state.residency = st.sidebar.selectbox(
         "Residency",
         ["Singapore Citizen", "Permanent Resident", "Foreigner"],
         index=["Singapore Citizen", "Permanent Resident", "Foreigner"].index(st.session_state.residency),
+        on_change=update_filters,
+        key="residency_select"
     )
     st.session_state.own_hdb = st.sidebar.selectbox(
         "Own HDB?",
         ["No", "Yes"],
         index=["No", "Yes"].index(st.session_state.own_hdb),
+        on_change=update_filters,
+        key="own_hdb_select"
     )
     tip = BUYER_TIPS.get((st.session_state.residency, st.session_state.own_hdb))
     if tip:
@@ -519,11 +527,15 @@ def render_sidebar_controls(df):
         "Rent or buy?",
         ["Rent", "Buy", "Still deciding"],
         index=["Rent", "Buy", "Still deciding"].index(st.session_state.rent_or_buy),
+        on_change=update_filters,
+        key="rent_or_buy_select"
     )
     st.session_state.first_property = st.sidebar.selectbox(
         "First property in Singapore?",
         ["Yes — first property", "No — I already own property"],
         index=0 if st.session_state.first_property.startswith("Yes") else 1,
+        on_change=update_filters,
+        key="first_property_select"
     )
 
     st.sidebar.markdown("**What are you looking at?**")
@@ -538,6 +550,8 @@ def render_sidebar_controls(df):
         kind_options,
         default=default_kinds or kind_options[:2],
         help="HDB = public flats · Condo = private apartments & EC · Landed = terrace / semi-D / bungalow",
+        on_change=update_filters,
+        key="housing_kinds_select"
     )
 
     size_options = size_options_for_kinds(df, housing_kinds)
@@ -547,10 +561,12 @@ def render_sidebar_controls(df):
         size_options,
         default=default_sizes,
         help="Sqft ranges are typical sizes from transaction data, shown in square feet.",
+        on_change=update_filters,
+        key="size_choices_select"
     )
 
     area_labels = sorted(df["area_name"].dropna().unique()) if "area_name" in df.columns else sorted(df["town"].dropna().unique())
-    selected_areas = st.sidebar.multiselect("Areas (towns / districts)", area_labels, default=[])
+    selected_areas = st.sidebar.multiselect("Areas (towns / districts)", area_labels, default=[], on_change=update_filters, key="selected_areas_select")
 
     year_options = sorted(df["year"].dropna().astype(int).unique())
     yr_start, yr_end = default_year_range(year_options)
@@ -558,6 +574,8 @@ def render_sidebar_controls(df):
         "Year range (last 5 years by default)",
         options=year_options,
         value=(yr_start, yr_end),
+        on_change=update_filters,
+        key="year_range_select"
     )
 
     if st.sidebar.button("Restart guided journey"):
@@ -648,12 +666,23 @@ def main():
     filtered = filter_dataframe(df, housing_kinds, size_choices, selected_areas)
 
     st.markdown("## Market snapshot")
-    st.write(f"**{len(df):,}** transactions ({int(df['year'].min())}–{int(df['year'].max())}) · **{len(filtered):,}** after your filters")
+    
+    # Show different information based on rent/buy selection
+    if st.session_state.rent_or_buy == "Rent":
+        st.info("🏠 **Rental Mode**: Currently showing purchase price data for reference. Actual rental market data is not available in this dataset. Use the 'Rent vs Buy Comparison' section below to estimate monthly rental costs.")
+        st.write(f"**{len(df):,}** purchase transactions ({int(df['year'].min())}–{int(df['year'].max())}) · **{len(filtered):,}** after your filters")
+        
+        m1, m2, m3 = st.columns(3)
+        m1.metric("HDB resale (purchase)", f"{len(df[df['dataset'] == 'HDB Resale']):,}")
+        m2.metric("Private (purchase)", f"{len(df[df['dataset'] == 'Private Property']):,}")
+        m3.metric("Median purchase price", format_currency(filtered["price"].median()) if not filtered.empty else "—")
+    else:
+        st.write(f"**{len(df):,}** transactions ({int(df['year'].min())}–{int(df['year'].max())}) · **{len(filtered):,}** after your filters")
 
-    m1, m2, m3 = st.columns(3)
-    m1.metric("HDB resale", f"{len(df[df['dataset'] == 'HDB Resale']):,}")
-    m2.metric("Private", f"{len(df[df['dataset'] == 'Private Property']):,}")
-    m3.metric("Median (filtered)", format_currency(filtered["price"].median()) if not filtered.empty else "—")
+        m1, m2, m3 = st.columns(3)
+        m1.metric("HDB resale", f"{len(df[df['dataset'] == 'HDB Resale']):,}")
+        m2.metric("Private", f"{len(df[df['dataset'] == 'Private Property']):,}")
+        m3.metric("Median (filtered)", format_currency(filtered["price"].median()) if not filtered.empty else "—")
 
     st.divider()
     
@@ -723,11 +752,13 @@ def main():
     
     # COLLAPSIBLE SECTIONS (All collapsed by default for cleaner UI)
     
-    # Rent vs Buy
+    # Rent vs Buy - auto-expand when Rent is selected
     rent_goal = st.session_state.rent_or_buy
     show_rent_tab = rent_goal in ("Rent", "Still deciding")
     if show_rent_tab:
-        with st.expander("🏠 Rent vs Buy Comparison", expanded=False):
+        # Auto-expand when Rent is selected, otherwise collapsed
+        expand_rent = (rent_goal == "Rent")
+        with st.expander("🏠 Rent vs Buy Comparison", expanded=expand_rent):
             show_rent_vs_buy_section(rental_scenario, filtered)
         st.divider()
     
