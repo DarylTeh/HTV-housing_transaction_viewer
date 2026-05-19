@@ -109,7 +109,6 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
                     state["selected_school"] = school_name
                     state["selected_school_lat"] = float(school_lat)
                     state["selected_school_lon"] = float(school_lon)
-                    st.experimental_rerun()
         st.markdown("---")
 
     if selected_school and selected_lat is not None and selected_lon is not None:

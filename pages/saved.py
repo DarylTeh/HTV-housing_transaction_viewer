@@ -17,7 +17,6 @@ def render_saved_page(data: dict[str, object], state: dict) -> None:
             cols[0].write(item)
             if cols[1].button("Remove", key=f"remove_property_{idx}"):
                 saved_properties.pop(idx)
-                st.experimental_rerun()
     else:
         st.info("No saved properties yet.")
 
@@ -29,6 +28,5 @@ def render_saved_page(data: dict[str, object], state: dict) -> None:
             cols[0].write(f"{scenario.get('name', 'Unnamed')} — {scenario.get('property_type', '')} at {scenario.get('purchase_price', 0):,.0f}")
             if cols[1].button("Remove", key=f"remove_scenario_{idx}"):
                 saved_scenarios.pop(idx)
-                st.experimental_rerun()
     else:
         st.info("No saved scenarios yet.")
