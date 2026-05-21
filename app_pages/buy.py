@@ -8,7 +8,7 @@ from engine.search_engine import search_properties
 
 
 def render_buy_page(data: dict[str, pd.DataFrame], state: dict) -> None:
-    st.header("Find Property")
+    st.header("Find Properties")
     st.write("Search current market inventory using district, MRT, school proximity and budget context.")
 
     transactions = data.get("transactions", pd.DataFrame())

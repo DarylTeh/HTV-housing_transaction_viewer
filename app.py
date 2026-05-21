@@ -34,7 +34,7 @@ st.set_page_config(
 NAVIGATION = [
     "Home Dashboard",
     "Affordability",
-    "Find Property",
+    "Find Properties",
     "Recent Transactions",
     "Project Analytics",
     "Map Explorer",
@@ -47,7 +47,7 @@ NAVIGATION = [
 PAGE_RENDERERS = {
     "Home Dashboard": render_dashboard,
     "Affordability": render_affordability_page,
-    "Find Property": render_buy_page,
+    "Find Properties": render_buy_page,
     "Recent Transactions": render_sell_page,
     "Project Analytics": render_analytics_page,
     "Map Explorer": render_map_explorer,
@@ -131,7 +131,7 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
         **Feature guide**
         - **Home Dashboard**: overview metrics, quick actions and saved items.
         - **Affordability**: calculate your budget and compare financing options.
-        - **Find Property**: search and compare HDB and condo transaction data.
+        - **Find Properties**: search and compare HDB and condo transaction data.
         - **Recent Transactions**: review market medians and recent pricing trends.
         - **Project Analytics**: inspect project-level sales and market performance.
         - **Map Explorer**: explore property data on an interactive map.
