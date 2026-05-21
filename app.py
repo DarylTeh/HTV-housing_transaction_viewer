@@ -86,6 +86,31 @@ def load_app_data() -> dict[str, pd.DataFrame]:
 def render_global_sidebar(state: dict[str, Any]) -> str:
     render_sidebar_logo("logo_rightleft.jpg")
     st.sidebar.markdown(
+        """
+        <style>
+        section[data-testid="stSidebar"] {
+            background-color: #f8f9fa !important;
+        }
+        section[data-testid="stSidebar"] .css-1avcm0n,
+        section[data-testid="stSidebar"] .css-1d391kg,
+        section[data-testid="stSidebar"] .css-1pqm26a,
+        section[data-testid="stSidebar"] .css-1d0f0j4 {
+            background-color: transparent !important;
+        }
+        .sidebar-logo-container {
+            background-color: transparent !important;
+            padding-bottom: 1rem;
+        }
+        .sidebar-logo-container img {
+            background-color: transparent !important;
+            display: block;
+            margin: 0 auto;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.sidebar.markdown(
         "Use the global navigation menu below to access every feature of the app. "
         "Each page is designed to help you understand the market, compare properties, "
         "and manage your saved options."
@@ -133,8 +158,8 @@ def render_sidebar_logo(image_path: str) -> None:
 
     st.sidebar.markdown(
         f"""
-        <div style="text-align: center; padding-bottom: 1rem;">
-            <img src="data:image/png;base64,{encoded}" width="220">
+        <div class="sidebar-logo-container" style="text-align: center; padding-bottom: 1rem;">
+            <img src="data:image/png;base64,{encoded}" width="220" style="background: transparent;" />
         </div>
         """,
         unsafe_allow_html=True,
