@@ -28,7 +28,7 @@ from processed_data import (
 
 st.set_page_config(
     page_title="SPY - Singapore Property Yardstick",    
-    page_icon="🏢🔍",
+    page_icon="logo.jpg",
     layout="wide",
     initial_sidebar_state="expanded",
 )
