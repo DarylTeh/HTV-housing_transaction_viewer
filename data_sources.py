@@ -80,12 +80,28 @@ def fetch_from_csv_url(url: str) -> pd.DataFrame | None:
         return None
 
 
+def _read_parquet_file(path: Path) -> pd.DataFrame:
+    """Read a parquet file, with fallback to CSV if parquet doesn't exist."""
+    parquet_path = path.with_suffix(".parquet")
+    
+    # Try parquet first if it exists
+    if parquet_path.exists():
+        try:
+            return pd.read_parquet(parquet_path, engine="pyarrow")
+        except Exception as exc:
+            print(f"Warning: Parquet read failed for {parquet_path}: {exc}", file=sys.stderr)
+            # Fall through to CSV
+    
+    # Fall back to CSV
+    return _read_csv_file(path)
+
+
 def _read_csv_file(path: Path) -> pd.DataFrame:
     try:
-        return pd.read_csv(path)
+        return pd.read_csv(path, low_memory=False)
     except UnicodeDecodeError:
         try:
-            return pd.read_csv(path, encoding="ISO-8859-1")
+            return pd.read_csv(path, encoding="ISO-8859-1", low_memory=False)
         except Exception as exc:
             print(f"Warning: CSV read failed for {path}: {exc}", file=sys.stderr)
             return pd.DataFrame()
@@ -223,7 +239,7 @@ def _load_local_csv_dataset(name: str) -> pd.DataFrame:
         for path in ROOT.glob(pattern):
             if not path.exists():
                 continue
-            raw = _read_csv_file(path)
+            raw = _read_parquet_file(path)
             if raw.empty:
                 continue
             if name == "hdb_resale":
@@ -293,13 +309,14 @@ def _xlsx_configured(name: str) -> bool:
 
 def _should_use_csv_cache(name: str) -> bool:
     csv_path = LATEST_DIR / f"{name}.csv"
-    if not csv_path.exists():
+    parquet_path = LATEST_DIR / f"{name}.parquet"
+    if not csv_path.exists() and not parquet_path.exists():
         return False
     if PREFER_CSV_CACHE == "1":
         return True
     if PREFER_CSV_CACHE == "0":
         return False
-    # auto: CSV when xlsx sources are missing (e.g. Streamlit Cloud with committed CSV only)
+    # auto: cache when xlsx sources are missing (e.g. Streamlit Cloud with committed cache only)
     return not _xlsx_configured(name)
 
 
@@ -311,9 +328,19 @@ def load_dataset(name: str) -> pd.DataFrame:
         print(f"Live API returned no data for {name}; falling back to local sources.", file=sys.stderr)
 
     if _should_use_csv_cache(name):
+        # Try parquet first, then CSV
+        parquet_path = LATEST_DIR / f"{name}.parquet"
+        if parquet_path.exists():
+            try:
+                df = pd.read_parquet(parquet_path, engine="pyarrow")
+                if not df.empty:
+                    return _enrich(df)
+            except Exception as exc:
+                print(f"Warning: Parquet cache read failed for {name}: {exc}", file=sys.stderr)
+        
         csv_path = LATEST_DIR / f"{name}.csv"
         try:
-            df = pd.read_csv(csv_path)
+            df = pd.read_csv(csv_path, low_memory=False)
             if not df.empty:
                 return _enrich(df)
         except Exception as exc:

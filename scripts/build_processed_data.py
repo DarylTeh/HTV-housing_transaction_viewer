@@ -30,6 +30,23 @@ CACHE_PATH = PROCESSED_DIR / "geocode_cache.csv"
 GEOCODE_DELAY_SEC = 1.05
 
 
+def save_dataframe(df: pd.DataFrame, path: Path, verbose: bool = True) -> None:
+    """Save dataframe to both CSV and Parquet formats."""
+    csv_path = path if path.suffix == ".csv" else path.with_suffix(".csv")
+    parquet_path = path.with_suffix(".parquet") if path.suffix == ".csv" else path.with_suffix(".parquet")
+    
+    # Save CSV
+    df.to_csv(csv_path, index=False)
+    
+    # Save Parquet
+    df.to_parquet(parquet_path, engine="pyarrow", index=False, compression="snappy")
+    
+    if verbose:
+        csv_size = csv_path.stat().st_size / (1024 * 1024)
+        parquet_size = parquet_path.stat().st_size / (1024 * 1024)
+        print(f"  saved {len(df):,} rows ({csv_size:.1f}MB CSV → {parquet_size:.1f}MB Parquet)")
+
+
 def ensure_dir():
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -131,8 +148,7 @@ def build_transactions(area_coords: dict | None = None):
         df["lon"] = df["area_name"].map(lambda x: lookup_coord(x, 1))
 
     path = PROCESSED_DIR / "transactions_all.csv"
-    df.to_csv(path, index=False)
-    print(f"  saved {len(df):,} rows")
+    save_dataframe(df, path)
 
     print("Building transaction_index.csv …")
     index = df.groupby(["dataset", "town", "street_name", "property_type"], as_index=False).agg(
@@ -142,8 +158,7 @@ def build_transactions(area_coords: dict | None = None):
         median_price=("price", "median"),
     )
     index = index.sort_values(["town", "street_name", "dataset"])
-    index.to_csv(PROCESSED_DIR / "transaction_index.csv", index=False)
-    print(f"  saved {len(index):,} index rows")
+    save_dataframe(index, PROCESSED_DIR / "transaction_index.csv")
 
     print("Building price_medians.csv …")
     recent = df[df["year"] >= df["year"].max() - 5]
@@ -151,8 +166,7 @@ def build_transactions(area_coords: dict | None = None):
         median_price=("price", "median"),
         sales=("price", "count"),
     )
-    med.to_csv(PROCESSED_DIR / "price_medians.csv", index=False)
-    print(f"  saved {len(med):,} summary rows")
+    save_dataframe(med, PROCESSED_DIR / "price_medians.csv")
 
 
 def build_schools_ranked(cache: dict, fast: bool):
@@ -161,7 +175,7 @@ def build_schools_ranked(cache: dict, fast: bool):
     if df.empty:
         return
     df["programmes"] = df.apply(programme_tags, axis=1)
-    df.to_csv(PROCESSED_DIR / "schools_ranked.csv", index=False)
+    save_dataframe(df, PROCESSED_DIR / "schools_ranked.csv", verbose=False)
 
     print("Building schools_ranked_geocoded.csv …")
     rows = []
@@ -171,8 +185,9 @@ def build_schools_ranked(cache: dict, fast: bool):
         loc = geocode_key(key, f"{name}, Singapore", cache, fast)
         rows.append({**row.to_dict(), "lat": loc[0] if loc else None, "lon": loc[1] if loc else None})
     out = pd.DataFrame(rows)
-    out.to_csv(PROCESSED_DIR / "schools_ranked_geocoded.csv", index=False)
-    print(f"  geocoded {out['lat'].notna().sum()}/{len(out)}")
+    geocoded_count = out['lat'].notna().sum()
+    save_dataframe(out, PROCESSED_DIR / "schools_ranked_geocoded.csv", verbose=False)
+    print(f"  geocoded {geocoded_count}/{len(out)}")
 
 
 def build_moe_primary(cache: dict, fast: bool):
@@ -197,7 +212,7 @@ def build_moe_primary(cache: dict, fast: bool):
             }
         )
     out = pd.DataFrame(rows)
-    out.to_csv(PROCESSED_DIR / "schools_moe_primary.csv", index=False)
+    save_dataframe(out, PROCESSED_DIR / "schools_moe_primary.csv", verbose=False)
     print(f"  geocoded {out['lat'].notna().sum()}/{len(out)}")
 
 
@@ -209,7 +224,7 @@ def build_supermarkets():
     df = pd.read_csv(src)
     df = df[df["category"].astype(str).str.lower() == "supermarket"].copy()
     df = df.rename(columns={"name": "name"})
-    df[["name", "brand", "address", "lat", "lon"]].to_csv(PROCESSED_DIR / "supermarkets.csv", index=False)
+    save_dataframe(df[["name", "brand", "address", "lat", "lon"]], PROCESSED_DIR / "supermarkets.csv", verbose=False)
     print(f"  saved {len(df)}")
 
 
@@ -237,7 +252,7 @@ def build_hawkers(cache: dict, fast: bool):
             }
         )
     out = pd.DataFrame(rows)
-    out.to_csv(PROCESSED_DIR / "hawker_centres.csv", index=False)
+    save_dataframe(out, PROCESSED_DIR / "hawker_centres.csv", verbose=False)
     print(f"  geocoded {out['lat'].notna().sum()}/{len(out)}")
 
 
@@ -264,7 +279,7 @@ def build_pharmacies(cache: dict, fast: bool):
             }
         )
     out = pd.DataFrame(rows)
-    out.to_csv(PROCESSED_DIR / "pharmacies.csv", index=False)
+    save_dataframe(out, PROCESSED_DIR / "pharmacies.csv", verbose=False)
     print(f"  geocoded {out['lat'].notna().sum()}/{len(out)}")
 
 
@@ -274,11 +289,11 @@ def build_rental_income():
     if scenario:
         meta = {k: v for k, v in scenario.items() if k != "timeline"}
         (PROCESSED_DIR / "rent_vs_buy_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
-        scenario["timeline"].to_csv(PROCESSED_DIR / "rent_vs_buy_timeline.csv", index=False)
+        save_dataframe(scenario["timeline"], PROCESSED_DIR / "rent_vs_buy_timeline.csv", verbose=False)
         print("  rent_vs_buy saved")
     savings = load_savings_projection()
     if savings is not None and not savings.empty:
-        savings.to_csv(PROCESSED_DIR / "savings_projection.csv", index=False)
+        save_dataframe(savings, PROCESSED_DIR / "savings_projection.csv", verbose=False)
         print("  savings_projection saved")
 
 

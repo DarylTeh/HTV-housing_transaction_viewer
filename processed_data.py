@@ -17,10 +17,21 @@ PROCESSED_DIR = ROOT / "data" / "processed"
 
 
 def _read_csv(name: str) -> pd.DataFrame:
+    """Read from parquet first (if available), fall back to CSV."""
     path = PROCESSED_DIR / name
+    parquet_path = PROCESSED_DIR / name.replace(".csv", ".parquet")
+    
+    # Try parquet first
+    if parquet_path.exists():
+        try:
+            return pd.read_parquet(parquet_path, engine="pyarrow")
+        except Exception:
+            pass  # Fall back to CSV
+    
+    # Fall back to CSV
     if not path.exists():
         return pd.DataFrame()
-    return pd.read_csv(path)
+    return pd.read_csv(path, low_memory=False)
 
 
 def haversine_km(lat1: float, lon1: float, lat2: pd.Series, lon2: pd.Series) -> pd.Series:
