@@ -6,20 +6,6 @@ import streamlit as st
 
 from amenity_search import haversine_distance
 
-PROPERTY_TYPE_KEYWORDS = {
-    "HDB": ["hdb", "hub"],
-    "Condo": ["condo", "residence", "apartment", "estate", "residences"],
-    "Landed": ["terrace", "bungalow", "house", "semi-d", "villa", "cluster"],
-}
-
-
-def infer_property_type(name: str | None, category: str | None) -> str:
-    text = f"{name or ''} {category or ''}".lower()
-    for property_type, keywords in PROPERTY_TYPE_KEYWORDS.items():
-        if any(keyword in text for keyword in keywords):
-            return property_type
-    return "Other"
-
 
 def search_schools(schools: pd.DataFrame, query: str) -> pd.DataFrame:
     if not query:
@@ -37,51 +23,104 @@ def search_schools(schools: pd.DataFrame, query: str) -> pd.DataFrame:
     return schools[mask].sort_values("rank").head(20)
 
 
-def search_schools_by_area(schools: pd.DataFrame, pois: pd.DataFrame, query: str) -> pd.DataFrame:
-    if pois.empty or not query:
+def search_schools_by_area(schools: pd.DataFrame, transactions: pd.DataFrame, query: str) -> pd.DataFrame:
+    """Search schools near an area found in transactions."""
+    if transactions.empty or not query:
         return pd.DataFrame()
-    q = query.strip()
+    
+    q = query.strip().lower()
+    # Search for area/town/street in transactions
     mask = (
-        pois["name"].fillna("").str.contains(q, case=False, na=False)
-        | pois["category"].fillna("").str.contains(q, case=False, na=False)
-        | pois["address"].fillna("").str.contains(q, case=False, na=False)
+        transactions["area_name"].fillna("").str.lower().str.contains(q, na=False)
+        | transactions["town"].fillna("").str.lower().str.contains(q, na=False)
+        | transactions["street_name"].fillna("").str.lower().str.contains(q, na=False)
     )
-    location_hits = pois[mask & pois["lat"].notna() & pois["lon"].notna()]
+    
+    location_hits = transactions[mask & transactions["lat"].notna() & transactions["lon"].notna()]
     if location_hits.empty:
         return pd.DataFrame()
-    home = location_hits.iloc[0]
+    
+    # Use the first match as reference point
+    ref = location_hits.iloc[0]
+    home_lat, home_lon = float(ref["lat"]), float(ref["lon"])
+    
     schools = schools.copy()
     schools["distance_km"] = schools.apply(
-        lambda row: haversine_distance(home["lat"], home["lon"], row["lat"], row["lon"]) if pd.notna(row["lat"]) and pd.notna(row["lon"]) else float("inf"),
+        lambda row: haversine_distance(home_lat, home_lon, row["lat"], row["lon"]) 
+        if pd.notna(row["lat"]) and pd.notna(row["lon"]) 
+        else float("inf"),
         axis=1,
     )
     return schools.sort_values("distance_km").head(20)
 
 
+def get_nearby_properties(transactions: pd.DataFrame, center_lat: float, center_lon: float, radius_km: float = 2.0) -> pd.DataFrame:
+    """Get properties near a location from transactions data."""
+    if transactions.empty or pd.isna(center_lat) or pd.isna(center_lon):
+        return pd.DataFrame()
+    
+    # Filter to properties with valid coordinates
+    candidates = transactions[transactions["lat"].notna() & transactions["lon"].notna()].copy()
+    
+    # Calculate distance
+    candidates["distance_km"] = candidates.apply(
+        lambda row: haversine_distance(center_lat, center_lon, float(row["lat"]), float(row["lon"])),
+        axis=1
+    )
+    
+    # Filter by radius and return nearby
+    nearby = candidates[candidates["distance_km"] <= radius_km]
+    
+    # Aggregate by property type and area
+    if not nearby.empty:
+        # Group by housing_kind to get counts and samples
+        grouped = nearby.groupby("housing_kind").agg({
+            "price": ["count", "mean", "median"],
+            "lat": "first",
+            "lon": "first",
+            "street_name": "first",
+            "town": "first",
+        }).head(50)
+        
+        return nearby.drop_duplicates(subset=["area_name", "housing_kind"]).sort_values("distance_km").head(50)
+    
+    return pd.DataFrame()
+
+
 def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     st.header("School Finder")
-    st.write("Search for Singapore schools and see nearby ranked institutions.")
+    st.write("Search for Singapore schools and see nearby properties (HDB, Condo, Landed).")
 
     schools = data.get("schools_geocoded", pd.DataFrame())
-    pois = data.get("pois", pd.DataFrame())
+    transactions = data.get("transactions", pd.DataFrame())
+    
     if schools.empty:
         st.warning("School ranking data is unavailable.")
         return
+    
+    if transactions.empty:
+        st.warning("Property data is unavailable.")
+        return
 
-    query = st.text_input("Search school by name, programme, special status or area", value=state.get("school_query", ""), key="school_query")
+    query = st.text_input(
+        "Search school by name, programme, special status or nearby area", 
+        value=state.get("school_query", ""), 
+        key="school_query"
+    )
 
     results = search_schools(schools, query)
     area_results = pd.DataFrame()
     area_search_used = False
+    
     if query and results.empty:
-        area_results = search_schools_by_area(schools, pois, query)
+        area_results = search_schools_by_area(schools, transactions, query)
         if not area_results.empty:
             area_search_used = True
             st.info(f"No direct school matches found. Showing schools nearest to '{query}'.")
             results = area_results
 
     if results.empty:
-        st.info("Try another school name, programme, special status or a nearby location like Dover.")
+        st.info("Try another school name, programme, special status or a nearby location like 'Ang Mo Kio' or 'Bishan'.")
         return
 
     selected_school = state.get("selected_school")
@@ -94,23 +133,25 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         school_name = school.get("name", "Unknown")
         school_lat = school.get("lat")
         school_lon = school.get("lon")
-        cols = st.columns([0.8, 0.2])
+        cols = st.columns([0.75, 0.25])
         with cols[0]:
             st.markdown(
-                f"**{school_name}** — Rank {school.get('rank', '-')}, Score {school.get('score', '-')}, Programmes: {school.get('programmes', 'N/A')}"
+                f"**{school_name}** — Rank {school.get('rank', '-')}, Score {school.get('score', '-')}"
             )
+            st.caption(f"Programmes: {school.get('programmes', 'N/A')}")
             if pd.notna(school_lat) and pd.notna(school_lon):
-                st.write(f"Location: {school_lat:.6f}, {school_lon:.6f}")
+                st.caption(f"📍 {school_lat:.6f}, {school_lon:.6f}")
             if selected_school == school_name:
-                st.success("Selected on map")
+                st.success("✓ Selected on map")
         with cols[1]:
             if pd.notna(school_lat) and pd.notna(school_lon):
                 if st.button("Focus on map", key=f"focus_school_{idx}"):
                     state["selected_school"] = school_name
                     state["selected_school_lat"] = float(school_lat)
                     state["selected_school_lon"] = float(school_lon)
-        st.markdown("---")
+        st.divider()
 
+    # Determine map center
     if selected_school and selected_lat is not None and selected_lon is not None:
         center_lat = selected_lat
         center_lon = selected_lon
@@ -121,7 +162,10 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         center_lon = float(first["lon"])
         selected_label = first.get("name", "Selected school")
 
+    # Build map data
     marker_rows = []
+    
+    # Add schools
     for _, school in results.iterrows():
         if pd.notna(school.get("lat")) and pd.notna(school.get("lon")):
             marker_rows.append(
@@ -134,62 +178,86 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
                 }
             )
 
+    # Add nearby properties from transactions
     property_rows = []
-    if not pois.empty and center_lat is not None and center_lon is not None:
-        property_candidates = pois[pois["lat"].notna() & pois["lon"].notna()].copy()
-        property_candidates["property_type"] = property_candidates.apply(
-            lambda row: infer_property_type(row.get("name"), row.get("category")), axis=1
-        )
-        property_candidates["distance_km"] = property_candidates.apply(
-            lambda row: haversine_distance(center_lat, center_lon, float(row["lat"]), float(row["lon"])), axis=1
-        )
-        nearby_properties = property_candidates[property_candidates["distance_km"] <= 1.0]
-        for _, row in nearby_properties.iterrows():
-            if row["property_type"] == "Other":
-                continue
+    nearby_properties = get_nearby_properties(transactions, center_lat, center_lon, radius_km=2.0)
+    
+    if not nearby_properties.empty:
+        # Create property markers grouped by type to avoid clutter
+        property_summary = nearby_properties.groupby("housing_kind").apply(
+            lambda g: pd.Series({
+                "count": len(g),
+                "avg_price": g["price"].mean(),
+                "lat": g["lat"].iloc[0],
+                "lon": g["lon"].iloc[0],
+                "town": g["town"].iloc[0],
+            })
+        ).reset_index()
+        
+        for _, prop in property_summary.iterrows():
+            housing_kind = prop["housing_kind"]
+            count = int(prop["count"])
+            avg_price = prop["avg_price"]
+            
             property_rows.append(
                 {
-                    "latitude": float(row["lat"]),
-                    "longitude": float(row["lon"]),
-                    "label": row.get("name", row.get("category", "Property")),
-                    "type": row["property_type"],
+                    "latitude": float(prop["lat"]),
+                    "longitude": float(prop["lon"]),
+                    "label": f"{housing_kind} ({count} properties, avg: ${avg_price/1e6:.1f}M)",
+                    "type": housing_kind if housing_kind in ["HDB", "Condo", "Landed"] else "Other",
+                    "count": count,
                 }
             )
 
     map_df = pd.DataFrame(marker_rows + property_rows)
+    
     if not map_df.empty:
         color_map = {
             "School": [59, 130, 246],
             "HDB": [34, 197, 94],
             "Condo": [234, 179, 8],
             "Landed": [249, 115, 22],
+            "Other": [156, 163, 175],
         }
-        map_df["color"] = map_df["type"].map(color_map).tolist()
+        
+        map_df["color"] = map_df["type"].map(lambda x: color_map.get(x, [156, 163, 175]))
         map_df["score_info"] = map_df.apply(
             lambda row: f"T-Score: {row['score']}" if row["type"] == "School" and pd.notna(row["score"]) and row["score"] != "" else "",
             axis=1
         )
+        
         layer = pdk.Layer(
             "ScatterplotLayer",
             data=map_df,
             get_position="[longitude, latitude]",
             get_fill_color="color",
-            get_radius=40,
+            get_radius=50,
             pickable=True,
             auto_highlight=True,
         )
+        
         tooltip = {
             "html": "<b>{label}</b><br/>Type: {type}<br/>{score_info}",
             "style": {
                 "backgroundColor": "steelblue",
-                "color": "white"
+                "color": "white",
+                "padding": "10px",
+                "borderRadius": "5px",
             }
         }
+        
         view_state = pdk.ViewState(latitude=center_lat, longitude=center_lon, zoom=13, pitch=0)
         deck = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip=tooltip)
         st.pydeck_chart(deck)
-        st.caption("School = blue, HDB = green, Condo = yellow, Landed = orange")
+        
+        st.caption("🔵 School  •  🟢 HDB  •  🟡 Condo  •  🟠 Landed")
+        
         if property_rows:
-            st.write(f"Nearby property-like markers shown within 1 km of {selected_label}.")
+            st.markdown(f"**Nearby Properties** (within 2 km of {selected_label}):")
+            prop_summary = nearby_properties.groupby("housing_kind").agg({
+                "price": ["count", "mean", "median"],
+                "size_sqm": "mean"
+            }).round(0)
+            st.dataframe(prop_summary)
     else:
-        st.warning("No map points available for the selected school.")
+        st.warning("No map data available. Ensure the transaction data has geocoding information.")

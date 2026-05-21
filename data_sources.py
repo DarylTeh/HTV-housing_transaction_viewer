@@ -37,7 +37,7 @@ LOCAL_XLSX_SOURCES = {
 
 LOCAL_CSV_PATTERNS = {
     "hdb_resale": ["data/Resale Flat Prices*.csv"],
-    "private_property": [],
+    "private_property": ["data/CondoResidentialTransaction*.csv", "data/ECResidentialTransaction*.csv"],
 }
 
 # Placeholder for future live API sources (data.gov.sg). Add entries here, then set DATA_SOURCE_MODE = "live_api".
@@ -80,9 +80,30 @@ def fetch_from_csv_url(url: str) -> pd.DataFrame | None:
         return None
 
 
+def _read_csv_file(path: Path) -> pd.DataFrame:
+    try:
+        return pd.read_csv(path)
+    except UnicodeDecodeError:
+        try:
+            return pd.read_csv(path, encoding="ISO-8859-1")
+        except Exception as exc:
+            print(f"Warning: CSV read failed for {path}: {exc}", file=sys.stderr)
+            return pd.DataFrame()
+    except Exception as exc:
+        print(f"Warning: CSV read failed for {path}: {exc}", file=sys.stderr)
+        return pd.DataFrame()
+
+
 def _parse_sale_year(series: pd.Series) -> pd.Series:
     years = pd.to_numeric(series, errors="coerce")
     return years.where(years >= 1900, years + 2000)
+
+
+def _as_number(series: pd.Series) -> pd.Series:
+    return pd.to_numeric(
+        series.astype(str).str.replace(r"[,$]", "", regex=True),
+        errors="coerce",
+    )
 
 
 def normalize_ura_modern(df: pd.DataFrame) -> pd.DataFrame:
@@ -92,9 +113,9 @@ def normalize_ura_modern(df: pd.DataFrame) -> pd.DataFrame:
 
     out = pd.DataFrame()
     out["street_name"] = df.get("Project Name", df.get("Street Name", "")).astype(str)
-    out["price"] = pd.to_numeric(df.get("Transacted Price ($)"), errors="coerce")
-    out["size_sqm"] = pd.to_numeric(df.get("Area (SQM)"), errors="coerce")
-    sqft = pd.to_numeric(df.get("Area (SQFT)"), errors="coerce")
+    out["price"] = _as_number(df.get("Transacted Price ($)"))
+    out["size_sqm"] = _as_number(df.get("Area (SQM)"))
+    sqft = _as_number(df.get("Area (SQFT)"))
     out["size_sqm"] = out["size_sqm"].fillna(sqft * 0.092903)
 
     sale_date = pd.to_datetime(df.get("Sale Date"), format="%b-%y", errors="coerce")
@@ -121,8 +142,8 @@ def normalize_ura_legacy(df: pd.DataFrame) -> pd.DataFrame:
     out = pd.DataFrame()
     out["street_name"] = df.get("Project Name", df.get("Street Name", "")).astype(str)
     # Values are already in SGD despite the column label suggesting thousands.
-    out["price"] = pd.to_numeric(df.get("Price ($ '000)"), errors="coerce")
-    sqft = pd.to_numeric(df.get("Area (Sqft)"), errors="coerce")
+    out["price"] = _as_number(df.get("Price ($ '000)"))
+    sqft = _as_number(df.get("Area (Sqft)"))
     out["size_sqm"] = sqft * 0.092903
     date_col = "Date of Option Exercised / Sales Agreement Signed"
     out["transaction_date"] = pd.to_datetime(df.get(date_col), errors="coerce")
@@ -145,8 +166,8 @@ def normalize_hdb_resale(df: pd.DataFrame) -> pd.DataFrame:
     out["street_name"] = df.get("street_name", df.get("block", "")).astype(str)
     out["flat_type"] = df.get("flat_type", "")
     out["property_type"] = out["flat_type"].replace("", "HDB").fillna("HDB")
-    out["price"] = pd.to_numeric(df.get("resale_price", df.get("price")), errors="coerce")
-    out["size_sqm"] = pd.to_numeric(df.get("floor_area_sqm"), errors="coerce")
+    out["price"] = _as_number(df.get("resale_price", df.get("price")))
+    out["size_sqm"] = _as_number(df.get("floor_area_sqm"))
     out["lease_remaining"] = df.get("remaining_lease", "")
     out["transaction_date"] = pd.to_datetime(df.get("month", df.get("transaction_date")), errors="coerce")
     out["dataset"] = "HDB Resale"
@@ -187,8 +208,8 @@ def _normalize_hdb_csv(df: pd.DataFrame) -> pd.DataFrame:
     out["street_name"] = df.get("street_name", df.get("block", "")).astype(str)
     out["flat_type"] = df.get("flat_type", "").astype(str)
     out["property_type"] = out["flat_type"].replace("", "HDB").fillna("HDB")
-    out["price"] = pd.to_numeric(df.get("resale_price", df.get("price")), errors="coerce")
-    out["size_sqm"] = pd.to_numeric(df.get("floor_area_sqm", df.get("size_sqm")), errors="coerce")
+    out["price"] = _as_number(df.get("resale_price", df.get("price")))
+    out["size_sqm"] = _as_number(df.get("floor_area_sqm", df.get("size_sqm")))
     out["lease_remaining"] = df.get("remaining_lease", df.get("lease_remaining", ""))
     out["transaction_date"] = pd.to_datetime(df.get("month", df.get("transaction_date")), errors="coerce")
     out["dataset"] = "HDB Resale"
@@ -202,7 +223,7 @@ def _load_local_csv_dataset(name: str) -> pd.DataFrame:
         for path in ROOT.glob(pattern):
             if not path.exists():
                 continue
-            raw = pd.read_csv(path)
+            raw = _read_csv_file(path)
             if raw.empty:
                 continue
             if name == "hdb_resale":

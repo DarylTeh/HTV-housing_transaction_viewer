@@ -83,7 +83,34 @@ def geocode_key(key: str, query: str, cache: dict, fast: bool) -> tuple[float, f
     return loc
 
 
-def build_transactions():
+def build_area_geocodes(cache: dict, fast: bool) -> dict[str, tuple[float, float]]:
+    """Geocode unique areas and towns from transactions."""
+    print("Building area geocode mapping …")
+    frames = [load_dataset("hdb_resale"), load_dataset("private_property")]
+    frames = [f for f in frames if not f.empty]
+    df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    if df.empty:
+        return {}
+    
+    # Get unique area names and towns
+    unique_areas = pd.concat([df["area_name"], df["town"]]).unique()
+    unique_areas = [str(a).strip() for a in unique_areas if pd.notna(a) and str(a).strip()]
+    unique_areas = sorted(set(unique_areas))
+    
+    area_coords = {}
+    for area in unique_areas:
+        key = f"area:{area}"
+        loc = geocode_key(key, f"{area}, Singapore", cache, fast)
+        if loc:
+            area_coords[area] = loc
+        else:
+            area_coords[area] = None
+    
+    print(f"  geocoded {sum(1 for v in area_coords.values() if v)}/{len(area_coords)} areas")
+    return area_coords
+
+
+def build_transactions(area_coords: dict | None = None):
     print("Building transactions_all.csv …")
     frames = [load_dataset("hdb_resale"), load_dataset("private_property")]
     frames = [f for f in frames if not f.empty]
@@ -91,6 +118,12 @@ def build_transactions():
     if df.empty:
         print("  WARNING: no transaction data")
         return
+    
+    # Add geocoding if area coordinates are available
+    if area_coords:
+        df["lat"] = df["area_name"].map(lambda x: area_coords.get(str(x).strip(), (None, None))[0] if pd.notna(x) else None)
+        df["lon"] = df["area_name"].map(lambda x: area_coords.get(str(x).strip(), (None, None))[1] if pd.notna(x) else None)
+    
     path = PROCESSED_DIR / "transactions_all.csv"
     df.to_csv(path, index=False)
     print(f"  saved {len(df):,} rows")
@@ -246,7 +279,8 @@ def run(fast: bool = False):
     cache = load_geocode_cache()
     print(f"Geocode cache: {len(cache)} entries · fast={fast}")
 
-    build_transactions()
+    area_coords = build_area_geocodes(cache, fast)
+    build_transactions(area_coords)
     build_schools_ranked(cache, fast)
     build_moe_primary(cache, fast)
     build_supermarkets()
