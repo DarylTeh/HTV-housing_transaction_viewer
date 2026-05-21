@@ -5,17 +5,17 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
-from pages.affordability import render_affordability_page
-from pages.analytics import render_analytics_page
-from pages.buy import render_buy_page
-from pages.compare import render_compare_page
-from pages.dashboard import render_dashboard
-from pages.maps import render_map_explorer
-from pages.rent import render_rent_page
-from pages.saved import render_saved_page
-from pages.sell import render_sell_page
-from pages.schools import render_schools_page
-from pages.trends import render_trends_page
+from app_pages.affordability import render_affordability_page
+from app_pages.analytics import render_analytics_page
+from app_pages.buy import render_buy_page
+from app_pages.compare import render_compare_page
+from app_pages.dashboard import render_dashboard
+from app_pages.maps import render_map_explorer
+from app_pages.rent import render_rent_page
+from app_pages.saved import render_saved_page
+from app_pages.sell import render_sell_page
+from app_pages.schools import render_schools_page
+from app_pages.trends import render_trends_page
 from amenity_search import load_pois
 from processed_data import (
     load_hawker_centres,
@@ -42,11 +42,9 @@ NAVIGATION = [
     "Project Analytics",
     "Map Explorer",
     "School Finder",
-    "Rental Yield",
     "Market Trends",
     "Scenario Comparison",
     "Saved Properties",
-    "Saved Scenarios",
 ]
 
 INTEREST_TYPES = ["Buy", "Rent", "Sell", "Invest"]
@@ -60,11 +58,9 @@ PAGE_RENDERERS = {
     "Project Analytics": render_analytics_page,
     "Map Explorer": render_map_explorer,
     "School Finder": render_schools_page,
-    "Rental Yield": render_rent_page,
     "Market Trends": render_trends_page,
     "Scenario Comparison": render_compare_page,
     "Saved Properties": render_saved_page,
-    "Saved Scenarios": render_saved_page,
 }
 
 

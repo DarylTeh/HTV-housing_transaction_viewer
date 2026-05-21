@@ -105,17 +105,13 @@ All data files now have at least one feature using them:
 ## 🚀 Technical Implementation
 
 ### New Modules
-- **`budget_calculator.py`**: Income → budget math (MSR/TDSR limits)
 - **`amenity_search.py`**: Load pharmacies, hawker, POI data
-- **`policy_context.py`**: Educational content (MOP, schools, CPF, ABSD, etc.)
-- **`dataset_audit.py`**: Tracks which features use which datasets
 
 ### Modified Files
-- **`app.py`**: Added budget calc UI, collapsible sections, amenity loading
+- **`app.py`**: Cleaned navigation and removed duplicate sidebar pages
 
 ### Demo & Testing
-- **`demo_budget_calc.py`**: Example showing budget calculator in action
-- **`test_imports.py`**: Quick check that new modules import correctly
+- No unused demo/testing helpers remain in the production branch.
 
 ---
 

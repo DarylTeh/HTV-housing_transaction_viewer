@@ -89,6 +89,9 @@ def load_hawker_centres() -> pd.DataFrame:
 def load_pharmacies() -> pd.DataFrame:
     return _read_csv("pharmacies.csv")
 
+def load_transaction_index() -> pd.DataFrame:
+    return _read_csv("transaction_index.csv")
+
 
 def load_savings_projection() -> pd.DataFrame:
     return _read_csv("savings_projection.csv")

@@ -95,6 +95,15 @@ def build_transactions():
     df.to_csv(path, index=False)
     print(f"  saved {len(df):,} rows")
 
+    print("Building transaction_index.csv …")
+    index = (
+        df.groupby(["dataset", "town", "street_name", "property_type"], as_index=False)["price"]
+        .agg(record_count="count", first_year=("year", "min"), last_year=("year", "max"), median_price="median")
+    )
+    index = index.sort_values(["town", "street_name", "dataset"])
+    index.to_csv(PROCESSED_DIR / "transaction_index.csv", index=False)
+    print(f"  saved {len(index):,} index rows")
+
     print("Building price_medians.csv …")
     recent = df[df["year"] >= df["year"].max() - 5]
     med = (

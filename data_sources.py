@@ -35,6 +35,11 @@ LOCAL_XLSX_SOURCES = {
     ],
 }
 
+LOCAL_CSV_PATTERNS = {
+    "hdb_resale": ["data/Resale Flat Prices*.csv"],
+    "private_property": [],
+}
+
 # Placeholder for future live API sources (data.gov.sg). Add entries here, then set DATA_SOURCE_MODE = "live_api".
 LIVE_API_SOURCES = {
     "hdb_resale": [
@@ -173,6 +178,55 @@ def _finalize_frame(df: pd.DataFrame) -> pd.DataFrame:
     return cleaned
 
 
+def _normalize_hdb_csv(df: pd.DataFrame) -> pd.DataFrame:
+    if df is None or df.empty:
+        return pd.DataFrame()
+
+    out = pd.DataFrame()
+    out["town"] = df.get("town", "Unknown").astype(str)
+    out["street_name"] = df.get("street_name", df.get("block", "")).astype(str)
+    out["flat_type"] = df.get("flat_type", "").astype(str)
+    out["property_type"] = out["flat_type"].replace("", "HDB").fillna("HDB")
+    out["price"] = pd.to_numeric(df.get("resale_price", df.get("price")), errors="coerce")
+    out["size_sqm"] = pd.to_numeric(df.get("floor_area_sqm", df.get("size_sqm")), errors="coerce")
+    out["lease_remaining"] = df.get("remaining_lease", df.get("lease_remaining", ""))
+    out["transaction_date"] = pd.to_datetime(df.get("month", df.get("transaction_date")), errors="coerce")
+    out["dataset"] = "HDB Resale"
+    return _finalize_frame(out)
+
+
+def _load_local_csv_dataset(name: str) -> pd.DataFrame:
+    patterns = LOCAL_CSV_PATTERNS.get(name, [])
+    frames: list[pd.DataFrame] = []
+    for pattern in patterns:
+        for path in ROOT.glob(pattern):
+            if not path.exists():
+                continue
+            raw = pd.read_csv(path)
+            if raw.empty:
+                continue
+            if name == "hdb_resale":
+                normalized = _normalize_hdb_csv(raw)
+            elif name == "private_property":
+                normalized = normalize_ura_modern(raw)
+            else:
+                normalized = pd.DataFrame()
+            if not normalized.empty:
+                frames.append(normalized)
+    if frames:
+        return pd.concat(frames, ignore_index=True)
+    return pd.DataFrame()
+
+
+def _deduplicate_transactions(df: pd.DataFrame) -> pd.DataFrame:
+    if df.empty:
+        return df
+    subset = [c for c in ["transaction_date", "town", "street_name", "price", "size_sqm", "property_type", "dataset"] if c in df.columns]
+    if not subset:
+        return df
+    return df.drop_duplicates(subset=subset)
+
+
 def _load_local_xlsx_dataset(name: str) -> pd.DataFrame:
     entries = LOCAL_XLSX_SOURCES.get(name, [])
     frames: list[pd.DataFrame] = []
@@ -244,7 +298,17 @@ def load_dataset(name: str) -> pd.DataFrame:
         except Exception as exc:
             print(f"Warning: CSV cache read failed for {name}: {exc}", file=sys.stderr)
 
-    return _enrich(_load_local_xlsx_dataset(name))
+    xlsx_df = _load_local_xlsx_dataset(name)
+    csv_df = _load_local_csv_dataset(name)
+    if not xlsx_df.empty and not csv_df.empty:
+        merged = pd.concat([xlsx_df, csv_df], ignore_index=True)
+        return _enrich(_deduplicate_transactions(merged))
+    if not xlsx_df.empty:
+        return _enrich(xlsx_df)
+    if not csv_df.empty:
+        return _enrich(csv_df)
+
+    return pd.DataFrame()
 
 
 def _enrich(df: pd.DataFrame) -> pd.DataFrame:
