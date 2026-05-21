@@ -27,7 +27,7 @@ from processed_data import (
 )
 
 st.set_page_config(
-    page_title="SPY - Singapore Property Yardstick",    
+    page_title="PropHub - Your Property Guide",    
     page_icon="logo.jpg",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -91,7 +91,7 @@ def load_app_data() -> dict[str, pd.DataFrame]:
 
 
 def render_global_sidebar(state: dict[str, Any]) -> str:
-    st.sidebar.title("Singapore Property Yardstick")
+    st.sidebar.title("PropertyHub")
     st.sidebar.markdown(
         "Select your user intent and jump into the experience that matters most for your next property decision."
     )
@@ -125,7 +125,7 @@ def main() -> None:
 
     page = render_global_sidebar(st.session_state)
 
-    st.title("Singapore Property Yardstick")
+    st.title("Property Hub")
     st.markdown(
         "A modern, non-linear property decision workspace built for budget, school search, rental insights, market analytics and quick comparison."
     )
