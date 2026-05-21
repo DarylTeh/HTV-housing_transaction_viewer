@@ -38,7 +38,7 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
 
     st.markdown("---")
     st.subheader("Market snapshot")
-    st.markdown("Median price history for HDB, EC and Condo across the full dataset.")
+    st.markdown("Median price history for HDB, EC and Condo across the full dataset. Dataset for condo and landed only starts from 2010.")
     st.plotly_chart(historical_median_chart(data.get("transactions", pd.DataFrame())), use_container_width=True)
 
     # Only show budget recommendations if the user has run the affordability assessment
