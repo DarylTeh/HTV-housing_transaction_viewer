@@ -15,6 +15,42 @@ def market_trend_chart(price_medians: pd.DataFrame) -> px.line:
     return fig
 
 
+def historical_median_chart(transactions: pd.DataFrame) -> px.line:
+    if transactions.empty:
+        return px.line()
+
+    df = transactions.copy()
+    if "transaction_date" in df.columns:
+        df["transaction_date"] = pd.to_datetime(df["transaction_date"], errors="coerce")
+    df = df.dropna(subset=["transaction_date", "price", "housing_kind"])
+    df["year"] = df["transaction_date"].dt.year
+    df = df[df["year"].notna()]
+    if df.empty:
+        return px.line()
+
+    summary = (
+        df.groupby(["year", "housing_kind"], as_index=False)["price"]
+        .median()
+        .rename(columns={"price": "median_price"})
+        .sort_values(["housing_kind", "year"])
+    )
+    fig = px.line(
+        summary,
+        x="year",
+        y="median_price",
+        color="housing_kind",
+        title="Median transaction price by housing type over time",
+        markers=True,
+    )
+    fig.update_layout(
+        hovermode="x unified",
+        template="plotly_white",
+        xaxis_title="Year",
+        yaxis_title="Median transaction price (SGD)",
+    )
+    return fig
+
+
 def rent_vs_buy_chart(timeline: pd.DataFrame) -> px.line:
     if timeline.empty:
         return px.line()

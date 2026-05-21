@@ -5,46 +5,41 @@ import streamlit as st
 
 from components.common import format_currency
 from engine.recommendation_engine import recommend_properties
-from engine.trend_engine import market_trend_chart
+from engine.trend_engine import historical_median_chart, market_trend_chart
 
 
 def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
     st.header("Home Dashboard")
 
-    top_row = st.columns(4)
+    top_row = st.columns(5)
     medians = data.get("price_medians", pd.DataFrame())
+    hdb = ec = condo = 0
     if not medians.empty:
-        latest = medians[medians["year"] == medians["year"].max()]
-        hdb = latest[latest["housing_kind"] == "HDB"]["median_price"].mean()
-        condo = latest[latest["housing_kind"] == "Condo"]["median_price"].mean()
-    else:
-        hdb = condo = 0
+        def latest_median_for(kind: str) -> float:
+            subset = medians[medians["housing_kind"] == kind]
+            if subset.empty:
+                return 0
+            max_year = subset["year"].max()
+            vals = subset[subset["year"] == max_year]["median_price"]
+            if vals.empty:
+                return 0
+            v = vals.mean()
+            return float(v) if pd.notna(v) else 0
+
+        hdb = latest_median_for("HDB")
+        ec = latest_median_for("EC")
+        condo = latest_median_for("Condo")
 
     top_row[0].metric("Latest HDB median", format_currency(hdb))
-    top_row[1].metric("Latest Condo median", format_currency(condo))
-    top_row[2].metric("Saved properties", len(state.get("saved_properties", [])))
-    top_row[3].metric("Saved scenarios", len(state.get("saved_scenarios", [])))
-
-    st.markdown("---")
-    st.subheader("Quick actions")
-    cards = st.columns(4)
-    actions = [
-        ("Calculate Budget", "Affordability"),
-        ("Search HDB/Condo", "Buy Property"),
-        ("View Market Trends", "Market Trends"),
-        ("Explore Schools", "School Finder"),
-    ]
-    for idx, (label, value) in enumerate(actions):
-        col = cards[idx]
-        if col.button(label, key=f"dashboard_action_{idx}"):
-            state["selected_page"] = value
-            st.session_state["nav_page_select"] = value
-        col.write(value)
+    top_row[1].metric("Latest EC median", format_currency(ec))
+    top_row[2].metric("Latest Condo median", format_currency(condo))
+    top_row[3].metric("Saved properties", len(state.get("saved_properties", [])))
+    top_row[4].metric("Saved scenarios", len(state.get("saved_scenarios", [])))
 
     st.markdown("---")
     st.subheader("Market snapshot")
-    if not medians.empty:
-        st.plotly_chart(market_trend_chart(medians), use_container_width=True)
+    st.markdown("Median price history for HDB, EC and Condo across the full dataset.")
+    st.plotly_chart(historical_median_chart(data.get("transactions", pd.DataFrame())), use_container_width=True)
 
     # Only show budget recommendations if the user has run the affordability assessment
     if state.get("budget_calculated", False):

@@ -8,7 +8,7 @@ import pandas as pd
 
 SQM_TO_SQFT = 10.764
 
-HOUSING_KINDS = ["HDB", "Condo", "Landed"]
+HOUSING_KINDS = ["HDB", "Condo", "EC", "Landed"]
 
 # Raw URA / HDB types rolled into "Landed"
 LANDED_RAW_TYPES = {
@@ -59,9 +59,11 @@ def _sqm_band(sqm: float, bands: list[tuple]) -> str:
 def housing_kind_for_row(property_type: str, dataset: str) -> str:
     if dataset == "HDB Resale":
         return "HDB"
+    pt = str(property_type).strip().lower()
+    if "executive condominium" in pt or pt == "ec":
+        return "EC"
     if property_type in LANDED_RAW_TYPES:
         return "Landed"
-    pt = str(property_type).lower()
     if any(k in pt for k in ("terrace", "semi-detached", "semi detached", "detached", "bungalow")):
         return "Landed"
     return "Condo"
