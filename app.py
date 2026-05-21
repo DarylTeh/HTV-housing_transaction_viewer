@@ -28,7 +28,7 @@ from processed_data import (
 
 st.set_page_config(
     page_title="PropHub - Your Property Guide",    
-    page_icon="logo.jpg",
+    page_icon="logo_topbottom.jpg",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -91,7 +91,7 @@ def load_app_data() -> dict[str, pd.DataFrame]:
 
 
 def render_global_sidebar(state: dict[str, Any]) -> str:
-    st.sidebar.title("PropertyHub")
+    render_sidebar_logo("logo_rightleft.jpg")
     st.sidebar.markdown(
         "Select your user intent and jump into the experience that matters most for your next property decision."
     )
@@ -118,6 +118,18 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
 
     return state["selected_page"]
 
+def render_sidebar_logo(image_path: str) -> None:
+    with open(image_path, "rb") as image_file:
+        encoded = base64.b64encode(image_file.read()).decode()
+
+    st.sidebar.markdown(
+        f"""
+        <div style="text-align: center; padding-bottom: 1rem;">
+            <img src="data:image/png;base64,{encoded}" width="220">
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 def main() -> None:
     init_session_state()
