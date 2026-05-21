@@ -5,7 +5,7 @@ import streamlit as st
 
 from components.common import format_currency
 from engine.recommendation_engine import recommend_properties
-from engine.trend_engine import historical_median_chart, market_trend_chart
+from engine.trend_engine import market_snapshot_by_housing_type
 
 
 def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
@@ -38,8 +38,21 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
 
     st.markdown("---")
     st.subheader("Market snapshot")
-    st.markdown("Median price history for HDB, EC and Condo across the full dataset. Dataset for condo and landed only starts from 2010.")
-    st.plotly_chart(historical_median_chart(data.get("transactions", pd.DataFrame())), use_container_width=True)
+    st.markdown("Median price history for HDB, EC, Condo and Landed. Dataset for Condo and Landed only starts from 2010.")
+    
+    # Generate charts for each housing type
+    housing_charts = market_snapshot_by_housing_type(data.get("transactions", pd.DataFrame()))
+    
+    if housing_charts:
+        # Display charts in a 2x2 grid
+        col1, col2 = st.columns(2)
+        col3, col4 = st.columns(2)
+        columns = [col1, col2, col3, col4]
+        
+        for idx, housing_kind in enumerate(["HDB", "EC", "Condo", "Landed"]):
+            if housing_kind in housing_charts:
+                with columns[idx]:
+                    st.plotly_chart(housing_charts[housing_kind], use_container_width=True)
 
     # Only show budget recommendations if the user has run the affordability assessment
     if state.get("budget_calculated", False):

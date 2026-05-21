@@ -49,7 +49,7 @@ def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     with col1:
         housing_kind = st.selectbox(
             "Housing type",
-            ["All", "HDB", "Condo", "Landed"],
+            ["All", "HDB", "EC", "Condo", "Landed"],
             index=0,
             key="trend_housing_kind",
         )
