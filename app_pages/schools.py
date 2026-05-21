@@ -130,6 +130,7 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
                     "longitude": float(school["lon"]),
                     "label": school.get("name", "School"),
                     "type": "School",
+                    "score": school.get("score", ""),
                 }
             )
 
@@ -164,17 +165,28 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
             "Landed": [249, 115, 22],
         }
         map_df["color"] = map_df["type"].map(color_map).tolist()
+        map_df["score_info"] = map_df.apply(
+            lambda row: f"T-Score: {row['score']}" if row["type"] == "School" and pd.notna(row["score"]) and row["score"] != "" else "",
+            axis=1
+        )
         layer = pdk.Layer(
             "ScatterplotLayer",
             data=map_df,
             get_position="[longitude, latitude]",
             get_fill_color="color",
-            get_radius=120,
+            get_radius=40,
             pickable=True,
             auto_highlight=True,
         )
+        tooltip = {
+            "html": "<b>{label}</b><br/>Type: {type}<br/>{score_info}",
+            "style": {
+                "backgroundColor": "steelblue",
+                "color": "white"
+            }
+        }
         view_state = pdk.ViewState(latitude=center_lat, longitude=center_lon, zoom=13, pitch=0)
-        deck = pdk.Deck(layers=[layer], initial_view_state=view_state)
+        deck = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip=tooltip)
         st.pydeck_chart(deck)
         st.caption("School = blue, HDB = green, Condo = yellow, Landed = orange")
         if property_rows:
