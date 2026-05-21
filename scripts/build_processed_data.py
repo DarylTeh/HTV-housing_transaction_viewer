@@ -121,17 +121,25 @@ def build_transactions(area_coords: dict | None = None):
     
     # Add geocoding if area coordinates are available
     if area_coords:
-        df["lat"] = df["area_name"].map(lambda x: area_coords.get(str(x).strip(), (None, None))[0] if pd.notna(x) else None)
-        df["lon"] = df["area_name"].map(lambda x: area_coords.get(str(x).strip(), (None, None))[1] if pd.notna(x) else None)
-    
+        def lookup_coord(value, index: int):
+            if pd.isna(value):
+                return None
+            loc = area_coords.get(str(value).strip())
+            return loc[index] if isinstance(loc, tuple) else None
+
+        df["lat"] = df["area_name"].map(lambda x: lookup_coord(x, 0))
+        df["lon"] = df["area_name"].map(lambda x: lookup_coord(x, 1))
+
     path = PROCESSED_DIR / "transactions_all.csv"
     df.to_csv(path, index=False)
     print(f"  saved {len(df):,} rows")
 
     print("Building transaction_index.csv …")
-    index = (
-        df.groupby(["dataset", "town", "street_name", "property_type"], as_index=False)["price"]
-        .agg(record_count="count", first_year=("year", "min"), last_year=("year", "max"), median_price="median")
+    index = df.groupby(["dataset", "town", "street_name", "property_type"], as_index=False).agg(
+        record_count=("price", "count"),
+        first_year=("year", "min"),
+        last_year=("year", "max"),
+        median_price=("price", "median"),
     )
     index = index.sort_values(["town", "street_name", "dataset"])
     index.to_csv(PROCESSED_DIR / "transaction_index.csv", index=False)
@@ -139,9 +147,9 @@ def build_transactions(area_coords: dict | None = None):
 
     print("Building price_medians.csv …")
     recent = df[df["year"] >= df["year"].max() - 5]
-    med = (
-        recent.groupby(["year", "housing_kind", "size_label", "area_name"], as_index=False)["price"]
-        .agg(median_price="median", sales="count")
+    med = recent.groupby(["year", "housing_kind", "size_label", "area_name"], as_index=False).agg(
+        median_price=("price", "median"),
+        sales=("price", "count"),
     )
     med.to_csv(PROCESSED_DIR / "price_medians.csv", index=False)
     print(f"  saved {len(med):,} summary rows")

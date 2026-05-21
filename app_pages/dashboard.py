@@ -29,9 +29,9 @@ def render_dashboard(data: dict[str, pd.DataFrame], state: dict) -> None:
     st.subheader("Quick actions")
     cards = st.columns(4)
     actions = [
-        ("Calculate Budget", "Go to Affordability"),
+        ("Calculate Budget", "Affordability"),
         ("Search HDB/Condo", "Buy Property"),
-        ("Find Rental", "Rent Property"),
+        ("View Market Trends", "Market Trends"),
         ("Explore Schools", "School Finder"),
     ]
     for idx, (label, value) in enumerate(actions):

@@ -11,7 +11,6 @@ from app_pages.buy import render_buy_page
 from app_pages.compare import render_compare_page
 from app_pages.dashboard import render_dashboard
 from app_pages.maps import render_map_explorer
-from app_pages.rent import render_rent_page
 from app_pages.saved import render_saved_page
 from app_pages.sell import render_sell_page
 from app_pages.schools import render_schools_page
@@ -36,7 +35,6 @@ NAVIGATION = [
     "Home Dashboard",
     "Affordability",
     "Buy Property",
-    "Rent Property",
     "Sell Property",
     "Project Analytics",
     "Map Explorer",
@@ -46,13 +44,10 @@ NAVIGATION = [
     "Saved Properties",
 ]
 
-INTEREST_TYPES = ["Buy", "Rent", "Sell", "Invest"]
-
 PAGE_RENDERERS = {
     "Home Dashboard": render_dashboard,
     "Affordability": render_affordability_page,
     "Buy Property": render_buy_page,
-    "Rent Property": render_rent_page,
     "Sell Property": render_sell_page,
     "Project Analytics": render_analytics_page,
     "Map Explorer": render_map_explorer,
@@ -91,11 +86,10 @@ def load_app_data() -> dict[str, pd.DataFrame]:
 def render_global_sidebar(state: dict[str, Any]) -> str:
     render_sidebar_logo("logo_rightleft.jpg")
     st.sidebar.markdown(
-        "Select your user intent and jump into the experience that matters most for your next property decision."
+        "Use the global navigation menu below to access every feature of the app. "
+        "Each page is designed to help you understand the market, compare properties, "
+        "and manage your saved options."
     )
-
-    interest = st.sidebar.radio("Interest type", INTEREST_TYPES, index=INTEREST_TYPES.index(state.get("interest_type", "Buy")))
-    state["interest_type"] = interest
 
     current_page = state.get("selected_page", NAVIGATION[0])
     if "nav_page_select" not in st.session_state:
@@ -106,6 +100,23 @@ def render_global_sidebar(state: dict[str, Any]) -> str:
         index=NAVIGATION.index(current_page) if current_page in NAVIGATION else 0,
         key="nav_page_select",
     )
+
+    st.sidebar.markdown(
+        """
+        **Feature guide**
+        - **Home Dashboard**: overview metrics, quick actions and saved items.
+        - **Affordability**: calculate your budget and compare financing options.
+        - **Buy Property**: search and compare HDB and condo transaction data.
+        - **Sell Property**: review market medians and recent pricing trends.
+        - **Project Analytics**: inspect project-level sales and market performance.
+        - **Map Explorer**: explore property data on an interactive map.
+        - **School Finder**: search schools near areas and review ranked options.
+        - **Market Trends**: view pricing trends and transaction volume charts.
+        - **Scenario Comparison**: compare properties and scenarios side by side.
+        - **Saved Properties**: manage your saved properties and scenarios.
+        """
+    )
+
     if page != state.get("selected_page"):
         state["selected_page"] = page
 
@@ -137,9 +148,8 @@ def main() -> None:
 
     st.title("Property Hub")
     st.markdown(
-        "A modern, non-linear property decision workspace built for budget, school search, rental insights, market analytics and quick comparison."
+        "A modern, non-linear property decision workspace built for budget, school search, market analytics and quick comparison."
     )
-    st.markdown(f"**Mode:** {st.session_state['interest_type']}")
     st.markdown("---")
 
     renderer = PAGE_RENDERERS.get(page)
