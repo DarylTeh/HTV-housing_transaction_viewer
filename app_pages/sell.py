@@ -5,7 +5,7 @@ import streamlit as st
 
 
 def render_sell_page(data: dict[str, pd.DataFrame], state: dict) -> None:
-    st.header("Sell Property")
+    st.header("Recent Transactions")
     st.write("Estimate resale potential by looking at recent transaction activity and neighbourhood momentum.")
 
     price_medians = data.get("price_medians", pd.DataFrame())
