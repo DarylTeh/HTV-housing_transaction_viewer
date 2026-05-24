@@ -25,12 +25,12 @@ def render_map_explorer(data: dict[str, pd.DataFrame], state: dict) -> None:
         ]
     if show_supermarkets and not supermarkets.empty:
         rows += [
-            {"lat": float(row["lat"]), "lon": float(row["lon"]), "type": "Supermarket", "name": row.get("name", "Supermarket"), "score": ""}
+            {"lat": float(row["lat"]), "lon": float(row["lon"]), "type": "Supermarket", "name": row.get("name", "Supermarket") if pd.notna(row.get("name")) else "Supermarket", "score": ""}
             for _, row in supermarkets.dropna(subset=["lat", "lon"]).iterrows()
         ]
     if show_hawker and not hawkers.empty:
         rows += [
-            {"lat": float(row["lat"]), "lon": float(row["lon"]), "type": "Hawker", "name": row.get("name", "Hawker Centre"), "score": ""}
+            {"lat": float(row["lat"]), "lon": float(row["lon"]), "type": "Hawker", "name": row.get("name", "Hawker Centre") if pd.notna(row.get("name")) else "Hawker Centre", "score": ""}
             for _, row in hawkers.dropna(subset=["lat", "lon"]).iterrows()
         ]
 

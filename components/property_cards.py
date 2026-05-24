@@ -30,6 +30,7 @@ def render_property_card(project: dict, key: str, saved: bool = False) -> None:
     with cols[1]:
         if st.button("View Analytics", key=f"analytics_{key}"):
             st.session_state["selected_property"] = title
+            st.session_state["selected_page"] = "Project Analytics"
         if st.button("Save", key=f"save_{key}"):
             saved_list = st.session_state.setdefault("saved_properties", [])
             if title not in saved_list:

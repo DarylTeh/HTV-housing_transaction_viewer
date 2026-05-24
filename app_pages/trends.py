@@ -5,7 +5,9 @@ import pydeck as pdk
 import streamlit as st
 
 from engine.trend_engine import market_trend_chart, rent_vs_buy_chart, transaction_volume_price_chart
-from components.common import format_dataframe_prices
+from engine.transaction_engine import project_history, project_metrics
+from components.common import format_dataframe_prices, format_price
+from components.analytics_charts import line_chart
 
 
 def get_property_details(transactions: pd.DataFrame, housing_kind: str | None = None, street_name: str | None = None) -> pd.DataFrame:
@@ -167,6 +169,59 @@ def render_trends_page(data: dict[str, pd.DataFrame], state: dict) -> None:
                     display_df["Price ($)"] = display_df["Price ($)"].apply(lambda x: f"${x/1e6:.2f}M" if pd.notna(x) else "N/A")
                     display_df["Size (sqm)"] = display_df["Size (sqm)"].apply(lambda x: f"{x:.0f}" if pd.notna(x) else "N/A")
                     st.dataframe(display_df, use_container_width=True)
+                    
+                    # Individual property trend analysis
+                    st.markdown("**Individual Property Trend Analysis**")
+                    st.write("Select a specific property to view its transaction history and price trends over time.")
+                    
+                    # Create a list of unique street names from the filtered properties
+                    unique_streets = filtered_props["street_name"].dropna().unique().tolist()
+                    if unique_streets:
+                        selected_street = st.selectbox(
+                            "Select a property to view its trend",
+                            options=[""] + sorted(unique_streets),
+                            key="trend_individual_property",
+                        )
+                        
+                        if selected_street:
+                            # Get transaction history for the selected property
+                            property_history = project_history(transactions, selected_street)
+                            
+                            if not property_history.empty:
+                                st.subheader(f"Transaction History: {selected_street}")
+                                
+                                # Show metrics
+                                metrics = project_metrics(property_history)
+                                cols = st.columns(4)
+                                cols[0].metric("Transactions", metrics.get("transactions", 0))
+                                cols[1].metric("Latest Price", format_price(metrics.get("latest_price", None)))
+                                cols[2].metric("Avg PSF", format_price(metrics.get("average_psf", None)))
+                                cols[3].metric("Appreciation", f"{metrics.get('appreciation_pct', 0):.1f}%")
+                                
+                                # Show price trend chart
+                                monthly = (
+                                    property_history.groupby(property_history["transaction_date"].dt.to_period("M")).agg(
+                                        average_price=("price", "mean"), transactions=("price", "count")
+                                    ).reset_index()
+                                )
+                                monthly["transaction_date"] = monthly["transaction_date"].dt.to_timestamp()
+                                
+                                st.plotly_chart(
+                                    line_chart(monthly, x="transaction_date", y="average_price", title=f"Price trend for {selected_street}"),
+                                    use_container_width=True
+                                )
+                                
+                                # Show recent transactions
+                                st.markdown("**Recent Transactions**")
+                                recent = (
+                                    property_history[["transaction_date", "price", "size_sqm", "lease_remaining", "housing_kind"]]
+                                    .sort_values("transaction_date", ascending=False)
+                                    .head(20)
+                                )
+                                recent_fmt = format_dataframe_prices(recent, ["price"])
+                                st.dataframe(recent_fmt, hide_index=True, use_container_width=True)
+                            else:
+                                st.warning(f"No transaction history found for {selected_street}")
                 else:
                     st.warning(f"No geocoded properties found. Available properties: {len(filtered_props)} (not mapped)")
             else:

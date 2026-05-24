@@ -14,9 +14,12 @@ def render_saved_page(data: dict[str, object], state: dict) -> None:
     st.subheader("Saved properties")
     if saved_properties:
         for idx, item in enumerate(saved_properties):
-            cols = st.columns([0.9, 0.1])
+            cols = st.columns([0.7, 0.15, 0.15])
             cols[0].write(item)
-            if cols[1].button("Remove", key=f"remove_property_{idx}"):
+            if cols[1].button("View Analytics", key=f"analytics_saved_{idx}"):
+                st.session_state["selected_property"] = item
+                st.session_state["selected_page"] = "Project Analytics"
+            if cols[2].button("Remove", key=f"remove_property_{idx}"):
                 saved_properties.pop(idx)
     else:
         st.info("No saved properties yet.")

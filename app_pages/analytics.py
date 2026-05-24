@@ -29,7 +29,14 @@ def render_analytics_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         if len(area) > 0:
             combo.add(f"{s} — {area[0]}")
     options = [""] + sorted(combo)
-    project_query = st.selectbox("Search a project or street", options, index=0, key="analytics_query")
+    
+    # Check if a property was selected from another page
+    selected_property = st.session_state.get("selected_property", "")
+    default_index = 0
+    if selected_property and selected_property in options:
+        default_index = options.index(selected_property)
+    
+    project_query = st.selectbox("Search a project or street", options, index=default_index, key="analytics_query")
     if not project_query:
         st.info("Select a property name, town or street to begin.")
         return

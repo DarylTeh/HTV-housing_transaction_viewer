@@ -17,10 +17,19 @@ def render_affordability_page(data: dict[str, pd.DataFrame], state: dict) -> Non
     st.write("Estimate what you can afford today and how your budget compares to market prices.")
 
     with st.expander("Buyer profile", expanded=True):
-        name = st.text_input("Name", value=state.get("buyer_name", "Alex"), key="afford_buyer_name")
-        citizenship = st.selectbox("Citizenship", ["SC", "PR", "Foreigner"], index=0, key="afford_citizenship")
-        monthly_income = st.number_input("Monthly income (SGD)", min_value=0.0, value=8000.0, step=500.0, key="afford_monthly_income")
-        existing_debt = st.number_input("Existing monthly debt (SGD)", min_value=0.0, value=300.0, step=50.0, key="afford_existing_debt")
+        num_buyers = st.radio("Number of buyers", [1, 2], index=0, key="afford_num_buyers", horizontal=True)
+        
+        buyers = []
+        for i in range(num_buyers):
+            st.subheader(f"Buyer {i + 1}")
+            citizenship = st.selectbox("Citizenship", ["SC", "PR", "Foreigner"], index=0, key=f"afford_citizenship_{i}")
+            monthly_income = st.number_input("Monthly income (SGD)", min_value=0.0, value=8000.0, step=500.0, key=f"afford_monthly_income_{i}")
+            existing_debt = st.number_input("Existing monthly debt (SGD)", min_value=0.0, value=300.0, step=50.0, key=f"afford_existing_debt_{i}")
+            buyers.append({
+                "citizenship": citizenship,
+                "monthly_income": monthly_income,
+                "existing_debt": existing_debt,
+            })
 
     with st.expander("Property plan", expanded=True):
         property_type = st.selectbox("Target property type", PROPERTY_TYPES, index=1, key="afford_property_type")
@@ -32,24 +41,26 @@ def render_affordability_page(data: dict[str, pd.DataFrame], state: dict) -> Non
         state["budget"] = purchase_price
         state["budget_calculated"] = True
 
+    buyer_dicts = []
+    for i, buyer in enumerate(buyers):
+        buyer_dicts.append({
+            "name": f"Buyer {i + 1}",
+            "relationship": "Joint" if num_buyers == 2 else "Single",
+            "age": 35,
+            "citizenship": buyer["citizenship"],
+            "monthly_income": buyer["monthly_income"],
+            "annual_bonus": 0.0,
+            "cpf_oa": 10000.0,
+            "existing_property_count": 0,
+            "existing_home_loan": buyer["existing_debt"],
+            "other_monthly_debt": 0.0,
+            "ownership_percentage": 100.0 / num_buyers,
+            "will_be_owner": True,
+            "essential_occupier": True,
+        })
+    
     result = calculate_affordability(
-        buyers=[
-            {
-                "name": name,
-                "relationship": "Single",
-                "age": 35,
-                "citizenship": citizenship,
-                "monthly_income": monthly_income,
-                "annual_bonus": 0.0,
-                "cpf_oa": 10000.0,
-                "existing_property_count": 0,
-                "existing_home_loan": existing_debt,
-                "other_monthly_debt": 0.0,
-                "ownership_percentage": 100.0,
-                "will_be_owner": True,
-                "essential_occupier": True,
-            }
-        ],
+        buyers=buyer_dicts,
         property_type=property_type,
         purchase_price=purchase_price,
         interest_rate=interest_rate / 100.0,
@@ -82,7 +93,7 @@ def render_affordability_page(data: dict[str, pd.DataFrame], state: dict) -> Non
 
         if st.button("Save this scenario"):
             scenario = {
-                "name": f"Affordability: {name}",
+                "name": f"Affordability: {num_buyers} Buyer(s)",
                 "property_type": property_type,
                 "purchase_price": result.purchase_price,
                 "max_affordable_price": result.max_affordable_price,
