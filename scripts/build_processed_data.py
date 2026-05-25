@@ -38,13 +38,18 @@ def save_dataframe(df: pd.DataFrame, path: Path, verbose: bool = True) -> None:
     # Save CSV
     df.to_csv(csv_path, index=False)
     
-    # Save Parquet
-    df.to_parquet(parquet_path, engine="pyarrow", index=False, compression="snappy")
+    # Save Parquet - convert object columns with mixed types to string
+    df_for_parquet = df.copy()
+    for col in df_for_parquet.columns:
+        if df_for_parquet[col].dtype == 'object':
+            df_for_parquet[col] = df_for_parquet[col].astype(str)
+    
+    df_for_parquet.to_parquet(parquet_path, engine="pyarrow", index=False, compression="snappy")
     
     if verbose:
         csv_size = csv_path.stat().st_size / (1024 * 1024)
         parquet_size = parquet_path.stat().st_size / (1024 * 1024)
-        print(f"  saved {len(df):,} rows ({csv_size:.1f}MB CSV → {parquet_size:.1f}MB Parquet)")
+        print(f"  saved {len(df):,} rows ({csv_size:.1f}MB CSV -> {parquet_size:.1f}MB Parquet)")
 
 
 def ensure_dir():
