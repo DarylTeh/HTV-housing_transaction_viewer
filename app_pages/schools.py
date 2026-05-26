@@ -172,6 +172,16 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
 
     schools = data.get("schools_geocoded", pd.DataFrame())
     transactions = data.get("transactions", pd.DataFrame())
+
+    schools["lat"] = pd.to_numeric(
+        schools["lat"],
+        errors="coerce"
+    )
+
+    schools["lon"] = pd.to_numeric(
+        schools["lon"],
+        errors="coerce"
+    )
     
     if schools.empty:
         st.warning("School ranking data is unavailable.")
