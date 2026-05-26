@@ -355,10 +355,10 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         data=circle_df,
         get_position="[longitude, latitude]",
         get_radius=1000,
-        get_fill_color=[59,130,246,15],
+        radius_units="meters",
+        get_fill_color=[59,130,246,20],
         stroked=True,
         filled=True,
-        line_width_min_pixels=2,
     )
 
     school_layer = pdk.Layer(
@@ -431,3 +431,13 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         )
 
         st.dataframe(summary)
+
+    st.write(
+        schools[
+            schools["name"].str.contains(
+                "Fairfield",
+                case=False,
+                na=False
+            )
+        ].T
+    )
