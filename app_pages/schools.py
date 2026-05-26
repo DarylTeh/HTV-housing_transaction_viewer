@@ -342,7 +342,7 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         data=circle_df,
         get_position="[longitude, latitude]",
         get_radius=1000,
-        get_fill_color=[59,130,246,15]
+        get_fill_color=[59,130,246,15],
         stroked=True,
         filled=True,
         line_width_min_pixels=2,
