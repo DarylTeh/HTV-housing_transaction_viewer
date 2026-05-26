@@ -245,6 +245,19 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         & results["lon"].notna()
     ].copy()
 
+    st.write("Results shape:", results.shape)
+
+    st.write(
+        results[
+            ["name", "lat", "lon"]
+        ].head()
+    )
+
+    st.write(
+        results[
+            ["lat", "lon"]
+        ].isna().sum()
+    )
     if valid_schools.empty:
         st.warning("No geocoded schools available.")
         return
