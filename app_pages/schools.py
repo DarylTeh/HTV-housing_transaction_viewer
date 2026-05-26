@@ -37,20 +37,71 @@ def property_category(row):
 
     return "Other"
 
-def search_schools(schools: pd.DataFrame, query: str) -> pd.DataFrame:
-    if not query:
-        return schools.sort_values("rank").head(20)
-    q = query.strip()
-    mask = (
-        schools["name"].fillna("").str.contains(q, case=False, na=False)
-        | schools["programmes"].fillna("").str.contains(q, case=False, na=False)
-        | schools["gender"].fillna("").str.contains(q, case=False, na=False)
-        | schools["ip"].fillna("").str.contains(q, case=False, na=False)
-        | schools["ibdp"].fillna("").str.contains(q, case=False, na=False)
-        | schools["sap"].fillna("").str.contains(q, case=False, na=False)
-        | schools["affiliated"].fillna("").str.contains(q, case=False, na=False)
-    )
-    return schools[mask].sort_values("rank").head(20)
+def search_schools(
+        schools: pd.DataFrame,
+        query: str
+    ) -> pd.DataFrame:
+
+        schools = schools.copy()
+
+        if "school_name" in schools.columns:
+            schools["name"] = schools["school_name"].fillna(
+                schools.get("name")
+            )
+
+        schools["rank"] = pd.to_numeric(
+            schools.get("rank"),
+            errors="coerce"
+        )
+
+        if not query:
+            return schools.sort_values(
+                "rank",
+                na_position="last"
+            ).head(20)
+
+        q = query.strip()
+
+        searchable_cols = [
+            "name",
+            "programmes",
+            "gender",
+            "ip",
+            "ibdp",
+            "sap",
+            "affiliated",
+            "address",
+            "mrt_desc",
+            "bus_desc",
+            "postal_code",
+        ]
+
+        mask = False
+
+        for col in searchable_cols:
+
+            if col in schools.columns:
+
+                mask = (
+                    mask
+                    | schools[col]
+                    .fillna("")
+                    .astype(str)
+                    .str.contains(
+                        q,
+                        case=False,
+                        na=False
+                    )
+                )
+
+        return (
+            schools[mask]
+            .sort_values(
+                "rank",
+                na_position="last"
+            )
+            .head(20)
+        )
 
 
 def search_schools_by_area(schools: pd.DataFrame, transactions: pd.DataFrame, query: str) -> pd.DataFrame:
@@ -171,6 +222,10 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
     st.write("Search a school or neighbourhood and view HDB, Condo, EC and Landed housing options within the 1km priority admission radius.")
 
     schools = data.get("schools_geocoded", pd.DataFrame())
+    if "school_name" in schools.columns:
+        schools["name"] = schools["school_name"].fillna(
+            schools.get("name")
+        )
     transactions = data.get("transactions", pd.DataFrame())
 
     schools["lat"] = pd.to_numeric(
@@ -219,7 +274,11 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
 
     st.markdown(f"### {len(results)} school(s) found")
     for idx, school in results.iterrows():
-        school_name = school.get("name", "Unknown")
+        school_name = (
+            school.get("school_name")
+            or school.get("name")
+            or "Unknown"
+        )
         school_lat = school.get("lat")
         school_lon = school.get("lon")
         cols = st.columns([0.75, 0.25])
@@ -245,19 +304,6 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         & results["lon"].notna()
     ].copy()
 
-    st.write("Results shape:", results.shape)
-
-    st.write(
-        results[
-            ["name", "lat", "lon"]
-        ].head()
-    )
-
-    st.write(
-        results[
-            ["lat", "lon"]
-        ].isna().sum()
-    )
     if valid_schools.empty:
         st.warning("No geocoded schools available.")
         return
@@ -281,7 +327,7 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
                 "latitude": float(school["lat"]),
                 "longitude": float(school["lon"]),
                 "label": (
-                    f"{school['name']}<br>"
+                    f"{school.get('name', 'Unknown')}<br>"
                     f"Rank {school.get('rank','-')}"
                 ),
                 "type": "School",
@@ -431,13 +477,3 @@ def render_schools_page(data: dict[str, pd.DataFrame], state: dict) -> None:
         )
 
         st.dataframe(summary)
-
-    st.write(
-        schools[
-            schools["name"].str.contains(
-                "Fairfield",
-                case=False,
-                na=False
-            )
-        ].T
-    )

@@ -19,9 +19,9 @@ from processed_data import (
     load_hawker_centres,
     load_price_medians,
     load_rent_vs_buy_timeline,
-    load_schools_ranked_geocoded,
     load_supermarkets,
     load_transactions,
+    load_schools_master,
 )
 
 st.set_page_config(
@@ -76,7 +76,7 @@ def load_app_data() -> dict[str, pd.DataFrame]:
     return {
         "transactions": load_transactions(),
         "price_medians": load_price_medians(),
-        "schools_geocoded": load_schools_ranked_geocoded(),
+        "schools_geocoded": load_schools_master(),
         "supermarkets": load_supermarkets(),
         "hawker_centres": load_hawker_centres(),
         "rent_vs_buy": load_rent_vs_buy_timeline(),

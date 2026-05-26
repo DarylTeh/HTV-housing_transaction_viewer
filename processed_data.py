@@ -84,6 +84,8 @@ def load_schools_ranked() -> pd.DataFrame:
 def load_schools_ranked_geocoded() -> pd.DataFrame:
     return _read_csv("schools_ranked_geocoded.csv")
 
+def load_general_information_of_schools() -> pd.DataFrame:
+    return _read_csv("Generalinformationofschools.csv")
 
 def load_schools_moe_primary() -> pd.DataFrame:
     return _read_csv("schools_moe_primary.csv")
@@ -103,6 +105,8 @@ def load_pharmacies() -> pd.DataFrame:
 def load_transaction_index() -> pd.DataFrame:
     return _read_csv("transaction_index.csv")
 
+def load_schools_master() -> pd.DataFrame:
+    return _read_csv("schools_master.csv")
 
 def load_savings_projection() -> pd.DataFrame:
     return _read_csv("savings_projection.csv")
